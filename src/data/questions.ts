@@ -5,10 +5,17 @@ export type QuestionItem = {
   id: string;
   difficulty: Difficulty;
   questionType: QuestionType;
+  topic?: string;
   question: string;
   options: string[];
   correctAnswerIndex: number;
   explanation: string;
+  skillFocus?: string;
+  oralExamLink?: string;
+  isActive?: boolean;
+  createdBy?: string;
+  lastEdited?: string;
+  notes?: string;
 };
 
 export type BoardCell = {
@@ -3026,12 +3033,16 @@ export const gameBoard: BoardCell[] = [
 
 export type Question = QuestionItem & { categoryId: string; points: number };
 
-export function generateGameData() {
-  const selectedCategories = gameCategories;
+export function generateGameData(customBoard?: BoardCell[], customCategories?: Category[]) {
+  const boardToUse = customBoard || gameBoard;
+  const categoriesToUse = customCategories || gameCategories;
+  
+  const selectedCategories = categoriesToUse;
   const selectedQuestions: Question[] = [];
   
-  for (const cell of gameBoard) {
-    // Pick a random question from the 8 available for this cell
+  for (const cell of boardToUse) {
+    if (!cell.questions || cell.questions.length === 0) continue;
+    // Pick a random question from the available for this cell
     const randomIndex = Math.floor(Math.random() * cell.questions.length);
     const q = cell.questions[randomIndex];
     selectedQuestions.push({

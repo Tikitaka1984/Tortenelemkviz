@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, Users, BookOpen, ArrowLeft, CheckCircle2, XCircle, Trophy, RotateCcw, Home } from 'lucide-react';
-import { generateGameData, Category, Question, Difficulty, QuestionType } from './data/questions';
+import { Play, Users, BookOpen, ArrowLeft, CheckCircle2, XCircle, Trophy, RotateCcw, Home, Settings } from 'lucide-react';
+import { generateGameData, Category, Question, Difficulty, QuestionType, gameBoard as initialGameBoard, gameCategories as initialCategories, BoardCell } from './data/questions';
+import TeacherMode from './components/TeacherMode';
+import TeacherLogin from './components/TeacherLogin';
 
 type GameState = 'START' | 'RULES' | 'BOARD' | 'QUESTION' | 'FEEDBACK' | 'GAME_OVER';
 type GameMode = 'SINGLE' | 'TEAM';
@@ -31,6 +33,54 @@ const getTypeLabel = (type: QuestionType) => {
 };
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [isTeacherAuthenticated, setIsTeacherAuthenticated] = useState(() => {
+    return sessionStorage.getItem('teacher_auth') === 'true';
+  });
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+  };
+
+  const handleTeacherLogin = () => {
+    sessionStorage.setItem('teacher_auth', 'true');
+    setIsTeacherAuthenticated(true);
+  };
+
+  const handleTeacherLogout = () => {
+    sessionStorage.removeItem('teacher_auth');
+    setIsTeacherAuthenticated(false);
+  };
+
+  const [fullBoard, setFullBoard] = useState<BoardCell[]>(initialGameBoard);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
+
+  useEffect(() => {
+    const savedBoard = localStorage.getItem('tori_mester_board');
+    if (savedBoard) {
+      try {
+        setFullBoard(JSON.parse(savedBoard));
+      } catch (e) {
+        console.error("Failed to parse saved board", e);
+      }
+    }
+  }, []);
+
+  const handleSaveBoard = (newBoard: BoardCell[]) => {
+    setFullBoard(newBoard);
+    localStorage.setItem('tori_mester_board', JSON.stringify(newBoard));
+  };
+
   const [gameState, setGameState] = useState<GameState>('START');
   const [gameMode, setGameMode] = useState<GameMode>('SINGLE');
   
@@ -48,7 +98,7 @@ export default function App() {
   const [gameQuestions, setGameQuestions] = useState<Question[]>([]);
 
   const startGame = (mode: GameMode) => {
-    const { selectedCategories, selectedQuestions } = generateGameData();
+    const { selectedCategories, selectedQuestions } = generateGameData(fullBoard, categories);
     setGameCategories(selectedCategories);
     setGameQuestions(selectedQuestions);
     setGameMode(mode);
@@ -116,6 +166,31 @@ export default function App() {
     return 'Kezdő';
   };
 
+  if (currentPath === '/teacher') {
+    if (!isTeacherAuthenticated) {
+      return (
+        <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30 flex flex-col">
+          <TeacherLogin 
+            onLoginSuccess={handleTeacherLogin} 
+            onBack={() => navigateTo('/')} 
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30 flex flex-col">
+        <TeacherMode 
+          board={fullBoard} 
+          categories={categories} 
+          onSaveBoard={handleSaveBoard} 
+          onExit={() => navigateTo('/')} 
+          onLogout={handleTeacherLogout}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 overflow-hidden flex flex-col">
       <AnimatePresence mode="wait">
@@ -125,8 +200,17 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="flex-1 flex flex-col items-center justify-center p-6"
+            className="flex-1 flex flex-col items-center justify-center p-6 relative"
           >
+            <div className="absolute top-4 right-4 z-10">
+              <button 
+                onClick={() => navigateTo('/teacher')}
+                className="flex items-center gap-2 text-slate-400 hover:text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors border border-slate-800"
+              >
+                <Settings className="w-4 h-4" />
+                <span className="text-sm font-medium">Tanári mód</span>
+              </button>
+            </div>
             <div className="text-center mb-16">
               <h1 className="text-6xl md:text-8xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-purple-600 mb-4 tracking-tight">
                 Töri Mester
