@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import confetti from 'canvas-confetti';
 import { Play, Users, BookOpen, ArrowLeft, CheckCircle2, XCircle, Trophy, RotateCcw, Home, Settings } from 'lucide-react';
 import { generateGameData, Category, Question, Difficulty, QuestionType, gameBoard as initialGameBoard, gameCategories as initialCategories, BoardCell } from './data/questions';
 import TeacherMode from './components/TeacherMode';
@@ -110,6 +111,36 @@ export default function App() {
 
   const [gameCategories, setGameCategories] = useState<Category[]>([]);
   const [gameQuestions, setGameQuestions] = useState<Question[]>([]);
+
+  useEffect(() => {
+    if (gameState === 'GAME_OVER') {
+      const duration = 3 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+      const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+      const interval: any = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti({
+          ...defaults, particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        });
+        confetti({
+          ...defaults, particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        });
+      }, 250);
+      
+      return () => clearInterval(interval);
+    }
+  }, [gameState]);
 
   const startGame = (mode: GameMode) => {
     const { selectedCategories, selectedQuestions } = generateGameData(fullBoard, categories);
@@ -522,39 +553,92 @@ export default function App() {
         {gameState === 'GAME_OVER' && (
           <motion.div 
             key="gameover"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             className="flex-1 flex flex-col items-center justify-center p-6"
           >
-            <Trophy className="w-24 h-24 text-yellow-400 mb-8" />
-            <h2 className="text-5xl font-display font-bold text-white mb-2">Játék vége!</h2>
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.2 }}
+            >
+              <Trophy className="w-32 h-32 text-yellow-400 mb-6 drop-shadow-[0_0_30px_rgba(250,204,21,0.6)]" />
+            </motion.div>
             
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 mt-8 w-full max-w-md text-center">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-5xl md:text-7xl font-display font-bold text-white mb-2"
+            >
+              Játék vége!
+            </motion.h2>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, type: "spring", stiffness: 200, damping: 25 }}
+              className="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 mt-8 w-full max-w-md text-center shadow-[0_0_50px_-12px_rgba(59,130,246,0.25)]"
+            >
               {gameMode === 'SINGLE' ? (
                 <>
                   <p className="text-slate-400 text-lg mb-2">Végső pontszám</p>
-                  <div className="text-6xl font-display font-bold text-yellow-400 mb-6">{singleScore}</div>
-                  <div className="inline-block px-6 py-2 rounded-full bg-blue-900/30 border border-blue-800/50 text-blue-300 font-bold text-xl mb-8">
+                  <motion.div 
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 1.2, type: "spring", bounce: 0.5 }}
+                    className="text-7xl font-display font-bold text-yellow-400 mb-6"
+                  >
+                    {singleScore}
+                  </motion.div>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5 }}
+                    className="inline-block px-6 py-2 rounded-full bg-blue-900/30 border border-blue-800/50 text-blue-300 font-bold text-xl mb-8"
+                  >
                     Minősítés: {getRank(singleScore)}
-                  </div>
+                  </motion.div>
                 </>
               ) : (
                 <div className="space-y-6 mb-8">
-                  <div className={`p-6 rounded-2xl border-2 ${teamScores.A > teamScores.B ? 'border-yellow-500 bg-yellow-500/10' : 'border-slate-800 bg-slate-800/50'}`}>
+                  <motion.div 
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 1.1, type: "spring" }}
+                    className={`p-6 rounded-2xl border-2 ${teamScores.A > teamScores.B ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_30px_-5px_rgba(234,179,8,0.3)]' : 'border-slate-800 bg-slate-800/50'}`}
+                  >
                     <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">A Csapat</p>
-                    <p className="text-5xl font-display font-bold text-white">{teamScores.A}</p>
-                  </div>
-                  <div className={`p-6 rounded-2xl border-2 ${teamScores.B > teamScores.A ? 'border-yellow-500 bg-yellow-500/10' : 'border-slate-800 bg-slate-800/50'}`}>
+                    <p className="text-6xl font-display font-bold text-white">{teamScores.A}</p>
+                  </motion.div>
+                  <motion.div 
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 1.3, type: "spring" }}
+                    className={`p-6 rounded-2xl border-2 ${teamScores.B > teamScores.A ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_30px_-5px_rgba(234,179,8,0.3)]' : 'border-slate-800 bg-slate-800/50'}`}
+                  >
                     <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">B Csapat</p>
-                    <p className="text-5xl font-display font-bold text-white">{teamScores.B}</p>
-                  </div>
+                    <p className="text-6xl font-display font-bold text-white">{teamScores.B}</p>
+                  </motion.div>
                   {teamScores.A === teamScores.B && (
-                    <p className="text-xl font-bold text-slate-300">Döntetlen!</p>
+                    <motion.p 
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.6, type: "spring" }}
+                      className="text-2xl font-bold text-slate-300"
+                    >
+                      Döntetlen!
+                    </motion.p>
                   )}
                 </div>
               )}
 
-              <div className="flex justify-center gap-8 text-slate-400 mb-8">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.8 }}
+                className="flex justify-center gap-8 text-slate-400 mb-8"
+              >
                 <div className="text-center">
                   <p className="text-3xl font-bold text-emerald-400">{stats.correct}</p>
                   <p className="text-sm uppercase tracking-wider mt-1">Helyes</p>
@@ -563,25 +647,30 @@ export default function App() {
                   <p className="text-3xl font-bold text-rose-400">{stats.incorrect}</p>
                   <p className="text-sm uppercase tracking-wider mt-1">Hibás</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex flex-col gap-4">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.0 }}
+                className="flex flex-col gap-4"
+              >
                 <button 
                   onClick={() => startGame(gameMode)}
-                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-xl font-bold text-lg transition-all"
+                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-xl font-bold text-lg transition-all hover:scale-105 active:scale-95"
                 >
                   <RotateCcw className="w-5 h-5" />
                   Újra játszom
                 </button>
                 <button 
                   onClick={() => setGameState('START')}
-                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 p-4 rounded-xl font-bold text-lg transition-all"
+                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 p-4 rounded-xl font-bold text-lg transition-all hover:scale-105 active:scale-95"
                 >
                   <Home className="w-5 h-5" />
                   Főmenü
                 </button>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
