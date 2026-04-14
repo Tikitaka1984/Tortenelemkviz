@@ -19,6 +19,17 @@ const getDifficultyLabel = (diff: Difficulty) => {
   }
 };
 
+const getTimerDuration = (points: number) => {
+  switch(points) {
+    case 100: return 15;
+    case 200: return 15;
+    case 300: return 20;
+    case 400: return 25;
+    case 500: return 30;
+    default: return 20;
+  }
+};
+
 const getTypeLabel = (type: QuestionType) => {
   switch(type) {
     case 'multiple_choice': return 'Feleletválasztós';
@@ -92,6 +103,9 @@ export default function App() {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [isTimeUp, setIsTimeUp] = useState(false);
+  
   const [stats, setStats] = useState({ correct: 0, incorrect: 0 });
 
   const [gameCategories, setGameCategories] = useState<Category[]>([]);
@@ -114,11 +128,33 @@ export default function App() {
     if (answeredQuestions.has(q.id)) return;
     setCurrentQuestion(q);
     setSelectedAnswer(null);
+    setIsTimeUp(false);
+    setTimeLeft(getTimerDuration(q.points));
     setGameState('QUESTION');
   };
 
+  useEffect(() => {
+    if (gameState === 'QUESTION' && timeLeft !== null && timeLeft > 0 && selectedAnswer === null && !isTimeUp) {
+      const timerId = setTimeout(() => {
+        setTimeLeft(prev => prev! - 1);
+      }, 1000);
+      return () => clearTimeout(timerId);
+    } else if (gameState === 'QUESTION' && timeLeft === 0 && selectedAnswer === null && !isTimeUp) {
+      handleTimeUp();
+    }
+  }, [gameState, timeLeft, selectedAnswer, isTimeUp]);
+
+  const handleTimeUp = () => {
+    setIsTimeUp(true);
+    setStats(prev => ({ ...prev, incorrect: prev.incorrect + 1 }));
+    if (currentQuestion) {
+      setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
+    }
+    setGameState('FEEDBACK');
+  };
+
   const handleAnswer = (index: number) => {
-    if (!currentQuestion || selectedAnswer !== null) return;
+    if (!currentQuestion || selectedAnswer !== null || isTimeUp) return;
     
     setSelectedAnswer(index);
     const isCorrect = index === currentQuestion.correctAnswerIndex;
@@ -359,9 +395,21 @@ export default function App() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="flex-1 flex flex-col p-6 max-w-5xl mx-auto w-full justify-center"
+            className="flex-1 flex flex-col p-6 max-w-5xl mx-auto w-full justify-center relative"
           >
-            <div className="text-center mb-12">
+            {/* Timer */}
+            {timeLeft !== null && (
+              <div className="absolute top-0 right-0 md:right-6 flex items-center justify-center">
+                <div className={`
+                  flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full border-4 font-display font-bold text-2xl md:text-3xl transition-colors duration-300
+                  ${timeLeft <= 5 && !selectedAnswer && !isTimeUp ? 'border-rose-500 text-rose-500 bg-rose-500/10' : 'border-blue-500 text-blue-400 bg-blue-500/10'}
+                `}>
+                  {timeLeft}
+                </div>
+              </div>
+            )}
+
+            <div className="text-center mb-12 mt-16 md:mt-0">
               <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
                 <span className="px-4 py-1 rounded-full bg-blue-900/50 text-blue-300 font-bold text-sm tracking-wider uppercase border border-blue-800/50">
                   {gameCategories.find(c => c.id === currentQuestion.categoryId)?.name} • {currentQuestion.points} pont
@@ -433,7 +481,13 @@ export default function App() {
               animate={{ scale: 1, y: 0 }}
               className="bg-slate-900 border border-slate-800 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center shadow-2xl"
             >
-              {selectedAnswer === currentQuestion.correctAnswerIndex ? (
+              {isTimeUp ? (
+                <div className="flex flex-col items-center text-rose-400 mb-6">
+                  <XCircle className="w-20 h-20 mb-4" />
+                  <h2 className="text-4xl font-display font-bold">Lejárt az idő!</h2>
+                  <p className="text-slate-400 mt-2">Sajnos nem érkezett válasz időben.</p>
+                </div>
+              ) : selectedAnswer === currentQuestion.correctAnswerIndex ? (
                 <div className="flex flex-col items-center text-emerald-400 mb-6">
                   <CheckCircle2 className="w-20 h-20 mb-4" />
                   <h2 className="text-4xl font-display font-bold">Helyes válasz!</h2>
@@ -447,11 +501,13 @@ export default function App() {
                 </div>
               )}
 
-              <div className="bg-slate-800/50 rounded-2xl p-6 mb-8 text-left border border-slate-700/50">
-                <p className="text-slate-300 text-lg leading-relaxed">
-                  {currentQuestion.explanation}
-                </p>
-              </div>
+              {!isTimeUp && (
+                <div className="bg-slate-800/50 rounded-2xl p-6 mb-8 text-left border border-slate-700/50">
+                  <p className="text-slate-300 text-lg leading-relaxed">
+                    {currentQuestion.explanation}
+                  </p>
+                </div>
+              )}
 
               <button 
                 onClick={closeFeedback}

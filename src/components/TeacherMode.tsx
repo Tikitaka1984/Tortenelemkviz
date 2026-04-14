@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BoardCell, Category, QuestionItem, QuestionType, Difficulty } from '../data/questions';
-import { ArrowLeft, Save, Plus, Edit2, Trash2, Download, Search, LogOut } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Edit2, Trash2, Download, Search, LogOut, Upload } from 'lucide-react';
 
 type TeacherModeProps = {
   board: BoardCell[];
@@ -25,6 +25,7 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
   const [filterTopic, setFilterTopic] = useState<string>('ALL');
   const [filterType, setFilterType] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
     const dataStr = JSON.stringify(board, null, 2);
@@ -35,6 +36,42 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
     linkElement.click();
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const parsed = JSON.parse(content);
+        
+        // Basic validation to ensure it looks like a BoardCell array
+        if (Array.isArray(parsed) && parsed.length > 0 && 'categoryId' in parsed[0] && 'questions' in parsed[0]) {
+          if (window.confirm('Biztosan felülírod a jelenlegi kérdésbankot az importált fájllal? Ez a művelet nem vonható vissza.')) {
+            onSaveBoard(parsed);
+            alert('Sikeres importálás!');
+          }
+        } else {
+          alert('Érvénytelen fájlformátum. Kérlek, a korábban exportált JSON fájlt használd.');
+        }
+      } catch (error) {
+        console.error('Import error:', error);
+        alert('Hiba történt a fájl beolvasása során. Érvénytelen JSON.');
+      }
+      
+      // Reset input so the same file can be selected again if needed
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    };
+    reader.readAsText(file);
   };
 
   const handleAddNew = () => {
@@ -194,13 +231,29 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
           </button>
           
           <button 
-            onClick={onExit}
+            onClick={handleImportClick}
             className="flex flex-col items-center justify-center gap-4 bg-slate-800 hover:bg-slate-700 text-white p-8 rounded-2xl transition-all border border-slate-700"
+          >
+            <Upload className="w-10 h-10 text-orange-400" />
+            <span className="text-xl font-bold">Kérdésbank importálása</span>
+          </button>
+          
+          <button 
+            onClick={onExit}
+            className="flex flex-col items-center justify-center gap-4 bg-slate-800 hover:bg-slate-700 text-white p-8 rounded-2xl transition-all border border-slate-700 md:col-span-2"
           >
             <ArrowLeft className="w-10 h-10 text-slate-400" />
             <span className="text-xl font-bold">Vissza a játékhoz</span>
           </button>
         </div>
+        
+        <input 
+          type="file" 
+          accept=".json" 
+          ref={fileInputRef} 
+          onChange={handleFileChange} 
+          className="hidden" 
+        />
         
         <div className="mt-12">
           <button 
