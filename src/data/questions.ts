@@ -5254,10 +5254,15 @@ export function generateGameData(customBoard?: BoardCell[], customCategories?: C
   const boardToUse = customBoard || gameBoard;
   const categoriesToUse = customCategories || gameCategories;
   
-  const selectedCategories = categoriesToUse;
+  // Shuffle and pick 8 random categories
+  const shuffledCategories = [...categoriesToUse].sort(() => 0.5 - Math.random());
+  const selectedCategories = shuffledCategories.slice(0, 8);
+  const selectedCategoryIds = new Set(selectedCategories.map(c => c.id));
+  
   const selectedQuestions: Question[] = [];
   
   for (const cell of boardToUse) {
+    if (!selectedCategoryIds.has(cell.categoryId)) continue;
     if (!cell.questions || cell.questions.length === 0) continue;
     // Pick a random question from the available for this cell
     const randomIndex = Math.floor(Math.random() * cell.questions.length);

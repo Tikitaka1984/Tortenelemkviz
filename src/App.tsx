@@ -22,12 +22,12 @@ const getDifficultyLabel = (diff: Difficulty) => {
 
 const getTimerDuration = (points: number) => {
   switch(points) {
-    case 100: return 15;
-    case 200: return 15;
-    case 300: return 20;
+    case 100: return 25;
+    case 200: return 25;
+    case 300: return 25;
     case 400: return 25;
     case 500: return 30;
-    default: return 20;
+    default: return 25;
   }
 };
 
@@ -386,11 +386,14 @@ export default function App() {
             </div>
 
             {/* Game Board */}
-            <div className="flex-1 grid grid-cols-5 gap-2 md:gap-4">
+            <div 
+              className="flex-1 grid gap-2 md:gap-4"
+              style={{ gridTemplateColumns: `repeat(${gameCategories.length}, minmax(0, 1fr))` }}
+            >
               {/* Category Headers */}
               {gameCategories.map(cat => (
-                <div key={cat.id} className="bg-blue-950/50 border border-blue-900/50 rounded-xl p-2 md:p-4 flex items-center justify-center text-center">
-                  <h3 className="font-display font-bold text-blue-200 text-sm md:text-lg leading-tight uppercase tracking-wide">
+                <div key={cat.id} className="bg-blue-950/50 border border-blue-900/50 rounded-xl p-1 md:p-2 flex items-center justify-center text-center">
+                  <h3 className="font-display font-bold text-blue-200 text-[10px] md:text-sm leading-tight uppercase tracking-wide break-words">
                     {cat.name}
                   </h3>
                 </div>
@@ -411,7 +414,7 @@ export default function App() {
                         onClick={() => handleQuestionClick(q)}
                         disabled={isAnswered}
                         className={`
-                          relative aspect-[4/3] rounded-xl flex items-center justify-center text-2xl md:text-4xl font-display font-bold transition-all duration-300
+                          relative aspect-[4/3] rounded-xl flex items-center justify-center text-xl md:text-3xl font-display font-bold transition-all duration-300
                           ${isAnswered 
                             ? 'bg-slate-900/30 border border-slate-800/50 text-slate-800 cursor-not-allowed' 
                             : 'bg-slate-800 border border-slate-700 text-yellow-400 hover:bg-blue-600 hover:border-blue-500 hover:text-white hover:scale-105 hover:shadow-[0_0_30px_-5px_rgba(37,99,235,0.4)] cursor-pointer'
