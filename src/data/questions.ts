@@ -62,6 +62,10 @@ export const gameCategories: Category[] = [
   {
     "id": "cat8",
     "name": "Gazdaság és modernizáció"
+  },
+  {
+    "id": "cat9",
+    "name": "Magyar történelem a 19. században"
   }
 ];
 
@@ -732,58 +736,58 @@ export const gameBoard: BoardCell[] = [
             {
                 "id": "q10",
                 "difficulty": "expert",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS a középkori céhek működésével kapcsolatban?",
+                "questionType": "comparison",
+                "question": "Miért tekinthető a középkori céhrendszer egyszerre a városi gazdaság stabilizáló és korlátozó tényezőjének?",
                 "options": [
-                    "A céhek ösztönözték a tagok közötti szabad versenyt és az árak letörését",
-                    "Szabályozták a termelés minőségét és mennyiségét",
-                    "Korlátozták a kontárok (céhen kívüliek) tevékenységét",
-                    "Gondoskodtak az elhunyt tagok özvegyeiről és árváiról"
+                    "Mert biztosította a minőséget és a tagok védelmét, ugyanakkor visszafogta a szabad versenyt és az újításokat is",
+                    "Mert teljesen megszüntette a városi önkormányzatokat, és minden gazdasági döntést a királyra bízott",
+                    "Mert kizárólag a nemzetközi kereskedelem fellendítésére törekedett, a helyi termelést nem szabályozta",
+                    "Mert a céhek fő feladata a földművelés megszervezése volt a városfalakon belül"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a céhek pont a verseny KIZÁRÁSÁRA törekedtek. Rögzítették az árakat, a béreket és a munkaidőt, hogy minden mester megélhessen."
+                "explanation": "A céhek egyszerre védték a mesterek érdekeit, biztosították az áru minőségét és a szociális biztonságot, ugyanakkor korlátozták a versenyt, a termelés bővítését és sok esetben az innovációt is."
             },
             {
                 "id": "q30",
                 "difficulty": "expert",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS a Hanza-szövetséggel kapcsolatban?",
+                "questionType": "comparison",
+                "question": "Mi különböztette meg leginkább a Hanza-szövetség szerepét a levantei kereskedelmet irányító itáliai városállamokétól?",
                 "options": [
-                    "A Földközi-tenger keleti medencéjének kereskedelmét uralta",
-                    "Észak-német és balti városok kereskedelmi érdekszövetsége volt",
-                    "Főként tömegcikkekkel (fa, prém, viasz, gabona) kereskedtek",
-                    "Saját hadiflottával rendelkezett a kalózok és riválisok ellen"
+                    "A Hanza a Balti- és Északi-tenger térségének tömegcikk-kereskedelmét szervezte, míg az itáliai városok inkább a Földközi-tenger luxuscikk-forgalmát uralták",
+                    "A Hanza kizárólag szárazföldi kereskedelmet folytatott, az itáliai városok pedig nem kereskedtek tengeren",
+                    "A Hanza csak politikai szövetség volt, míg Velence és Genova nem rendelkezett kereskedelmi hálózattal",
+                    "A Hanza főként nyugat-európai fűszerkereskedelemből élt, míg az itáliai városok a balti gabonaforgalmat ellenőrizték"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a Hanza-szövetség az Északi- és a Balti-tenger térségét uralta. A Földközi-tengeri (levantei) kereskedelmet Velence és Genova irányította."
+                "explanation": "A Hanza-szövetség főként az északi térség nyersanyag- és tömegcikk-kereskedelmét fogta össze, míg Velence és Genova a mediterrán és keleti luxuscikk-kereskedelemben volt meghatározó."
             },
             {
                 "id": "q35",
                 "difficulty": "expert",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS Szent István törvénykezésével kapcsolatban?",
+                "questionType": "cause_effect",
+                "question": "Miért volt döntő jelentőségű Szent István törvénykezése a magyar államszervezet megszilárdítása szempontjából?",
                 "options": [
-                    "A törvények megszüntették a magántulajdont, minden föld a királyé lett",
-                    "Kötelezővé tették a vasárnapi templomba járást",
-                    "Minden tíz falunak egy templomot kellett építenie",
-                    "Szigorúan büntették a lopást és a gyilkosságot"
+                    "Mert a keresztény normák, a magántulajdon védelme és a királyi rend fenntartása révén új társadalmi és politikai keretet adott az országnak",
+                    "Mert a törvények elsődleges célja a törzsi autonómiák megerősítése és a királyi hatalom korlátozása volt",
+                    "Mert megszüntette az egyház szerepét, és teljesen világi alapokra helyezte az államot",
+                    "Mert kizárólag külpolitikai kérdéseket szabályozott, a belső rendet nem érintette"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: István törvényei éppen hogy VÉDTÉK a magántulajdont, ezzel is elősegítve a feudális társadalmi rend megszilárdulását a régi közös törzsi tulajdonnal szemben."
+                "explanation": "István törvényei a keresztény államrend, a tulajdonbiztonság, az egyházszervezet és a királyi tekintély megerősítésével járultak hozzá az államalapítás tartósságához."
             },
             {
                 "id": "q40",
                 "difficulty": "expert",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS Mátyás kulturális és udvari életével kapcsolatban?",
+                "questionType": "comparison",
+                "question": "Miért tekinthető Mátyás udvarának kulturális politikája a közép-európai uralkodói reprezentáció tudatos átalakításának?",
                 "options": [
-                    "A Corvina könyvtár kizárólag magyar nyelvű kódexeket tartalmazott",
-                    "Udvarában megjelent a reneszánsz építészet és a humanista műveltség",
-                    "Felesége, Aragóniai Beatrix révén erős itáliai kulturális hatás érte az udvart",
-                    "Pozsonyban egyetemet alapított (Universitas Istropolitana)"
+                    "Mert a humanizmus és a reneszánsz eszközeivel nemcsak műveltséget, hanem uralkodói presztízst és nemzetközi rangot is épített",
+                    "Mert teljesen elutasította az itáliai hatásokat, és kizárólag a középkori magyar hagyományokra támaszkodott",
+                    "Mert kulturális politikája kizárólag egyházi reformokra korlátozódott, udvari reprezentáció nélkül",
+                    "Mert a Corvina könyvtár főként közigazgatási adónyilvántartások tárolására szolgált"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a Bibliotheca Corviniana kódexei túlnyomórészt latin, görög és arab nyelvűek voltak, a korabeli európai humanista tudományosság nyelvén íródtak."
+                "explanation": "Mátyás udvara a reneszánsz reprezentáció, a könyvkultúra és a humanista kapcsolatrendszer révén a király hatalmát és európai rangját is demonstrálta."
             },
             {
                 "id": "q65",
@@ -1900,16 +1904,16 @@ export const gameBoard: BoardCell[] = [
             },
             {
                 "difficulty": "expert",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS a felvilágosult abszolutizmus magyarországi gyakorlatával kapcsolatban?",
+                "questionType": "comparison",
+                "question": "Mi volt a felvilágosult abszolutizmus magyarországi reformjainak alapvető ellentmondása?",
                 "options": [
-                    "A reformok célja a magyar rendi alkotmány és a függetlenség teljes helyreállítása volt",
-                    "Az uralkodók (Mária Terézia, II. József) rendeletekkel, az országgyűlés megkerülésével kormányoztak",
-                    "A reformok felülről, az uralkodói hatalom megerősítése érdekében történtek",
-                    "Intézkedéseik (pl. jobbágyvédelem, oktatás) hozzájárultak az ország modernizációjához"
+                    "Modernizáló intézkedéseket vezettek be felülről, de mindezt a rendi önállóság és a politikai részvétel korlátozásával párosították",
+                    "A reformok elsődleges célja a teljes magyar politikai függetlenség megteremtése volt Bécstől",
+                    "A korszak uralkodói minden lényeges kérdésben az országgyűlés döntéseit követték",
+                    "A reformok kizárólag vallási ügyekre korlátozódtak, a közigazgatást és gazdaságot nem érintették"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a felvilágosult abszolutizmus célja a birodalom egységesítése és modernizálása volt, nem pedig a magyar rendi függetlenség erősítése.",
+                "explanation": "A felvilágosult abszolutizmus egyszerre jelentett modernizációt és központosító, a rendi autonómiát háttérbe szorító uralkodói politikát.",
                 "id": "q220"
             },
             {
@@ -2557,17 +2561,17 @@ export const gameBoard: BoardCell[] = [
                 "id": "q239"
             },
             {
-                "difficulty": "hard",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS a dualizmus kori Magyarország társadalmával kapcsolatban?",
+                "difficulty": "expert",
+                "questionType": "comparison",
+                "question": "Miért beszélhetünk a dualizmus kori Magyarország esetében 'torlódó társadalomról'?",
                 "options": [
-                    "A társadalom teljesen polgárosodott, a régi nemesi arisztokrácia elvesztette minden politikai és gazdasági befolyását",
-                    "Kialakult a 'torlódó társadalom', ahol a régi rendi és az új tőkés-polgári rétegek egymás mellett éltek",
-                    "A parasztság alkotta a társadalom legnépesebb rétegét",
-                    "Megjelent egy erősödő, de politikai jogokkal alig rendelkező ipari munkásság"
+                    "Mert a modern polgári-gazdasági elemek mellett tovább éltek a rendi eredetű társadalmi hierarchiák és nagybirtokosi pozíciók is",
+                    "Mert a társadalom teljesen egyneművé vált, és megszűnt minden rétegbeli különbség",
+                    "Mert a dualizmus korában kizárólag ipari munkások és gyárosok alkották a társadalmat",
+                    "Mert a polgárosodás teljesen felszámolta a történeti elit politikai szerepét"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a dualizmus korában a nagybirtokos arisztokrácia megőrizte vezető politikai és társadalmi szerepét, a polgárosodás felemás maradt.",
+                "explanation": "A dualizmus korában a kapitalista fejlődés mellett továbbra is erős maradt a történeti elit, a nagybirtok és a rendi eredetű presztízs.",
                 "id": "q240"
             }
         ]
@@ -3525,16 +3529,16 @@ export const gameBoard: BoardCell[] = [
             {
                 "id": "q95",
                 "difficulty": "expert",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS a trianoni békeszerződés katonai és politikai rendelkezéseivel kapcsolatban?",
+                "questionType": "cause_effect",
+                "question": "Miért volt a trianoni békeszerződés katonai korlátozása politikailag is súlyos következményű Magyarország számára?",
                 "options": [
-                    "A szerződés engedélyezte az általános hadkötelezettséget, de a hadsereg létszámát 100 ezer főben maximálta",
-                    "Magyarországnak jóvátételt kellett fizetnie a győzteseknek",
-                    "Megtiltották a modern fegyvernemek (légierő, páncélosok) tartását",
-                    "A béke elcsatolt területeket Ausztriának (Őrvidék/Burgenland) is juttatott"
+                    "Mert nemcsak a honvédelem lehetőségeit szűkítette le, hanem a revíziós törekvéseket is külső támogatástól függővé tette",
+                    "Mert lehetővé tette egy modern, tömeghadseregre épülő magyar katonai rendszer gyors kiépítését",
+                    "Mert a béke a hadsereg megerősítésével kívánta biztosítani a belpolitikai stabilitást",
+                    "Mert katonai téren kedvezőbb helyzetet teremtett, mint a Monarchia idején"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a békeszerződés MEGTILTOTTA az általános hadkötelezettséget. Csak zsoldoshadsereget engedélyezett, és annak létszámát szigorúan 35 ezer főben maximálta."
+                "explanation": "A hadsereg létszámának és fegyverzetének korlátozása nemcsak katonai, hanem diplomáciai értelemben is kiszolgáltatottá tette Magyarországot."
             },
             {
                 "difficulty": "expert",
@@ -4279,17 +4283,17 @@ export const gameBoard: BoardCell[] = [
                 "id": "q292"
             },
             {
-                "difficulty": "hard",
-                "questionType": "faulty_statement",
-                "question": "Melyik állítás HIBÁS a magyarországi rendszerváltás (1989-1990) közjogi folyamatával kapcsolatban?",
+                "difficulty": "expert",
+                "questionType": "cause_effect",
+                "question": "Miért volt jelentős a magyar rendszerváltás közjogi szempontból abban a formában, ahogyan végbement?",
                 "options": [
-                    "Az 1989. október 23-án kikiáltott harmadik Köztársaság egy teljesen új, a nulláról megírt alkotmányt fogadott el",
-                    "A békés átmenet jogi alapját az 1949-es (sztálini) alkotmány radikális módosítása adta",
-                    "Létrejött az Alkotmánybíróság a jogállamiság őreként",
-                    "Bevezették a többpártrendszert és a szabad választásokat"
+                    "Mert a jogfolytonosság látszatát fenntartva, alkotmánymódosításokkal építették ki a demokratikus jogállamot, elkerülve a forradalmi jogi vákuumot",
+                    "Mert teljesen félretették a jogi kereteket, és kizárólag utcai erővel döntötték meg a rendszert",
+                    "Mert az új államrend alapját a katonai szükségállapot és a rendkívüli kormányzás adta",
+                    "Mert a kommunista alkotmány minden változtatás nélkül, automatikusan demokratikussá vált"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a közjogi folytonosság fenntartása érdekében nem írtak új alkotmányt, hanem az 1949. évi XX. törvényt módosították olyan mértékben, hogy az egy demokratikus jogállam alapja lett.",
+                "explanation": "A magyar átmenet egyik sajátossága az volt, hogy a régi alkotmány radikális módosításával, de jogi keretek között hozták létre az új demokratikus rendszert.",
                 "id": "q293"
             },
             {
@@ -4715,16 +4719,16 @@ export const gameBoard: BoardCell[] = [
             {
                 "id": "kozepkor-muvelodese-500-01",
                 "topic": "A középkor művelődése. Román, gótikus és reneszánsz stílus",
-                "questionType": "cause_effect",
+                "questionType": "comparison",
                 "difficulty": "expert",
-                "question": "Miért tekinthető a középkori egyetemek megjelenése történelmi fordulópontnak a művelődés szempontjából?",
+                "question": "Miért tekinthető a középkori művelődés és a reneszánsz kapcsolata inkább átalakulásnak, mint teljes törésnek?",
                 "options": [
-                    "Mert megszüntette az írásbeliséget Európában",
-                    "Mert intézményesebb, szervezettebb keretet adott a tudás átadásának",
-                    "Mert kizárólag katonai kiképzőhelyekként működtek",
-                    "Mert teljesen függetlenek voltak minden vallási és társadalmi hatástól"
+                    "Mert a reneszánsz a középkori intézmények teljes megsemmisítésével jött létre",
+                    "Mert a reneszánsz új emberképet és antik mintákat hozott, de sok középkori intézményre és tudásformára is épített",
+                    "Mert a középkor és a reneszánsz között semmilyen szellemi kapcsolat nem mutatható ki",
+                    "Mert a reneszánsz kizárólag építészeti stílusváltást jelentett, művelődéstörténeti tartalom nélkül"
                 ],
-                "explanation": "Az egyetemek megjelenése a tudás átadását és termelődését új, intézményes keretbe helyezte.",
+                "explanation": "A reneszánsz új szemléletet hozott, de nem a semmiből jött létre: az egyetemek, a latin műveltség és a kéziratos hagyományok részben középkori alapokon álltak.",
                 "skillFocus": "következtetés",
                 "oralExamLink": "Az egyetemek történelmi jelentősége",
                 "isActive": true,
@@ -4960,16 +4964,16 @@ export const gameBoard: BoardCell[] = [
             {
                 "id": "eszmek-19sz-500-01",
                 "topic": "A 19. század első felének uralkodó eszméi",
-                "questionType": "cause_effect",
+                "questionType": "comparison",
                 "difficulty": "expert",
-                "question": "Miért tekinthető a 19. század első felének eszmetörténete a modern Európa politikai alapjainak egyik kiindulópontjának?",
+                "question": "Miért váltak a 19. század első felének uralkodó eszméi egyszerre a polgári átalakulás és a politikai konfliktusok forrásává is?",
                 "options": [
-                    "Mert ezek az eszmék semmilyen hatást nem gyakoroltak a politikára",
-                    "Mert a szabadság, nemzet és állam kérdéseit új módon fogalmazták meg",
-                    "Mert kizárólag középkori teológiai viták folytatódtak",
-                    "Mert megszüntették a politikai részvétel minden formáját"
+                    "Mert a liberalizmus, a konzervativizmus és a nacionalizmus minden kérdésben könnyen összeegyeztethető volt",
+                    "Mert az új eszmék a szabadság, nemzet és állam kérdését új módon vetették fel, de egymással is ütközhettek",
+                    "Mert a korszak társadalmai teljesen közömbösek maradtak az eszmei vitákkal szemben",
+                    "Mert ezek az eszmék kizárólag filozófiai körökben léteztek, politikai hatás nélkül"
                 ],
-                "explanation": "A korszak eszméi hosszú távon meghatározták a modern politikai gondolkodást.",
+                "explanation": "Az új eszmék egyszerre segítették a modern politikai rendszerek kialakulását, ugyanakkor új konfliktusokat is teremtettek például nemzeti és alkotmányos kérdésekben.",
                 "skillFocus": "következtetés",
                 "oralExamLink": "A korszak eszméinek történelmi jelentősége",
                 "isActive": true,
@@ -5205,23 +5209,23 @@ export const gameBoard: BoardCell[] = [
             {
                 "id": "ipari-forradalom-500-01",
                 "topic": "Ipari forradalom",
-                "questionType": "cause_effect",
+                "questionType": "comparison",
                 "difficulty": "expert",
-                "question": "Miért tekinthető az ipari forradalom nemcsak gazdasági, hanem társadalmi fordulópontnak is?",
+                "question": "Miért tekinthető az ipari forradalom a modern társadalom egyik alapvető kiindulópontjának, nem pusztán technikai fejlődési szakasznak?",
                 "options": [
-                    "Mert a termelés változásai nem érintették az emberek életmódját",
-                    "Mert a gazdasági átalakulás együtt járt a városiasodással, új társadalmi rétegek megjelenésével és az életmód változásával",
-                    "Mert az ipari forradalom csak a mezőgazdaságban fejtett ki hatást",
-                    "Mert kizárólag a politikai intézményeket alakította át"
+                    "Mert a technikai újítások mellett átalakította a településszerkezetet, a munkaviszonyokat, a társadalmi rétegeket és a mindennapi életet is",
+                    "Mert kizárólag a bányászat gépesítését jelentette, más területre nem hatott",
+                    "Mert úgy növelte a termelést, hogy közben nem változott a társadalom szerkezete",
+                    "Mert csak Anglia belső fejlődésére volt hatással, Európára és a világra nem"
                 ],
-                "explanation": "Az ipari forradalom átalakította a társadalmat, a településszerkezetet és a mindennapi életet is.",
+                "explanation": "Az ipari forradalom komplex folyamat volt: a technika mellett a társadalom, a városok, a munkakultúra és a gazdasági kapcsolatok szerkezete is átalakult.",
                 "skillFocus": "következtetés",
                 "oralExamLink": "Az ipari forradalom társadalmi jelentősége",
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 0
             },
             {
                 "id": "ipari-forradalom-500-02",
@@ -5245,6 +5249,491 @@ export const gameBoard: BoardCell[] = [
                 "correctAnswerIndex": 1
             }
         ]
+    },
+    {
+        "categoryId": "cat9",
+        "points": 100,
+        "questions": [
+            {
+                "id": "reformkor-100-01",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik időszakot nevezzük reformkornak a magyar történelemben?",
+                "options": [
+                    "1703–1711",
+                    "1825–1848",
+                    "1849–1867",
+                    "1867–1914"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A reformkor hagyományos időhatára 1825-től 1848-ig tart."
+            },
+            {
+                "id": "reformkor-100-02",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Ki ajánlotta fel birtokainak egyévi jövedelmét a Magyar Tudós Társaság létrehozására?",
+                "options": [
+                    "Kossuth Lajos",
+                    "Deák Ferenc",
+                    "Széchenyi István",
+                    "Wesselényi Miklós"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Széchenyi István 1825-ben tett felajánlása jelképes reformkori kezdőpont."
+            },
+            {
+                "id": "szabadsagharc-100-01",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik napon tört ki a pesti forradalom 1848-ban?",
+                "options": [
+                    "Március 13.",
+                    "Március 15.",
+                    "Április 11.",
+                    "Október 6."
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A pesti forradalom 1848. március 15-én zajlott le."
+            },
+            {
+                "id": "szabadsagharc-100-02",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik dokumentum foglalta össze a márciusi ifjak követeléseit?",
+                "options": [
+                    "A Pragmatica Sanctio",
+                    "A 12 pont",
+                    "Az Aranybulla",
+                    "A Hitlevél"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A 12 pont a márciusi forradalom politikai követeléseit foglalta össze."
+            },
+            {
+                "id": "dualizmus-100-01",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik évben jött létre a kiegyezés?",
+                "options": [
+                    "1848",
+                    "1849",
+                    "1867",
+                    "1873"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "A kiegyezés 1867-ben jött létre a Habsburg uralkodó és a magyar politikai elit megegyezéseként."
+            },
+            {
+                "id": "dualizmus-100-02",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Ki volt a kiegyezéshez kapcsolódó magyar politikusok egyik legfontosabb alakja?",
+                "options": [
+                    "Deák Ferenc",
+                    "Görgei Artúr",
+                    "Táncsics Mihály",
+                    "Bocskai István"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "Deák Ferenc kulcsszerepet játszott a kiegyezés politikai előkészítésében."
+            }
+        ],
+        "categoryName": "Magyar történelem a 19. században"
+    },
+    {
+        "categoryId": "cat9",
+        "points": 200,
+        "questions": [
+            {
+                "id": "reformkor-200-01",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik reformkori kérdés kapcsolódott a jobbágyrendszer felszámolásához?",
+                "options": [
+                    "Örökváltság",
+                    "Szent Szövetség",
+                    "Perszonálunió",
+                    "Pátens"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "Az örökváltság a jobbágyfelszabadítás egyik kulcsfogalma volt."
+            },
+            {
+                "id": "reformkor-200-02",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik reformkori politikushoz kapcsoljuk leginkább a 'Hitel' című művet?",
+                "options": [
+                    "Batthyány Lajos",
+                    "Kossuth Lajos",
+                    "Széchenyi István",
+                    "Eötvös József"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "A 'Hitel' Széchenyi programadó műve volt a gazdasági és társadalmi reformokról."
+            },
+            {
+                "id": "szabadsagharc-200-01",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Ki lett Magyarország első felelős miniszterelnöke 1848-ban?",
+                "options": [
+                    "Kossuth Lajos",
+                    "Deák Ferenc",
+                    "Batthyány Lajos",
+                    "Görgei Artúr"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Az első felelős magyar kormány miniszterelnöke Batthyány Lajos lett."
+            },
+            {
+                "id": "szabadsagharc-200-02",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik törvénycsomag rögzítette a polgári átalakulás alapjait 1848-ban?",
+                "options": [
+                    "Úrbéri rendelet",
+                    "Áprilisi törvények",
+                    "Bach-rendszer rendeletei",
+                    "Vallásügyi türelmi rendelet"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Az áprilisi törvények a polgári átalakulás legfontosabb jogi alapjait teremtették meg."
+            },
+            {
+                "id": "dualizmus-200-01",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Mit jelentett a dualizmus kifejezés az Osztrák–Magyar Monarchia esetében?",
+                "options": [
+                    "Két teljesen független köztársaság szövetségét",
+                    "Két központtal működő államszerkezetet közös uralkodóval és néhány közös üggyel",
+                    "A magyar állam teljes alárendelését Bécsnek minden kérdésben",
+                    "A nemzetiségek önálló államait a Monarchián belül"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A dualizmus két államrészre épült, közös uralkodóval és közös ügyekkel."
+            },
+            {
+                "id": "dualizmus-200-02",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "multiple_choice",
+                "difficulty": "easy",
+                "question": "Melyik ügy tartozott a közös ügyek közé a dualizmus rendszerében?",
+                "options": [
+                    "A helyi vármegyei igazgatás",
+                    "A közoktatás minden részlete",
+                    "A hadügy",
+                    "A mezőgazdasági termelés közvetlen irányítása"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "A hadügy, a külügy és az ezek fedezéséhez szükséges pénzügy közös ügynek számított."
+            }
+        ],
+        "categoryName": "Magyar történelem a 19. században"
+    },
+    {
+        "categoryId": "cat9",
+        "points": 300,
+        "questions": [
+            {
+                "id": "reformkor-300-01",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "cause_effect",
+                "difficulty": "medium",
+                "question": "Miért vált a reformkorban központi kérdéssé a közteherviselés ügye?",
+                "options": [
+                    "Mert a nemesség teljes adómentessége egyre inkább akadályozta az igazságosabb és modernebb állami működést",
+                    "Mert a jobbágyok adómentességet követeltek a nemességgel együtt",
+                    "Mert a korszakban nem léteztek állami kiadások",
+                    "Mert a közteherviselés kizárólag külpolitikai kérdés volt"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A közteherviselés a rendi kiváltságok lebontásának és a polgári átalakulásnak fontos eleme volt."
+            },
+            {
+                "id": "reformkor-300-02",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "multiple_choice",
+                "difficulty": "medium",
+                "question": "Melyik állítás írja le legjobban Kossuth reformkori politikáját?",
+                "options": [
+                    "A gazdasági és politikai reformokat erőteljesebb nemzeti érdekvédelemmel kapcsolta össze",
+                    "Teljesen elutasította az ipar fejlesztését",
+                    "A rendi kiváltságokat változatlanul meg akarta őrizni",
+                    "Minden kérdésben a bécsi kormányzat teljes programját támogatta"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "Kossuth programja a reformokat és a nemzeti önállóság erősebb hangsúlyozását kapcsolta össze."
+            },
+            {
+                "id": "szabadsagharc-300-01",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "cause_effect",
+                "difficulty": "medium",
+                "question": "Miért alakult át a forradalom szabadságharccá 1848 őszére?",
+                "options": [
+                    "Mert a bécsi udvar elfogadta minden magyar követelést",
+                    "Mert a politikai konfliktus fegyveres összeütközéssé vált a magyar kormány és a Habsburg udvar között",
+                    "Mert Magyarország lemondott minden önálló intézkedésről",
+                    "Mert a nemzetiségi és birodalmi kérdések teljesen megoldódtak"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Az udvar és a magyar kormányzat közötti konfliktus 1848 őszére fegyveres harccá mélyült."
+            },
+            {
+                "id": "szabadsagharc-300-02",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "multiple_choice",
+                "difficulty": "medium",
+                "question": "Melyik állítás írja le legjobban Kossuth szerepét a szabadságharc idején?",
+                "options": [
+                    "Csak katonai vezetőként vett részt az eseményekben",
+                    "A politikai mozgósítás és az önvédelmi harc egyik legfontosabb irányító alakja volt",
+                    "Az osztrák udvar hivatalos képviselője volt Magyarországon",
+                    "A szabadságharc teljes idején háttérbe húzódott"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Kossuth meghatározó szerepet játszott a politikai vezetésben és a nemzeti ellenállás megszervezésében."
+            },
+            {
+                "id": "dualizmus-300-01",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "cause_effect",
+                "difficulty": "medium",
+                "question": "Miért fogadta el a magyar politikai elit jelentős része a kiegyezést 1867-ben?",
+                "options": [
+                    "Mert úgy látta, hogy a birodalmon belül így lehet a legreálisabban visszaszerezni az alkotmányos önállóság jelentős részét",
+                    "Mert a magyar politikusok teljesen lemondtak minden önálló állami intézményről",
+                    "Mert a szabadságharc minden célja maradéktalanul, kompromisszum nélkül teljesült",
+                    "Mert a kiegyezés megszüntette a Habsburg-ház uralmát"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A kiegyezés kompromisszum volt: nem teljes függetlenséget, hanem jelentős belső önállóságot adott."
+            },
+            {
+                "id": "dualizmus-300-02",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "multiple_choice",
+                "difficulty": "medium",
+                "question": "Melyik állítás írja le legjobban a dualizmus kori Magyarország fejlődését?",
+                "options": [
+                    "A korszak teljes gazdasági stagnálást hozott",
+                    "Jelentős gazdasági és infrastrukturális fejlődés zajlott, miközben politikai és nemzetiségi problémák is fennmaradtak",
+                    "A korszakban megszűnt minden társadalmi és politikai feszültség",
+                    "A dualizmus kizárólag katonai rendszer volt, gazdasági hatások nélkül"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A dualizmus egyszerre jelentett modernizációt és megoldatlan politikai feszültségeket."
+            }
+        ],
+        "categoryName": "Magyar történelem a 19. században"
+    },
+    {
+        "categoryId": "cat9",
+        "points": 400,
+        "questions": [
+            {
+                "id": "reformkor-400-01",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "comparison",
+                "difficulty": "hard",
+                "question": "Mi volt a legfontosabb különbség Széchenyi és Kossuth reformkori politikai felfogása között?",
+                "options": [
+                    "Széchenyi fokozatosabb, felülről is támogatható reformokat képzelt el, Kossuth pedig szélesebb társadalmi mozgósításra és határozottabb politikai fellépésre támaszkodott",
+                    "Kossuth teljesen elutasította a reformokat, Széchenyi pedig forradalmat akart",
+                    "Széchenyi a magyar nyelv ellen, Kossuth a latin nyelv mellett érvelt",
+                    "A két politikus között nem volt lényeges különbség"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A két reformpolitikus céljai részben hasonlóak voltak, de módszereik és politikai hangsúlyaik eltértek."
+            },
+            {
+                "id": "reformkor-400-02",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "faulty_statement",
+                "difficulty": "hard",
+                "question": "Melyik állítás hibás a reformkorral kapcsolatban?",
+                "options": [
+                    "A reformkor egyik célja a rendi viszonyok meghaladása volt",
+                    "A gazdasági modernizáció és a polgári átalakulás összekapcsolódott",
+                    "A reformkorban teljes politikai mozdulatlanság uralkodott, érdemi vita nélkül",
+                    "A nemzeti kérdés és a nyelvkérdés is fontos szerepet játszott"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Ez hibás, mert a reformkor élénk politikai és társadalmi viták időszaka volt."
+            },
+            {
+                "id": "szabadsagharc-400-01",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "comparison",
+                "difficulty": "hard",
+                "question": "Mi volt a legfontosabb különbség az 1848 tavaszi forradalmi szakasz és az 1849-es szabadságharc helyzete között?",
+                "options": [
+                    "1848 tavaszán főként politikai-jogi átalakulás zajlott, míg 1849-re a függetlenségi küzdelem katonai és állami létkérdéssé vált",
+                    "1848-ban nem voltak politikai követelések, 1849-ben sem voltak katonai események",
+                    "1849-ben Magyarország teljesen visszatért a rendi állapotokhoz",
+                    "A két szakasz között nem volt lényeges különbség"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A forradalom kezdeti politikai eredményei később fegyveres önvédelmi és függetlenségi harccá alakultak."
+            },
+            {
+                "id": "szabadsagharc-400-02",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "faulty_statement",
+                "difficulty": "hard",
+                "question": "Melyik állítás hibás az 1848–49-es eseményekkel kapcsolatban?",
+                "options": [
+                    "Az áprilisi törvények fontos polgári átalakulást rögzítettek",
+                    "A szabadságharc leverésében az orosz beavatkozás is szerepet játszott",
+                    "A szabadságharc idején Magyarország és a bécsi udvar között végig teljes együttműködés volt",
+                    "A forradalom és szabadságharc a modern magyar nemzet történetének egyik kulcseseménye"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Ez hibás, mert a konfliktus fegyveres összecsapássá alakult a magyar fél és a Habsburg hatalom között."
+            },
+            {
+                "id": "dualizmus-400-01",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "comparison",
+                "difficulty": "hard",
+                "question": "Mi volt a legfontosabb különbség az 1848-as függetlenségi törekvések és az 1867-es kiegyezés politikai logikája között?",
+                "options": [
+                    "1848 a teljesebb nemzeti önrendelkezés felé törekedett, míg 1867 kompromisszumos együttélési keretet keresett a Habsburg Birodalmon belül",
+                    "1848-ban nem volt szó alkotmányosságról, 1867-ben sem",
+                    "Az 1848-as program teljesen a birodalmi központosítást támogatta",
+                    "A két politikai célrendszer teljesen azonos volt"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A két korszak között fontos különbség volt a cél és a realitásérzék alapján választott politikai megoldás."
+            },
+            {
+                "id": "dualizmus-400-02",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "faulty_statement",
+                "difficulty": "hard",
+                "question": "Melyik állítás hibás a dualizmus rendszerével kapcsolatban?",
+                "options": [
+                    "A Monarchiának közös uralkodója volt",
+                    "A hadügy és a külügy közös ügynek számított",
+                    "A dualizmus minden nemzetiségi kérdést tartósan és teljesen megoldott",
+                    "Magyarország belső kormányzata jelentős önállósággal működött"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Ez hibás, mert a nemzetiségi kérdés a dualizmus egész időszakában komoly feszültségforrás maradt."
+            }
+        ],
+        "categoryName": "Magyar történelem a 19. században"
+    },
+    {
+        "categoryId": "cat9",
+        "points": 500,
+        "questions": [
+            {
+                "id": "reformkor-500-01",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "comparison",
+                "difficulty": "expert",
+                "question": "Miért tekinthető a reformkor egyszerre társadalmi modernizációs és nemzetépítő folyamatnak?",
+                "options": [
+                    "Mert kizárólag gazdasági technikai fejlesztésekről szólt, politikai és nemzeti tartalom nélkül",
+                    "Mert a rendi viszonyok lebontását, a polgári átalakulást és a magyar nemzeti önállóság erősítését párhuzamosan próbálta előmozdítani",
+                    "Mert a reformkor elsődleges célja a középkori viszonyok teljes visszaállítása volt",
+                    "Mert a korszakban a társadalmi reformok és a nemzeti kérdés teljesen függetlenek voltak egymástól"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A reformkor jelentősége éppen abban áll, hogy a társadalmi-gazdasági modernizáció és a nemzeti program összekapcsolódott."
+            },
+            {
+                "id": "reformkor-500-02",
+                "topic": "Reformkor Magyarországon",
+                "questionType": "cause_effect",
+                "difficulty": "expert",
+                "question": "Miért volt a reformkor legnagyobb politikai kérdése az, hogy miként lehet átalakítani az országot a Habsburg Birodalmon belüli helyzet megtartása vagy módosítása mellett?",
+                "options": [
+                    "Mert a magyar reformpolitika egyszerre akart belső modernizációt és nagyobb önállóságot, ami szükségszerűen érintette a birodalmi keretek kérdését",
+                    "Mert a korszakban senki sem foglalkozott a birodalmi viszonyokkal",
+                    "Mert a reformkor célja kizárólag az volt, hogy Magyarország teljesen lemondjon minden önálló intézményéről",
+                    "Mert a Habsburg Birodalom és a magyar politikai elit között minden kérdésben teljes egyetértés volt"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A reformkor kulcskérdése a modernizáció és az állami önállóság viszonyának kezelése volt."
+            },
+            {
+                "id": "szabadsagharc-500-01",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "comparison",
+                "difficulty": "expert",
+                "question": "Miért tekinthető az 1848–49-es forradalom és szabadságharc egyszerre polgári átalakulásnak és nemzeti függetlenségi küzdelemnek?",
+                "options": [
+                    "Mert kizárólag társadalmi reformokról szólt, állami kérdések nélkül",
+                    "Mert egyszerre akarta felszámolni a rendi viszonyok jelentős részét és biztosítani a magyar politikai önrendelkezést",
+                    "Mert csupán katonai eseménysor volt, jogi és társadalmi tartalom nélkül",
+                    "Mert a korszakban a nemzeti és társadalmi kérdések teljesen elváltak egymástól"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "A korszak jelentősége abban áll, hogy a polgári reformok és a nemzeti önállóság programja összekapcsolódott."
+            },
+            {
+                "id": "szabadsagharc-500-02",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "questionType": "cause_effect",
+                "difficulty": "expert",
+                "question": "Miért volt döntő jelentőségű a szabadságharc sorsa szempontjából az, hogy a Habsburg Birodalom külső segítséget is igénybe vett annak leverésére?",
+                "options": [
+                    "Mert ez azt jelezte, hogy a konfliktus már nem pusztán belső alkotmányos vita volt, hanem nemzetközi súlyú hatalmi kérdéssé vált",
+                    "Mert a külső segítség valójában a magyar függetlenség biztosítását szolgálta",
+                    "Mert az orosz beavatkozás kizárólag gazdasági támogatást jelentett, katonai következmények nélkül",
+                    "Mert a magyar fél is ugyanakkora külső katonai támogatással rendelkezett"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "Az orosz beavatkozás megmutatta, hogy a szabadságharc leverése a birodalmi rend és az európai hatalmi egyensúly kérdésévé is vált."
+            },
+            {
+                "id": "dualizmus-500-01",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "comparison",
+                "difficulty": "expert",
+                "question": "Miért tekinthető a kiegyezés egyszerre sikeres politikai kompromisszumnak és hosszú távon vitatható megoldásnak?",
+                "options": [
+                    "Mert jelentős alkotmányos mozgásteret és fejlődési lehetőséget adott Magyarországnak, ugyanakkor több alapvető kérdést, köztük a nemzetiségi és teljes szuverenitási problémákat nyitva hagyta",
+                    "Mert a kiegyezés semmilyen gyakorlati változást nem hozott Magyarország helyzetében",
+                    "Mert a kiegyezés azonnal megszüntette a Monarchia egész államszerkezetét",
+                    "Mert a rendszer kizárólag rövid távú katonai szerződés volt politikai tartalom nélkül"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A kiegyezés történelmi megítélése éppen azért összetett, mert egyszerre hozott stabilizációt és hagyott fenn tartós feszültségeket."
+            },
+            {
+                "id": "dualizmus-500-02",
+                "topic": "Kiegyezés és a dualizmus rendszere",
+                "questionType": "cause_effect",
+                "difficulty": "expert",
+                "question": "Miért vált a dualizmus kori gazdasági fejlődés ellenére is sérülékennyé a Monarchia és benne Magyarország politikai rendszere a 20. század elejére?",
+                "options": [
+                    "Mert a modernizáció önmagában nem oldotta meg a nemzetiségi, társadalmi és birodalmi hatalommegosztási feszültségeket",
+                    "Mert a dualizmus korában semmilyen gazdasági fejlődés nem zajlott",
+                    "Mert a Monarchia politikai rendszerét kizárólag külföldi államok irányították közvetlenül",
+                    "Mert a korszakban megszűnt minden társadalmi és nemzeti konfliktus, így nem volt belső feszültség"
+                ],
+                "correctAnswerIndex": 0,
+                "explanation": "A gazdasági fejlődés nem szüntette meg azokat a szerkezeti problémákat, amelyek később a rendszer megrendüléséhez vezettek."
+            }
+        ],
+        "categoryName": "Magyar történelem a 19. században"
     }
 ];
 

@@ -1,0 +1,159 @@
+[
+  {
+    "id": "q10",
+    "difficulty": "expert",
+    "questionType": "comparison",
+    "question": "Miért tekinthető a középkori céhrendszer egyszerre a városi gazdaság stabilizáló és korlátozó tényezőjének?",
+    "options": [
+      "Mert biztosította a minőséget és a tagok védelmét, ugyanakkor visszafogta a szabad versenyt és az újításokat is",
+      "Mert teljesen megszüntette a városi önkormányzatokat, és minden gazdasági döntést a királyra bízott",
+      "Mert kizárólag a nemzetközi kereskedelem fellendítésére törekedett, a helyi termelést nem szabályozta",
+      "Mert a céhek fő feladata a földművelés megszervezése volt a városfalakon belül"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A céhek egyszerre védték a mesterek érdekeit, biztosították az áru minőségét és a szociális biztonságot, ugyanakkor korlátozták a versenyt, a termelés bővítését és sok esetben az innovációt is."
+  },
+  {
+    "id": "q30",
+    "difficulty": "expert",
+    "questionType": "comparison",
+    "question": "Mi különböztette meg leginkább a Hanza-szövetség szerepét a levantei kereskedelmet irányító itáliai városállamokétól?",
+    "options": [
+      "A Hanza a Balti- és Északi-tenger térségének tömegcikk-kereskedelmét szervezte, míg az itáliai városok inkább a Földközi-tenger luxuscikk-forgalmát uralták",
+      "A Hanza kizárólag szárazföldi kereskedelmet folytatott, az itáliai városok pedig nem kereskedtek tengeren",
+      "A Hanza csak politikai szövetség volt, míg Velence és Genova nem rendelkezett kereskedelmi hálózattal",
+      "A Hanza főként nyugat-európai fűszerkereskedelemből élt, míg az itáliai városok a balti gabonaforgalmat ellenőrizték"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A Hanza-szövetség főként az északi térség nyersanyag- és tömegcikk-kereskedelmét fogta össze, míg Velence és Genova a mediterrán és keleti luxuscikk-kereskedelemben volt meghatározó."
+  },
+  {
+    "id": "q35",
+    "difficulty": "expert",
+    "questionType": "cause_effect",
+    "question": "Miért volt döntő jelentőségű Szent István törvénykezése a magyar államszervezet megszilárdítása szempontjából?",
+    "options": [
+      "Mert a keresztény normák, a magántulajdon védelme és a királyi rend fenntartása révén új társadalmi és politikai keretet adott az országnak",
+      "Mert a törvények elsődleges célja a törzsi autonómiák megerősítése és a királyi hatalom korlátozása volt",
+      "Mert megszüntette az egyház szerepét, és teljesen világi alapokra helyezte az államot",
+      "Mert kizárólag külpolitikai kérdéseket szabályozott, a belső rendet nem érintette"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "István törvényei a keresztény államrend, a tulajdonbiztonság, az egyházszervezet és a királyi tekintély megerősítésével járultak hozzá az államalapítás tartósságához."
+  },
+  {
+    "id": "q40",
+    "difficulty": "expert",
+    "questionType": "comparison",
+    "question": "Miért tekinthető Mátyás udvarának kulturális politikája a közép-európai uralkodói reprezentáció tudatos átalakításának?",
+    "options": [
+      "Mert a humanizmus és a reneszánsz eszközeivel nemcsak műveltséget, hanem uralkodói presztízst és nemzetközi rangot is épített",
+      "Mert teljesen elutasította az itáliai hatásokat, és kizárólag a középkori magyar hagyományokra támaszkodott",
+      "Mert kulturális politikája kizárólag egyházi reformokra korlátozódott, udvari reprezentáció nélkül",
+      "Mert a Corvina könyvtár főként közigazgatási adónyilvántartások tárolására szolgált"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "Mátyás udvara a reneszánsz reprezentáció, a könyvkultúra és a humanista kapcsolatrendszer révén a király hatalmát és európai rangját is demonstrálta."
+  },
+  {
+    "id": "q95",
+    "difficulty": "expert",
+    "questionType": "cause_effect",
+    "question": "Miért volt a trianoni békeszerződés katonai korlátozása politikailag is súlyos következményű Magyarország számára?",
+    "options": [
+      "Mert nemcsak a honvédelem lehetőségeit szűkítette le, hanem a revíziós törekvéseket is külső támogatástól függővé tette",
+      "Mert lehetővé tette egy modern, tömeghadseregre épülő magyar katonai rendszer gyors kiépítését",
+      "Mert a béke a hadsereg megerősítésével kívánta biztosítani a belpolitikai stabilitást",
+      "Mert katonai téren kedvezőbb helyzetet teremtett, mint a Monarchia idején"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A hadsereg létszámának és fegyverzetének korlátozása nemcsak katonai, hanem diplomáciai értelemben is kiszolgáltatottá tette Magyarországot."
+  },
+  {
+    "id": "q220",
+    "difficulty": "expert",
+    "questionType": "comparison",
+    "question": "Mi volt a felvilágosult abszolutizmus magyarországi reformjainak alapvető ellentmondása?",
+    "options": [
+      "Modernizáló intézkedéseket vezettek be felülről, de mindezt a rendi önállóság és a politikai részvétel korlátozásával párosították",
+      "A reformok elsődleges célja a teljes magyar politikai függetlenség megteremtése volt Bécstől",
+      "A korszak uralkodói minden lényeges kérdésben az országgyűlés döntéseit követték",
+      "A reformok kizárólag vallási ügyekre korlátozódtak, a közigazgatást és gazdaságot nem érintették"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A felvilágosult abszolutizmus egyszerre jelentett modernizációt és központosító, a rendi autonómiát háttérbe szorító uralkodói politikát."
+  },
+  {
+    "id": "q240",
+    "difficulty": "expert",
+    "questionType": "comparison",
+    "question": "Miért beszélhetünk a dualizmus kori Magyarország esetében 'torlódó társadalomról'?",
+    "options": [
+      "Mert a modern polgári-gazdasági elemek mellett tovább éltek a rendi eredetű társadalmi hierarchiák és nagybirtokosi pozíciók is",
+      "Mert a társadalom teljesen egyneművé vált, és megszűnt minden rétegbeli különbség",
+      "Mert a dualizmus korában kizárólag ipari munkások és gyárosok alkották a társadalmat",
+      "Mert a polgárosodás teljesen felszámolta a történeti elit politikai szerepét"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A dualizmus korában a kapitalista fejlődés mellett továbbra is erős maradt a történeti elit, a nagybirtok és a rendi eredetű presztízs."
+  },
+  {
+    "id": "q293",
+    "difficulty": "expert",
+    "questionType": "cause_effect",
+    "question": "Miért volt jelentős a magyar rendszerváltás közjogi szempontból abban a formában, ahogyan végbement?",
+    "options": [
+      "Mert a jogfolytonosság látszatát fenntartva, alkotmánymódosításokkal építették ki a demokratikus jogállamot, elkerülve a forradalmi jogi vákuumot",
+      "Mert teljesen félretették a jogi kereteket, és kizárólag utcai erővel döntötték meg a rendszert",
+      "Mert az új államrend alapját a katonai szükségállapot és a rendkívüli kormányzás adta",
+      "Mert a kommunista alkotmány minden változtatás nélkül, automatikusan demokratikussá vált"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A magyar átmenet egyik sajátossága az volt, hogy a régi alkotmány radikális módosításával, de jogi keretek között hozták létre az új demokratikus rendszert."
+  },
+  {
+    "id": "kozepkor-muvelodese-500-01",
+    "topic": "A középkor művelődése. Román, gótikus és reneszánsz stílus",
+    "questionType": "comparison",
+    "difficulty": "expert",
+    "question": "Miért tekinthető a középkori művelődés és a reneszánsz kapcsolata inkább átalakulásnak, mint teljes törésnek?",
+    "options": [
+      "Mert a reneszánsz a középkori intézmények teljes megsemmisítésével jött létre",
+      "Mert a reneszánsz új emberképet és antik mintákat hozott, de sok középkori intézményre és tudásformára is épített",
+      "Mert a középkor és a reneszánsz között semmilyen szellemi kapcsolat nem mutatható ki",
+      "Mert a reneszánsz kizárólag építészeti stílusváltást jelentett, művelődéstörténeti tartalom nélkül"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": "A reneszánsz új szemléletet hozott, de nem a semmiből jött létre: az egyetemek, a latin műveltség és a kéziratos hagyományok részben középkori alapokon álltak."
+  },
+  {
+    "id": "eszmek-19sz-500-01",
+    "topic": "A 19. század első felének uralkodó eszméi",
+    "questionType": "comparison",
+    "difficulty": "expert",
+    "question": "Miért váltak a 19. század első felének uralkodó eszméi egyszerre a polgári átalakulás és a politikai konfliktusok forrásává is?",
+    "options": [
+      "Mert a liberalizmus, a konzervativizmus és a nacionalizmus minden kérdésben könnyen összeegyeztethető volt",
+      "Mert az új eszmék a szabadság, nemzet és állam kérdését új módon vetették fel, de egymással is ütközhettek",
+      "Mert a korszak társadalmai teljesen közömbösek maradtak az eszmei vitákkal szemben",
+      "Mert ezek az eszmék kizárólag filozófiai körökben léteztek, politikai hatás nélkül"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": "Az új eszmék egyszerre segítették a modern politikai rendszerek kialakulását, ugyanakkor új konfliktusokat is teremtettek például nemzeti és alkotmányos kérdésekben."
+  },
+  {
+    "id": "ipari-forradalom-500-01",
+    "topic": "Ipari forradalom",
+    "questionType": "comparison",
+    "difficulty": "expert",
+    "question": "Miért tekinthető az ipari forradalom a modern társadalom egyik alapvető kiindulópontjának, nem pusztán technikai fejlődési szakasznak?",
+    "options": [
+      "Mert a technikai újítások mellett átalakította a településszerkezetet, a munkaviszonyokat, a társadalmi rétegeket és a mindennapi életet is",
+      "Mert kizárólag a bányászat gépesítését jelentette, más területre nem hatott",
+      "Mert úgy növelte a termelést, hogy közben nem változott a társadalom szerkezete",
+      "Mert csak Anglia belső fejlődésére volt hatással, Európára és a világra nem"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "Az ipari forradalom komplex folyamat volt: a technika mellett a társadalom, a városok, a munkakultúra és a gazdasági kapcsolatok szerkezete is átalakult."
+  }
+]
