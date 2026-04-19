@@ -5,8 +5,9 @@ import { Play, Users, BookOpen, ArrowLeft, CheckCircle2, XCircle, Trophy, Rotate
 import { generateGameData, Category, Question, Difficulty, QuestionType, gameBoard as initialGameBoard, gameCategories as initialCategories, BoardCell } from './data/questions';
 import TeacherMode from './components/TeacherMode';
 import TeacherLogin from './components/TeacherLogin';
+import { playCorrect, playWrong, playTick, playTimeUp, playOpen, playVictory } from './lib/soundUtils';
 
-type GameState = 'START' | 'RULES' | 'BOARD' | 'QUESTION' | 'FEEDBACK' | 'GAME_OVER';
+type GameState = 'START' | 'RULES' | 'TEAM_SETUP' | 'BOARD' | 'QUESTION' | 'FEEDBACK' | 'GAME_OVER';
 type GameMode = 'SINGLE' | 'TEAM';
 type TeamTurn = 'A' | 'B';
 
@@ -99,7 +100,9 @@ export default function App() {
   
   const [singleScore, setSingleScore] = useState(0);
   const [teamScores, setTeamScores] = useState({ A: 0, B: 0 });
+  const [teamNames, setTeamNames] = useState({ A: 'A csapat', B: 'B csapat' });
   const [currentTurn, setCurrentTurn] = useState<TeamTurn>('A');
+  const [showTurnNotice, setShowTurnNotice] = useState(false);
   
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
@@ -118,6 +121,7 @@ export default function App() {
 
   useEffect(() => {
     if (gameState === 'GAME_OVER') {
+      playVictory();
       const duration = 3 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
@@ -151,17 +155,28 @@ export default function App() {
     setGameCategories(selectedCategories);
     setGameQuestions(selectedQuestions);
     setGameMode(mode);
-    setGameState('BOARD');
     setSingleScore(0);
     setTeamScores({ A: 0, B: 0 });
     setCurrentTurn('A');
     setAnsweredQuestions(new Set());
     setStats({ correct: 0, incorrect: 0 });
+    
+    if (mode === 'TEAM') {
+      setGameState('TEAM_SETUP');
+    } else {
+      setGameState('BOARD');
+    }
+  };
+
+  const confirmTeamSetup = () => {
+    setGameState('BOARD');
   };
 
   const handleQuestionClick = (q: Question) => {
     if (answeredQuestions.has(q.id)) return;
     
+    playOpen();
+
     // Shuffling logic for multiple choice and faulty statement questions
     if (q.questionType === 'multiple_choice' || q.questionType === 'faulty_statement') {
       const optionsWithMeta = q.options.map((option, index) => ({
@@ -195,7 +210,11 @@ export default function App() {
   useEffect(() => {
     if (gameState === 'QUESTION' && timeLeft !== null && timeLeft > 0 && selectedAnswer === null && !isTimeUp) {
       const timerId = setTimeout(() => {
-        setTimeLeft(prev => prev! - 1);
+        const nextTime = timeLeft - 1;
+        setTimeLeft(nextTime);
+        if (nextTime <= 5) {
+          playTick();
+        }
       }, 1000);
       return () => clearTimeout(timerId);
     } else if (gameState === 'QUESTION' && timeLeft === 0 && selectedAnswer === null && !isTimeUp) {
@@ -204,6 +223,7 @@ export default function App() {
   }, [gameState, timeLeft, selectedAnswer, isTimeUp]);
 
   const handleTimeUp = () => {
+    playTimeUp();
     setIsTimeUp(true);
     setStats(prev => ({ ...prev, incorrect: prev.incorrect + 1 }));
     if (currentQuestion) {
@@ -219,6 +239,7 @@ export default function App() {
     const isCorrect = index === shuffledCorrectIndex;
     
     if (isCorrect) {
+      playCorrect();
       setStats(prev => ({ ...prev, correct: prev.correct + 1 }));
       if (gameMode === 'SINGLE') {
         setSingleScore(prev => prev + currentQuestion.points);
@@ -229,6 +250,7 @@ export default function App() {
         }));
       }
     } else {
+      playWrong();
       setStats(prev => ({ ...prev, incorrect: prev.incorrect + 1 }));
     }
 
@@ -240,8 +262,12 @@ export default function App() {
   };
 
   const closeFeedback = () => {
+    let nextTurn = currentTurn;
     if (gameMode === 'TEAM') {
-      setCurrentTurn(prev => prev === 'A' ? 'B' : 'A');
+      nextTurn = currentTurn === 'A' ? 'B' : 'A';
+      setCurrentTurn(nextTurn);
+      setShowTurnNotice(true);
+      setTimeout(() => setShowTurnNotice(false), 2000);
     }
     
     if (answeredQuestions.size === gameQuestions.length) {
@@ -411,6 +437,66 @@ export default function App() {
           </motion.div>
         )}
 
+        {gameState === 'TEAM_SETUP' && (
+          <motion.div 
+            key="team_setup"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            className="flex-1 flex flex-col items-center justify-center p-6"
+          >
+            <div className="w-full max-w-md bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl">
+              <h2 className="text-3xl font-display font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Csapatok beállítása
+              </h2>
+              <div className="space-y-6 mb-10">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-blue-400 uppercase tracking-widest px-1">A Csapat Neve</label>
+                  <input 
+                    type="text" 
+                    maxLength={20}
+                    value={teamNames.A}
+                    onChange={(e) => setTeamNames(prev => ({ ...prev, A: e.target.value }))}
+                    onBlur={() => {
+                      if (!teamNames.A.trim()) setTeamNames(prev => ({ ...prev, A: 'A csapat' }));
+                      else setTeamNames(prev => ({ ...prev, A: teamNames.A.trim() }));
+                    }}
+                    className="w-full bg-slate-800 border-2 border-slate-700 focus:border-blue-500 rounded-xl p-4 text-white text-lg font-bold transition-all outline-none"
+                    placeholder="A csapat"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-purple-400 uppercase tracking-widest px-1">B Csapat Neve</label>
+                  <input 
+                    type="text" 
+                    maxLength={20}
+                    value={teamNames.B}
+                    onChange={(e) => setTeamNames(prev => ({ ...prev, B: e.target.value }))}
+                    onBlur={() => {
+                      if (!teamNames.B.trim()) setTeamNames(prev => ({ ...prev, B: 'B csapat' }));
+                      else setTeamNames(prev => ({ ...prev, B: teamNames.B.trim() }));
+                    }}
+                    className="w-full bg-slate-800 border-2 border-slate-700 focus:border-purple-500 rounded-xl p-4 text-white text-lg font-bold transition-all outline-none"
+                    placeholder="B csapat"
+                  />
+                </div>
+              </div>
+              <button 
+                onClick={confirmTeamSetup}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-black py-5 rounded-2xl text-xl transition-all shadow-lg hover:shadow-blue-500/20 active:scale-95"
+              >
+                Játék indítása
+              </button>
+              <button 
+                onClick={() => setGameState('START')}
+                className="w-full mt-4 text-slate-500 hover:text-slate-300 transition-colors uppercase text-xs font-bold tracking-widest"
+              >
+                Mégse
+              </button>
+            </div>
+          </motion.div>
+        )}
+
         {gameState === 'BOARD' && (
           <motion.div 
             key="board"
@@ -420,8 +506,8 @@ export default function App() {
             className="flex-1 flex flex-col p-4 md:p-8 max-w-7xl mx-auto w-full"
           >
             {/* Header / Scoreboard */}
-            <div className="flex justify-between items-center mb-8 bg-slate-900/50 p-4 rounded-2xl border border-slate-800 backdrop-blur-sm">
-              <div className="flex items-center gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-slate-900/50 p-4 md:px-8 rounded-2xl border border-slate-800 backdrop-blur-sm">
+              <div className="flex items-center gap-4 w-full md:w-auto">
                 <button 
                   onClick={() => setGameState('START')}
                   className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
@@ -436,22 +522,43 @@ export default function App() {
                 >
                   <RotateCcw className="w-6 h-6" />
                 </button>
-                <h2 className="text-2xl font-display font-bold text-blue-400 hidden sm:block">Töri Mester</h2>
+                <h2 className="text-2xl font-display font-bold text-blue-400 hidden lg:block">Töri Mester</h2>
               </div>
+
+              {gameMode === 'TEAM' && (
+                <div className="flex items-center justify-center flex-1 order-first md:order-none w-full">
+                  <motion.div 
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className={`flex items-center gap-3 px-6 py-2.5 rounded-2xl border-2 shadow-lg transition-all ${
+                      currentTurn === 'A' 
+                        ? 'border-blue-500 bg-blue-500/10 text-blue-400 shadow-blue-500/20' 
+                        : 'border-purple-500 bg-purple-500/10 text-purple-400 shadow-purple-500/20'
+                    }`}
+                  >
+                    <div className={`w-3 h-3 rounded-full animate-pulse ${currentTurn === 'A' ? 'bg-blue-400' : 'bg-purple-400'}`} />
+                    <span className="text-sm font-black uppercase tracking-[0.2em]">Soron következik:</span>
+                    <span className="text-xl font-display font-black tracking-tight underline decoration-2 underline-offset-4">
+                      {currentTurn === 'A' ? teamNames.A : teamNames.B}
+                    </span>
+                  </motion.div>
+                </div>
+              )}
               
               {gameMode === 'SINGLE' ? (
                 <div className="text-3xl font-display font-bold text-yellow-400">
                   {singleScore} <span className="text-lg text-slate-500">pont</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-8">
-                  <div className={`flex flex-col items-center px-6 py-2 rounded-xl border-2 transition-colors ${currentTurn === 'A' ? 'border-blue-500 bg-blue-500/10' : 'border-transparent opacity-50'}`}>
-                    <span className="text-sm font-bold text-blue-400 uppercase tracking-wider">A Csapat</span>
-                    <span className="text-3xl font-display font-bold text-white">{teamScores.A}</span>
+                <div className="flex items-center gap-4 md:gap-8">
+                  <div className={`flex flex-col items-center px-4 md:px-6 py-2 rounded-xl border-2 transition-all ${currentTurn === 'A' ? 'border-blue-500 bg-blue-500/10 scale-105' : 'border-slate-800 opacity-40 shadow-none'}`}>
+                    <span className="text-[10px] md:text-xs font-bold text-blue-400 uppercase tracking-wider mb-1 line-clamp-1 max-w-[80px] md:max-w-[120px]">{teamNames.A}</span>
+                    <span className="text-2xl md:text-3xl font-display font-bold text-white">{teamScores.A}</span>
                   </div>
-                  <div className={`flex flex-col items-center px-6 py-2 rounded-xl border-2 transition-colors ${currentTurn === 'B' ? 'border-purple-500 bg-purple-500/10' : 'border-transparent opacity-50'}`}>
-                    <span className="text-sm font-bold text-purple-400 uppercase tracking-wider">B Csapat</span>
-                    <span className="text-3xl font-display font-bold text-white">{teamScores.B}</span>
+                  <div className="w-px h-8 bg-slate-800" />
+                  <div className={`flex flex-col items-center px-4 md:px-6 py-2 rounded-xl border-2 transition-all ${currentTurn === 'B' ? 'border-purple-500 bg-purple-500/10 scale-105' : 'border-slate-800 opacity-40 shadow-none'}`}>
+                    <span className="text-[10px] md:text-xs font-bold text-purple-400 uppercase tracking-wider mb-1 line-clamp-1 max-w-[80px] md:max-w-[120px]">{teamNames.B}</span>
+                    <span className="text-2xl md:text-3xl font-display font-bold text-white">{teamScores.B}</span>
                   </div>
                 </div>
               )}
@@ -537,6 +644,40 @@ export default function App() {
                 ))}
               </div>
             </div>
+
+            {/* Turn Transition Notification */}
+            <AnimatePresence>
+              {showTurnNotice && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.5, y: 50 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 1.2, y: -50 }}
+                  className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+                >
+                  <div className={`px-12 py-8 rounded-3xl border-4 shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-xl ${
+                    currentTurn === 'A' 
+                      ? 'bg-blue-600/90 border-blue-400 text-white' 
+                      : 'bg-purple-600/90 border-purple-400 text-white'
+                  }`}>
+                    <motion.p 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                      className="text-2xl font-black uppercase tracking-[0.3em] mb-2 text-white/70 text-center"
+                    >
+                      Most következik:
+                    </motion.p>
+                    <motion.h2 
+                      initial={{ scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      className="text-6xl font-display font-black text-center"
+                    >
+                      {currentTurn === 'A' ? teamNames.A : teamNames.B}
+                    </motion.h2>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
 
@@ -733,10 +874,10 @@ export default function App() {
                   <motion.div 
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 1.1, type: "spring" }}
+                    transition={{ delay: 1.0, type: "spring" }}
                     className={`p-6 rounded-2xl border-2 ${teamScores.A > teamScores.B ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_30px_-5px_rgba(234,179,8,0.3)]' : 'border-slate-800 bg-slate-800/50'}`}
                   >
-                    <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">A Csapat</p>
+                    <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">{teamNames.A}</p>
                     <p className="text-6xl font-display font-bold text-white">{teamScores.A}</p>
                   </motion.div>
                   <motion.div 
@@ -745,7 +886,7 @@ export default function App() {
                     transition={{ delay: 1.3, type: "spring" }}
                     className={`p-6 rounded-2xl border-2 ${teamScores.B > teamScores.A ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_30px_-5px_rgba(234,179,8,0.3)]' : 'border-slate-800 bg-slate-800/50'}`}
                   >
-                    <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">B Csapat</p>
+                    <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">{teamNames.B}</p>
                     <p className="text-6xl font-display font-bold text-white">{teamScores.B}</p>
                   </motion.div>
                   {teamScores.A === teamScores.B && (
