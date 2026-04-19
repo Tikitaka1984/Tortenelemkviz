@@ -1,14 +1,18 @@
-export type QuestionType = 'multiple_choice' | 'true_false' | 'faulty_statement' | 'timeline' | 'matching' | 'cause_effect' | 'comparison' | 'korszakjellemzés';
+export type QuestionType = 'multiple_choice' | 'true_false' | 'faulty_statement' | 'timeline' | 'matching' | 'cause_effect' | 'comparison' | 'korszakjellemzés' | 'concept_application' | 'historical_significance' | 'sequence_logic' | 'source_based' | 'viewpoint_goal' | 'relationship_match';
 export type Difficulty = 'easy' | 'medium' | 'hard' | 'expert';
 
 export type QuestionItem = {
   id: string;
-  difficulty: Difficulty;
-  questionType: QuestionType;
   topic?: string;
+  category?: string;
+  value?: number;
+  questionType: QuestionType;
+  difficulty: Difficulty;
   question: string;
+  sourceText?: string;
   options: string[];
-  correctAnswerIndex: number;
+  correctAnswer?: string;
+  correctAnswerIndex?: number;
   explanation: string;
   skillFocus?: string;
   oralExamLink?: string;
@@ -31,42 +35,50 @@ export type Category = {
 };
 
 export const gameCategories: Category[] = [
-  {
-    "id": "cat1",
-    "name": "Ókor és Középkor"
-  },
-  {
-    "id": "cat2",
-    "name": "Kora Újkor és Felvilágosodás"
-  },
-  {
-    "id": "cat3",
-    "name": "A hosszú 19. század"
-  },
-  {
-    "id": "cat4",
-    "name": "Világháborúk kora"
-  },
-  {
-    "id": "cat5",
-    "name": "Jelenkor és Hidegháború"
-  },
-  {
-    "id": "cat6",
-    "name": "Középkor és kultúra"
-  },
-  {
-    "id": "cat7",
-    "name": "Eszmék és ideológiák"
-  },
-  {
-    "id": "cat8",
-    "name": "Gazdaság és modernizáció"
-  },
-  {
-    "id": "cat9",
-    "name": "Magyar történelem a 19. században"
-  }
+    {
+        "id": "cat1",
+        "name": "Ókor és Középkor"
+    },
+    {
+        "id": "cat2",
+        "name": "Kora Újkor és Felvilágosodás"
+    },
+    {
+        "id": "cat3",
+        "name": "A hosszú 19. század"
+    },
+    {
+        "id": "cat4",
+        "name": "Világháborúk kora"
+    },
+    {
+        "id": "cat5",
+        "name": "Jelenkor és Hidegháború"
+    },
+    {
+        "id": "cat6",
+        "name": "Középkor és kultúra"
+    },
+    {
+        "id": "cat7",
+        "name": "Eszmék és ideológiák"
+    },
+    {
+        "id": "cat8",
+        "name": "Gazdaság és modernizáció"
+    },
+    {
+        "id": "cat9",
+        "name": "Magyar történelem a 19. században"
+    },
+    {
+        "id": "cat10",
+        "name": "Világháborúk és diktatúrák"
+    },
+    {
+        "id": "cat11",
+        "name": "Diktatúrák és hidegháború"
+    }
 ];
 
 export const gameBoard: BoardCell[] = [
@@ -87,7 +99,10 @@ export const gameBoard: BoardCell[] = [
                     "Vas"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "I. Károly idején Magyarország adta Európa aranytermelésének jelentős részét (kb. 1/3-át), ami a gazdasági reformok alapját jelentette."
+                "explanation": "I. Károly idején Magyarország adta Európa aranytermelésének jelentős részét (kb. 1/3-át), ami a gazdasági reformok alapját jelentette.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "Arany"
             },
             {
                 "id": "q6",
@@ -101,7 +116,10 @@ export const gameBoard: BoardCell[] = [
                     "Talajváltó gazdálkodás"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A háromnyomásos gazdálkodás a középkorban terjedt el, hatékonyabbá téve a földhasználatot az ugar arányának csökkentésével."
+                "explanation": "A háromnyomásos gazdálkodás a középkorban terjedt el, hatékonyabbá téve a földhasználatot az ugar arányának csökkentésével.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "Háromnyomásos gazdálkodás"
             },
             {
                 "id": "q26",
@@ -115,7 +133,10 @@ export const gameBoard: BoardCell[] = [
                     "A távolsági kereskedelem és a kézműipar"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A városok a kereskedelmi útvonalak találkozásánál jöttek létre, lakóik főként iparral és kereskedelemmel foglalkoztak, nem mezőgazdasággal."
+                "explanation": "A városok a kereskedelmi útvonalak találkozásánál jöttek létre, lakóik főként iparral és kereskedelemmel foglalkoztak, nem mezőgazdasággal.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "A távolsági kereskedelem és a kézműipar"
             },
             {
                 "id": "q31",
@@ -129,7 +150,10 @@ export const gameBoard: BoardCell[] = [
                     "A pápát tette meg a magyar állam hivatalos vezetőjévé"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "István az esztergomi és kalocsai érsekség, valamint további nyolc püspökség felállításával független, a pápának alárendelt magyar egyházszervezetet hozott létre."
+                "explanation": "István az esztergomi és kalocsai érsekség, valamint további nyolc püspökség felállításával független, a pápának alárendelt magyar egyházszervezetet hozott létre.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "Tíz egyházmegyét (püspökséget) és két érsekséget alapított"
             },
             {
                 "id": "q36",
@@ -143,7 +167,10 @@ export const gameBoard: BoardCell[] = [
                     "Rendkívüli hadiadó"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A füstpénzt nem portánként (kapunként), hanem háztartásonként (kéményenként/füstönként) szedték, így a megosztott portákon élő jobbágyok is fizettek."
+                "explanation": "A füstpénzt nem portánként (kapunként), hanem háztartásonként (kéményenként/füstönként) szedték, így a megosztott portákon élő jobbágyok is fizettek.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "Füstpénz"
             },
             {
                 "id": "q61",
@@ -157,7 +184,10 @@ export const gameBoard: BoardCell[] = [
                     "A népgyűlés (ekklészia)"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A népgyűlés hozta a törvényeket, döntött háború és béke kérdésében, és minden 20 év feletti, athéni polgárjoggal rendelkező férfi részt vehetett rajta."
+                "explanation": "A népgyűlés hozta a törvényeket, döntött háború és béke kérdésében, és minden 20 év feletti, athéni polgárjoggal rendelkező férfi részt vehetett rajta.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "A népgyűlés (ekklészia)"
             },
             {
                 "id": "q71",
@@ -171,7 +201,10 @@ export const gameBoard: BoardCell[] = [
                     "Ábrahám"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Mohamed próféta a 7. század elején, az Arab-félszigeten alapította meg az iszlám vallást, miután látomásai voltak."
+                "explanation": "Mohamed próféta a 7. század elején, az Arab-félszigeten alapította meg az iszlám vallást, miután látomásai voltak.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "Mohamed"
             },
             {
                 "id": "q76",
@@ -185,7 +218,10 @@ export const gameBoard: BoardCell[] = [
                     "Marius és Sulla"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A Gracchus-testvérek néptribunusként a nincstelen parasztoknak akartak állami földet osztani, hogy megerősítsék a római hadsereg bázisát."
+                "explanation": "A Gracchus-testvérek néptribunusként a nincstelen parasztoknak akartak állami földet osztani, hogy megerősítsék a római hadsereg bázisát.",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "Tiberius és Caius Gracchus"
             },
             {
                 "id": "ivbela-100-01",
@@ -206,7 +242,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "IV. Béla"
             },
             {
                 "id": "ivbela-100-02",
@@ -227,7 +266,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 100,
+                "correctAnswer": "1241–1242"
             }
         ]
     },
@@ -248,7 +290,10 @@ export const gameBoard: BoardCell[] = [
                     "A földesurak érdekeltté tétele a bányák feltárásában"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "I. Károly ezzel a lépéssel ösztönözte a birtokosokat, hogy ne titkolják el a földjükön talált érceket, hanem nyissanak bányákat."
+                "explanation": "I. Károly ezzel a lépéssel ösztönözte a birtokosokat, hogy ne titkolják el a földjükön talált érceket, hanem nyissanak bányákat.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "A földesurak érdekeltté tétele a bányák feltárásában"
             },
             {
                 "id": "q7",
@@ -262,7 +307,10 @@ export const gameBoard: BoardCell[] = [
                     "A vazallus kizárólag egyházi tisztséget tölthetett be"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A hűbéri lánc alapja a kölcsönös hűségeskü volt: a senior földet és védelmet, a vazallus fegyveres szolgálatot és hűséget fogadott."
+                "explanation": "A hűbéri lánc alapja a kölcsönös hűségeskü volt: a senior földet és védelmet, a vazallus fegyveres szolgálatot és hűséget fogadott.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "A hűbérúr földbirtokot (feudumot) és védelmet adott katonai szolgálatért cserébe"
             },
             {
                 "id": "q27",
@@ -276,7 +324,10 @@ export const gameBoard: BoardCell[] = [
                     "A korabeli források alapján valószínűsíthető, hogy a történetírás egy része szerint a városokban tilos volt a céhek alapítása"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A városok menedéket nyújtottak a szökött jobbágyoknak, akik bizonyos idő elteltével elnyerték a személyes szabadságot és a polgárjogot."
+                "explanation": "A városok menedéket nyújtottak a szökött jobbágyoknak, akik bizonyos idő elteltével elnyerték a személyes szabadságot és a polgárjogot.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "Ha egy jobbágy egy évig és egy napig a városban élt anélkül, hogy ura visszakövetelte volna, szabaddá vált"
             },
             {
                 "id": "q32",
@@ -290,7 +341,10 @@ export const gameBoard: BoardCell[] = [
                     "A szegények és árvák segélyezését"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A tized a termés egytizede volt, amelyet a lakosságnak az egyház számára kellett beszolgáltatnia az egyházmegyék működésének biztosítására."
+                "explanation": "A tized a termés egytizede volt, amelyet a lakosságnak az egyház számára kellett beszolgáltatnia az egyházmegyék működésének biztosítására.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "Az egyházszervezet és a papság anyagi fenntartását"
             },
             {
                 "id": "q37",
@@ -304,7 +358,10 @@ export const gameBoard: BoardCell[] = [
                     "Függetlenítette a királyt a bárók katonai erejétől (bandériumoktól)"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A zsoldoshadsereg közvetlenül a királynak engedelmeskedett, így Mátyás nem szorult rá a megbízhatatlan főurak magánhadseregeire a kül- és belpolitikában."
+                "explanation": "A zsoldoshadsereg közvetlenül a királynak engedelmeskedett, így Mátyás nem szorult rá a megbízhatatlan főurak magánhadseregeire a kül- és belpolitikában.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "Függetlenítette a királyt a bárók katonai erejétől (bandériumoktól)"
             },
             {
                 "id": "q62",
@@ -318,7 +375,10 @@ export const gameBoard: BoardCell[] = [
                     "Öröklődés útján"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A demokrácia alapelve volt, hogy minden polgár egyenlő eséllyel vehet részt az irányításban, ezért a tisztségek többségét sorsolták, nem választották."
+                "explanation": "A demokrácia alapelve volt, hogy minden polgár egyenlő eséllyel vehet részt az irányításban, ezért a tisztségek többségét sorsolták, nem választották.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "Történelmi szempontból vizsgálva sorsolással"
             },
             {
                 "id": "q72",
@@ -332,7 +392,10 @@ export const gameBoard: BoardCell[] = [
                     "A Korán"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A Korán az iszlám legszentebb irata, amely Mohamed próféta kinyilatkoztatásait tartalmazza arab nyelven."
+                "explanation": "A Korán az iszlám legszentebb irata, amely Mohamed próféta kinyilatkoztatásait tartalmazza arab nyelven.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "A Korán"
             },
             {
                 "id": "q77",
@@ -346,7 +409,10 @@ export const gameBoard: BoardCell[] = [
                     "Megszűnt a kereskedelem a Földközi-tengeren, ami a társadalmi viszonyokat is érintette."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hódításokból származó olcsó rabszolgamunkával dolgozó nagybirtokok tönkretették a parasztokat, akik Rómába menekültek, ahol ingyen gabonát követeltek."
+                "explanation": "A hódításokból származó olcsó rabszolgamunkával dolgozó nagybirtokok tönkretették a parasztokat, akik Rómába menekültek, ahol ingyen gabonát követeltek.",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "A kisbirtokos parasztság tönkrement és a városokba áramlott (antik proletariátus)"
             },
             {
                 "id": "ivbela-200-01",
@@ -367,7 +433,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "Muhi"
             },
             {
                 "id": "ivbela-200-02",
@@ -388,7 +457,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 200,
+                "correctAnswer": "Mert egy újabb támadás ellen erősebb védelmet akart kialakítani"
             }
         ]
     },
@@ -409,7 +481,10 @@ export const gameBoard: BoardCell[] = [
                     "Történelmi szempontból vizsgálva a pápai tized (tized) kiváltása"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Mivel I. Károly értékálló pénzt vezetett be, elesett a pénzbeváltásból származó haszontól, ezt pótolta az első állami egyenes adóval, a kapuadóval."
+                "explanation": "Mivel I. Károly értékálló pénzt vezetett be, elesett a pénzbeváltásból származó haszontól, ezt pótolta az első állami egyenes adóval, a kapuadóval.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "A kamara haszna (pénzrontás) megszüntetése miatti bevételkiesés pótlása"
             },
             {
                 "id": "q8",
@@ -423,7 +498,10 @@ export const gameBoard: BoardCell[] = [
                     "Megszűnt a jobbágyság intézménye"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hatékonyabb termelés több élelmiszert eredményezett, ami lehetővé tette a népesség gyors növekedését és a városiasodás megindulását."
+                "explanation": "A hatékonyabb termelés több élelmiszert eredményezett, ami lehetővé tette a népesség gyors növekedését és a városiasodás megindulását.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Jelentős népességnövekedés indult meg Európában"
             },
             {
                 "id": "q28",
@@ -437,7 +515,10 @@ export const gameBoard: BoardCell[] = [
                     "A polgárság gazdasági megerősödése révén kivásárolta magát a földesúri joghatóság alól"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A meggazdagodott kereskedők és iparosok pénzért (vagy fegyverrel) megváltották a földesúri terheket, így saját bírót és tanácsot választhattak."
+                "explanation": "A meggazdagodott kereskedők és iparosok pénzért (vagy fegyverrel) megváltották a földesúri terheket, így saját bírót és tanácsot választhattak.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "A polgárság gazdasági megerősödése révén kivásárolta magát a földesúri joghatóság alól"
             },
             {
                 "id": "q33",
@@ -451,7 +532,10 @@ export const gameBoard: BoardCell[] = [
                     "A bizánci császár ezt szabta feltételül a békekötéshez"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Ha a császártól fogad el koronát, az hűbéri alárendeltséget jelentett volna. A pápától kapott korona a független, keresztény királyság elismerését jelentette."
+                "explanation": "Ha a császártól fogad el koronát, az hűbéri alárendeltséget jelentett volna. A pápától kapott korona a független, keresztény királyság elismerését jelentette.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Meg akarta őrizni az ország függetlenségét a Német-római Birodalommal szemben"
             },
             {
                 "id": "q38",
@@ -465,7 +549,10 @@ export const gameBoard: BoardCell[] = [
                     "Bizonyos megközelítések szerint a magyar nemesség megtagadta a török elleni harcot"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Mátyás felismerte, hogy Magyarország ereje önmagában kevés a török Birodalom ellen. A cseh királyi és a császári cím megszerzésével akart egy erős közép-európai birodalmat építeni."
+                "explanation": "Mátyás felismerte, hogy Magyarország ereje önmagában kevés a török Birodalom ellen. A cseh királyi és a császári cím megszerzésével akart egy erős közép-európai birodalmat építeni.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Meg akarta szerezni a német-római császári címet, hogy egyesült erővel léphessen fel a török ellen"
             },
             {
                 "id": "q63",
@@ -479,7 +566,10 @@ export const gameBoard: BoardCell[] = [
                     "Hogy a szegényebb polgárok is részt tudjanak venni a politikai életben a munkaidő kiesése ellenére"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A napidíj biztosította, hogy a szegényebb kézművesek és parasztok is elmehessenek a bíróságra vagy a népgyűlésre anélkül, hogy a családjuk éhezne a kieső napi bér miatt."
+                "explanation": "A napidíj biztosította, hogy a szegényebb kézművesek és parasztok is elmehessenek a bíróságra vagy a népgyűlésre anélkül, hogy a családjuk éhezne a kieső napi bér miatt.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Hogy a szegényebb polgárok is részt tudjanak venni a politikai életben a munkaidő kiesése ellenére"
             },
             {
                 "id": "q73",
@@ -493,7 +583,10 @@ export const gameBoard: BoardCell[] = [
                     "A korabeli források alapján valószínűsíthető, hogy mert ekkor épült fel a Kába szentély"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hidzsra (kivonulás) fordulópont volt: Mohamed Medinában politikai és vallási vezetővé vált, és itt szerveződött meg az iszlám állam alapja."
+                "explanation": "A hidzsra (kivonulás) fordulópont volt: Mohamed Medinában politikai és vallási vezetővé vált, és itt szerveződött meg az iszlám állam alapja.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Mert Mohamed ekkor menekült át Mekkából Medinába, ahol megalapította az első muszlim közösséget"
             },
             {
                 "id": "q78",
@@ -507,7 +600,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a karthágóiak elpusztították a teljes római flottát, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A régi római hadsereg a birtokos parasztokra épült. Mivel ők tönkrementek, Marius a nincstelenekből (proletárokból) szervezett zsoldoshadsereget, amely 16 év szolgálat után földet kapott."
+                "explanation": "A régi római hadsereg a birtokos parasztokra épült. Mivel ők tönkrementek, Marius a nincstelenekből (proletárokból) szervezett zsoldoshadsereget, amely 16 év szolgálat után földet kapott.",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Mert a parasztság elszegényedése miatt drasztikusan lecsökkent a hadköteles, saját fegyverzettel rendelkező polgárok száma"
             },
             {
                 "id": "ivbela-300-01",
@@ -528,7 +624,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "A kővárépítés támogatása és a telepesek betelepítése"
             },
             {
                 "id": "ivbela-300-02",
@@ -549,7 +648,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 300,
+                "correctAnswer": "Mert a pusztítás rámutatott az ország védelmi és településszerkezeti gyengeségeire"
             }
         ]
     },
@@ -570,7 +672,10 @@ export const gameBoard: BoardCell[] = [
                     "Rézből verték, de arannyal vonták be a felületét"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A korábbi gyakorlattal ellentétben (évenkénti pénzbeváltás és rontás) az aranyforint állandó értékű fizetőeszköz volt, ami fellendítette a kereskedelmet."
+                "explanation": "A korábbi gyakorlattal ellentétben (évenkénti pénzbeváltás és rontás) az aranyforint állandó értékű fizetőeszköz volt, ami fellendítette a kereskedelmet.",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "Értékálló volt és nem rontották a nemesfémtartalmát évente"
             },
             {
                 "id": "q9",
@@ -584,7 +689,10 @@ export const gameBoard: BoardCell[] = [
                     "A jobbágy részt vehetett a királyi hadseregben, a rabszolga nem"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A jobbágy jogilag szabadabb volt: bár a földhöz volt kötve (később szabadon költözhetett), saját háza, eszközei voltak, és a termény egy részét megtarthatta."
+                "explanation": "A jobbágy jogilag szabadabb volt: bár a földhöz volt kötve (később szabadon költözhetett), saját háza, eszközei voltak, és a termény egy részét megtarthatta.",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "A jobbágy rendelkezett saját termelőeszközzel és nem volt a földesúr tulajdona"
             },
             {
                 "id": "q29",
@@ -598,7 +706,10 @@ export const gameBoard: BoardCell[] = [
                     "A korszak politikai kontextusában értelmezve a patríciusok vidéken éltek, a plebejusok a városfalakon belül"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A városi társadalom erősen rétegzett volt: a hatalmat a szűk, gazdag patrícius réteg gyakorolta, míg a legalsó réteg, a plebejusok politikai jogok nélkül éltek."
+                "explanation": "A városi társadalom erősen rétegzett volt: a hatalmat a szűk, gazdag patrícius réteg gyakorolta, míg a legalsó réteg, a plebejusok politikai jogok nélkül éltek.",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "A patríciusok (gazdag kereskedők) irányították a várost, míg a plebejusok (szegények) nem rendelkeztek polgárjoggal"
             },
             {
                 "id": "q34",
@@ -612,7 +723,10 @@ export const gameBoard: BoardCell[] = [
                     "Területi alapon szerveződött a királyi hatalom képviseletében, nem vérségi alapon"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "István a vérségi (törzsi) kötelékek helyett területi alapú közigazgatást épített ki. A vármegye élén a király által kinevezett ispán (comes) állt, aki katonai, bírói és gazdasági vezető volt."
+                "explanation": "István a vérségi (törzsi) kötelékek helyett területi alapú közigazgatást épített ki. A vármegye élén a király által kinevezett ispán (comes) állt, aki katonai, bírói és gazdasági vezető volt.",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "Területi alapon szerveződött a királyi hatalom képviseletében, nem vérségi alapon"
             },
             {
                 "id": "q39",
@@ -626,7 +740,10 @@ export const gameBoard: BoardCell[] = [
                     "A korabeli források alapján valószínűsíthető, hogy kizárólag külföldi zsoldosokra bízta az ország közigazgatását"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Mátyás a származás helyett a tehetséget és a hűséget díjazta. Olyan szakembereket (pl. Ernuszt János, Bakócz Tamás) emelt fel, akik csak tőle függtek, így letörte a régi arisztokrácia hatalmát."
+                "explanation": "Mátyás a származás helyett a tehetséget és a hűséget díjazta. Olyan szakembereket (pl. Ernuszt János, Bakócz Tamás) emelt fel, akik csak tőle függtek, így letörte a régi arisztokrácia hatalmát.",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "A bárók helyett gyakran köznemeseket és polgárokat (akár jobbágysorból származókat) emelt magas hivatalokba"
             },
             {
                 "id": "q64",
@@ -640,7 +757,10 @@ export const gameBoard: BoardCell[] = [
                     "Nem tartoztak elszámolással a népgyűlésnek, ami az események egyfajta logikus következménye volt."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Mivel a hadvezetés szakértelmet igényelt, a 10 sztratégoszt választották (nem sorsolták), és ők voltak az egyetlenek, akiket egymás után többször is újraválaszthattak (pl. Periklészt 15 évig)."
+                "explanation": "Mivel a hadvezetés szakértelmet igényelt, a 10 sztratégoszt választották (nem sorsolták), és ők voltak az egyetlenek, akiket egymás után többször is újraválaszthattak (pl. Periklészt 15 évig).",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "Őket nem sorsolták, hanem választották, és a tisztségük újraválasztható volt"
             },
             {
                 "id": "q74",
@@ -654,7 +774,10 @@ export const gameBoard: BoardCell[] = [
                     "A muszlimoknak életükben legalább egyszer el kell zarándokolniuk Mekkába, ha anyagilag és fizikailag képesek rá"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Az öt oszlop: hitvallás (Allah az egyetlen Isten), napi ötszöri ima, alamizsna (szegényadó), ramadán havi böjt (napkeltétől napnyugtáig semmi étel/ital), és a mekkai zarándoklat (haddzs)."
+                "explanation": "Az öt oszlop: hitvallás (Allah az egyetlen Isten), napi ötszöri ima, alamizsna (szegényadó), ramadán havi böjt (napkeltétől napnyugtáig semmi étel/ital), és a mekkai zarándoklat (haddzs).",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "A muszlimoknak életükben legalább egyszer el kell zarándokolniuk Mekkába, ha anyagilag és fizikailag képesek rá"
             },
             {
                 "id": "q79",
@@ -668,7 +791,10 @@ export const gameBoard: BoardCell[] = [
                     "A korabeli források alapján megállapítható, hogy sulla a rabszolgákra támaszkodott, Caesar a patríciusokra, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Sulla a konzervatív (optimata) szenátus hatalmát akarta fegyverrel restaurálni. Caesar viszont a népre és a hadseregre támaszkodva (néppártiként) építette ki saját, nyílt egyeduralmát."
+                "explanation": "Sulla a konzervatív (optimata) szenátus hatalmát akarta fegyverrel restaurálni. Caesar viszont a népre és a hadseregre támaszkodva (néppártiként) építette ki saját, nyílt egyeduralmát.",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "Caesar a néppárti hagyományokra támaszkodva, a köztársasági formákat látszólag fenntartva épített ki egyeduralmat, míg Sulla a szenátus hatalmát állította vissza erőszakkal"
             },
             {
                 "id": "ivbela-400-01",
@@ -689,7 +815,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "A korábbi birtok-visszavételi törekvések után nagyobb szerepet adott a birtokadományozásnak és a várépítésnek"
             },
             {
                 "id": "ivbela-400-02",
@@ -710,7 +839,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 400,
+                "correctAnswer": "A korszak politikai kontextusában értelmezve a tatárjárás után mindenáron megakadályozta a kunok visszatérését"
             }
         ]
     },
@@ -731,7 +863,10 @@ export const gameBoard: BoardCell[] = [
                     "A megállapodás fellendítette a magyar-cseh-lengyel kereskedelmet, ami az események egyfajta logikus következménye volt."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hibás állítás az első: a találkozó célja pont az volt, hogy Bécset ELKERÜLŐ (nem Bécset érintő) új kereskedelmi útvonalakat hozzanak létre az árumegállító jog miatt."
+                "explanation": "A hibás állítás az első: a találkozó célja pont az volt, hogy Bécset ELKERÜLŐ (nem Bécset érintő) új kereskedelmi útvonalakat hozzanak létre az árumegállító jog miatt.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Bécset érintő új kereskedelmi útvonalakat jelöltek ki a cseh és lengyel királlyal"
             },
             {
                 "id": "q10",
@@ -745,7 +880,10 @@ export const gameBoard: BoardCell[] = [
                     "A korszak politikai kontextusában értelmezve mert a céhek fő feladata a földművelés megszervezése volt a városfalakon belül"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A céhek egyszerre védték a mesterek érdekeit, biztosították az áru minőségét és a szociális biztonságot, ugyanakkor korlátozták a versenyt, a termelés bővítését és sok esetben az innovációt is."
+                "explanation": "A céhek egyszerre védték a mesterek érdekeit, biztosították az áru minőségét és a szociális biztonságot, ugyanakkor korlátozták a versenyt, a termelés bővítését és sok esetben az innovációt is.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Mert biztosította a minőséget és a tagok védelmét, ugyanakkor visszafogta a szabad versenyt és az újításokat is"
             },
             {
                 "id": "q30",
@@ -759,7 +897,10 @@ export const gameBoard: BoardCell[] = [
                     "A Hanza főként nyugat-európai fűszerkereskedelemből élt, míg az itáliai városok a balti gabonaforgalmat ellenőrizték, ami egyértelműen tükrözte a kor viszonyait."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A Hanza-szövetség főként az északi térség nyersanyag- és tömegcikk-kereskedelmét fogta össze, míg Velence és Genova a mediterrán és keleti luxuscikk-kereskedelemben volt meghatározó."
+                "explanation": "A Hanza-szövetség főként az északi térség nyersanyag- és tömegcikk-kereskedelmét fogta össze, míg Velence és Genova a mediterrán és keleti luxuscikk-kereskedelemben volt meghatározó.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "A Hanza a Balti- és Északi-tenger térségének tömegcikk-kereskedelmét szervezte, míg az itáliai városok inkább a Földközi-tenger luxuscikk-forgalmát uralták"
             },
             {
                 "id": "q35",
@@ -773,7 +914,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a keresztény normák, a magántulajdon védelme és a királyi rend fenntartása révén új társadalmi és politikai keretet adott az országnak"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "István törvényei a keresztény államrend, a tulajdonbiztonság, az egyházszervezet és a királyi tekintély megerősítésével járultak hozzá az államalapítás tartósságához."
+                "explanation": "István törvényei a keresztény államrend, a tulajdonbiztonság, az egyházszervezet és a királyi tekintély megerősítésével járultak hozzá az államalapítás tartósságához.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Mert a keresztény normák, a magántulajdon védelme és a királyi rend fenntartása révén új társadalmi és politikai keretet adott az országnak"
             },
             {
                 "id": "q40",
@@ -787,7 +931,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a humanizmus és a reneszánsz eszközeivel nemcsak műveltséget, hanem uralkodói presztízst és nemzetközi rangot is épített"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Mátyás udvara a reneszánsz reprezentáció, a könyvkultúra és a humanista kapcsolatrendszer révén a király hatalmát és európai rangját is demonstrálta."
+                "explanation": "Mátyás udvara a reneszánsz reprezentáció, a könyvkultúra és a humanista kapcsolatrendszer révén a király hatalmát és európai rangját is demonstrálta.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Mert a humanizmus és a reneszánsz eszközeivel nemcsak műveltséget, hanem uralkodói presztízst és nemzetközi rangot is épített"
             },
             {
                 "id": "q65",
@@ -801,7 +948,10 @@ export const gameBoard: BoardCell[] = [
                     "A száműzött 10 évig nem térhetett vissza Athénba, ami az események egyfajta logikus következménye volt."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a cserépszavazással száműzött politikus megtarthatta a vagyonát, a családja is Athénban maradhatott, és 10 év után visszakapta politikai jogait."
+                "explanation": "A hibás állítás az első: a cserépszavazással száműzött politikus megtarthatta a vagyonát, a családja is Athénban maradhatott, és 10 év után visszakapta politikai jogait.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Akit száműztek, annak a vagyonát is elkobozták és családját is elűzték"
             },
             {
                 "id": "q75",
@@ -815,7 +965,10 @@ export const gameBoard: BoardCell[] = [
                     "Bizonyos megközelítések szerint a hódítások során az arabok átvették és megőrizték a perzsa és görög-római kultúra számos elemét"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hibás állítás az első: a korai iszlám toleráns volt az egyistenhívő 'könyv népeivel' (zsidók, keresztények) szemben. Nem kényszerítették őket áttérésre, de magasabb adót kellett fizetniük."
+                "explanation": "A hibás állítás az első: a korai iszlám toleráns volt az egyistenhívő 'könyv népeivel' (zsidók, keresztények) szemben. Nem kényszerítették őket áttérésre, de magasabb adót kellett fizetniük.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Az iszlám erőszakkal kényszerítette a keresztényeket és zsidókat a vallásváltásra, különben kivégezték őket"
             },
             {
                 "id": "q80",
@@ -829,7 +982,10 @@ export const gameBoard: BoardCell[] = [
                     "A triumvirátus felbomlása polgárháborúhoz vezetett Caesar és Pompeius között"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A hibás állítás az első: a triumvirátus (három férfi szövetsége) éppen a Szenátus AKARATA ELLENÉRE jött létre. A három legbefolyásosabb politikus összefogott, hogy kijátsszák a köztársasági intézményeket."
+                "explanation": "A hibás állítás az első: a triumvirátus (három férfi szövetsége) éppen a Szenátus AKARATA ELLENÉRE jött létre. A három legbefolyásosabb politikus összefogott, hogy kijátsszák a köztársasági intézményeket.",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "A szövetséget a Szenátus hozta létre, hogy korlátozza a hadvezérek hatalmát"
             },
             {
                 "id": "ivbela-500-01",
@@ -850,7 +1006,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "Mert a tatárjárás utáni újjáépítéssel és átszervezéssel új alapokra helyezte az ország működését"
             },
             {
                 "id": "ivbela-500-02",
@@ -871,7 +1030,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Ókor és Középkor",
+                "value": 500,
+                "correctAnswer": "A tatárjárás arra kényszerítette, hogy a királyság védelmét, településhálózatát és népességpolitikáját is újragondolja"
             }
         ]
     },
@@ -892,7 +1054,10 @@ export const gameBoard: BoardCell[] = [
                     "Franciaország"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Tengerész Henrik irányításával a portugálok kezdték meg Afrika partjainak feltérképezését a 15. században."
+                "explanation": "Tengerész Henrik irányításával a portugálok kezdték meg Afrika partjainak feltérképezését a 15. században.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Portugália"
             },
             {
                 "id": "q66",
@@ -906,7 +1071,10 @@ export const gameBoard: BoardCell[] = [
                     "I. Lipót"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Mária Terézia rendeletben szabályozta a földesúr és a jobbágy viszonyát, hogy megvédje az állami adóalapot jelentő jobbágyságot."
+                "explanation": "Mária Terézia rendeletben szabályozta a földesúr és a jobbágy viszonyát, hogy megvédje az állami adóalapot jelentő jobbágyságot.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Mária Terézia"
             },
             {
                 "id": "q81",
@@ -920,7 +1088,10 @@ export const gameBoard: BoardCell[] = [
                     "A jobbágyság"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A szabadságharcot a magas adók (pl. porció, forspont) miatt elégedetlen, Esze Tamás vezette jobbágyok indították el, akik hazahívták Rákóczit Lengyelországból."
+                "explanation": "A szabadságharcot a magas adók (pl. porció, forspont) miatt elégedetlen, Esze Tamás vezette jobbágyok indították el, akik hazahívták Rákóczit Lengyelországból.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "A jobbágyság"
             },
             {
                 "difficulty": "easy",
@@ -934,7 +1105,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Kolumbusz 1492-ben érte el a Bahama-szigeteket, ezzel felfedezte Amerikát az európaiak számára.",
-                "id": "q200"
+                "id": "q200",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Amerika"
             },
             {
                 "difficulty": "easy",
@@ -948,7 +1122,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "Luther Márton ágoston-rendi szerzetes fellépése a búcsúcédulák ellen indította el a reformációt.",
-                "id": "q201"
+                "id": "q201",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Martin Luther (Luther Márton)"
             },
             {
                 "difficulty": "easy",
@@ -962,7 +1139,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Gyulafehérvár volt a fejedelmi székhely és a politikai központ.",
-                "id": "q202"
+                "id": "q202",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Gyulafehérvár"
             },
             {
                 "difficulty": "easy",
@@ -976,7 +1156,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Dobó István vezetésével az egri várvédők sikeresen verték vissza a hatalmas török sereget.",
-                "id": "q203"
+                "id": "q203",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Eger"
             },
             {
                 "difficulty": "easy",
@@ -990,7 +1173,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A mohácsi csata után a Habsburgok szerezték meg a magyar trónt.",
-                "id": "q204"
+                "id": "q204",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Habsburg-ház"
             },
             {
                 "id": "angol-alkm-100-01",
@@ -1011,7 +1197,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Angliában"
             },
             {
                 "id": "angol-alkm-100-02",
@@ -1032,7 +1221,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Jognyilatkozat, bár a kortárs elit egy része ezt hevesen ellenezte."
             },
             {
                 "id": "varhaboruk-100-01",
@@ -1053,7 +1245,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "1526"
             },
             {
                 "id": "varhaboruk-100-02",
@@ -1074,7 +1269,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "II. Lajos"
             },
             {
                 "id": "reformacio-erdely-100-01",
@@ -1095,7 +1293,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Reformáció"
             },
             {
                 "id": "reformacio-erdely-100-02",
@@ -1116,7 +1317,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 100,
+                "correctAnswer": "Erdély"
             }
         ]
     },
@@ -1137,7 +1341,10 @@ export const gameBoard: BoardCell[] = [
                     "Dromón"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A karavella magas oldalfalú, jól manőverezhető, hátszelet és oldalszelet is hasznosítani tudó vitorlás volt, ideális az óceáni utakra."
+                "explanation": "A karavella magas oldalfalú, jól manőverezhető, hátszelet és oldalszelet is hasznosítani tudó vitorlás volt, ideális az óceáni utakra.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Karavella"
             },
             {
                 "id": "q67",
@@ -1151,7 +1358,10 @@ export const gameBoard: BoardCell[] = [
                     "Egyes kutatások alapján felmerült, hogy a vallásszabadságot"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Mária Terézia rendelete az állam feladatává tette az oktatás irányítását, és egységes, a népiskolától az egyetemig terjedő rendszert hozott létre."
+                "explanation": "Mária Terézia rendelete az állam feladatává tette az oktatás irányítását, és egységes, a népiskolától az egyetemig terjedő rendszert hozott létre.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Az oktatásügyet, egységes iskolarendszert és állami tantervet vezetett be"
             },
             {
                 "id": "q82",
@@ -1165,7 +1375,10 @@ export const gameBoard: BoardCell[] = [
                     "Békét ajánlott a bécsi udvarnak, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Rákóczi ezzel a rendelettel akarta megnyerni és a seregben tartani a jobbágyokat, miközben megnyugtatta a nemességet is, hogy a mentesség csak a harcolóknak jár, nem jelent általános jobbágyfelszabadítást."
+                "explanation": "Rákóczi ezzel a rendelettel akarta megnyerni és a seregben tartani a jobbágyokat, miközben megnyugtatta a nemességet is, hogy a mentesség csak a harcolóknak jár, nem jelent általános jobbágyfelszabadítást.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Mentesítette a kuruc seregben harcoló jobbágyokat és családjukat a földesúri szolgáltatások (robot, adó) alól"
             },
             {
                 "difficulty": "medium",
@@ -1179,7 +1392,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A rengeteg beáramló arany és ezüst elértéktelenedett, ami a mezőgazdasági és ipari cikkek árának drasztikus emelkedéséhez vezetett.",
-                "id": "q205"
+                "id": "q205",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Árforradalom (az árak jelentős emelkedése)"
             },
             {
                 "difficulty": "medium",
@@ -1193,7 +1409,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Kálvin János tanítása szerint Isten már a születés előtt eldöntötte, hogy ki jut üdvösségre és ki kárhozatra.",
-                "id": "q206"
+                "id": "q206",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "A predesztináció (eleve elrendelés) tana"
             },
             {
                 "difficulty": "medium",
@@ -1207,7 +1426,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A zsinat betiltotta a búcsúcédulákat, javította a papképzést, hogy megállítsa a reformáció terjedését.",
-                "id": "q207"
+                "id": "q207",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "A katolikus egyház belső megtisztulása és a hívők visszaszerzése"
             },
             {
                 "difficulty": "medium",
@@ -1221,7 +1443,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "III. Károly fiúutód hiányában ezzel a törvénnyel biztosította lánya, Mária Terézia trónra lépését.",
-                "id": "q208"
+                "id": "q208",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "A Habsburg-ház nőági örökösödésének biztosítását"
             },
             {
                 "difficulty": "medium",
@@ -1235,7 +1460,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A felfedezések nyomán az Atlanti-óceán vált a kereskedelem központjává, összekapcsolva a kontinensek gazdaságát.",
-                "id": "q209"
+                "id": "q209",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "A kontinenseket (Európa, Afrika, Amerika, Ázsia) összekötő tengeri kereskedelmi hálózatok létrejöttét"
             },
             {
                 "id": "angol-alkm-200-01",
@@ -1256,7 +1484,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Orániai Vilmost"
             },
             {
                 "id": "angol-alkm-200-02",
@@ -1277,7 +1508,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "A parlament szerepe megnőtt a kormányzásban"
             },
             {
                 "id": "varhaboruk-200-01",
@@ -1298,7 +1532,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Buda 1541-es török elfoglalásához"
             },
             {
                 "id": "varhaboruk-200-02",
@@ -1319,7 +1556,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Eger"
             },
             {
                 "id": "reformacio-erdely-200-01",
@@ -1340,7 +1580,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "Bethlen Gábor"
             },
             {
                 "id": "reformacio-erdely-200-02",
@@ -1361,7 +1604,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 200,
+                "correctAnswer": "A politikai megosztottság és az egyházi viszonyok megrendülése"
             }
         ]
     },
@@ -1382,7 +1628,10 @@ export const gameBoard: BoardCell[] = [
                     "Kikerülni a portugálok által uralt Földközi-tengeri kereskedelmet"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A török terjeszkedés miatt a levantei kereskedelem drágult, ezért Kolumbusz a Föld gömbölyűségére alapozva nyugat felé akart eljutni a fűszerekben gazdag Indiába."
+                "explanation": "A török terjeszkedés miatt a levantei kereskedelem drágult, ezért Kolumbusz a Föld gömbölyűségére alapozva nyugat felé akart eljutni a fűszerekben gazdag Indiába.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Új, rövidebb tengeri útvonalat találni Indiába a fűszerkereskedelem miatt"
             },
             {
                 "id": "q68",
@@ -1396,7 +1645,10 @@ export const gameBoard: BoardCell[] = [
                     "Nem akart esküt tenni a magyar rendi alkotmányra és a nemesi kiváltságok tiszteletben tartására"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "II. József abszolút hatalmat akart, hogy rendeletekkel, a rendi gyűlés megkerülésével gyorsan modernizálhassa a birodalmat. A koronázási eskü ezt megakadályozta volna."
+                "explanation": "II. József abszolút hatalmat akart, hogy rendeletekkel, a rendi gyűlés megkerülésével gyorsan modernizálhassa a birodalmat. A koronázási eskü ezt megakadályozta volna.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Nem akart esküt tenni a magyar rendi alkotmányra és a nemesi kiváltságok tiszteletben tartására"
             },
             {
                 "id": "q83",
@@ -1410,7 +1662,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a francia-bajor sereg vereséget szenvedett, így Rákóczi elvesztette a reményt a közvetlen francia katonai segítségre"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A spanyol örökösödési háborúban a franciák vereséget szenvedtek az osztrák-angol erőktől Höchstädtnél. Ezzel meghiúsult XIV. Lajos terve, hogy Bécs alatt egyesüljön a kuruc sereggel."
+                "explanation": "A spanyol örökösödési háborúban a franciák vereséget szenvedtek az osztrák-angol erőktől Höchstädtnél. Ezzel meghiúsult XIV. Lajos terve, hogy Bécs alatt egyesüljön a kuruc sereggel.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Mert a francia-bajor sereg vereséget szenvedett, így Rákóczi elvesztette a reményt a közvetlen francia katonai segítségre"
             },
             {
                 "difficulty": "medium",
@@ -1424,7 +1679,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A manufaktúrákban a munkamegosztás révén gyorsabban és olcsóbban tudtak tömegcikkeket (pl. posztót) előállítani a bővülő piacok számára.",
-                "id": "q210"
+                "id": "q210",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Mert a céhek nem tudták kielégíteni a megnövekedett tömegigényeket a világpiacon"
             },
             {
                 "difficulty": "medium",
@@ -1438,7 +1696,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A háború a törökök és a Habsburgok közötti erőpróba volt a Kárpát-medence feletti uralomért, amely hatalmas pusztítással járt.",
-                "id": "q211"
+                "id": "q211",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "A törökök újabb terjeszkedési kísérlete és a Habsburgok ellentámadása"
             },
             {
                 "difficulty": "medium",
@@ -1452,7 +1713,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A tordai vallásbéke Európában egyedülálló módon biztosította a felekezetek békés egymás mellett élését.",
-                "id": "q212"
+                "id": "q212",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Hogy megakadályozzák a vallásháborúkat a négy bevett felekezet (katolikus, református, evangélikus, unitárius) szabad vallásgyakorlásának biztosításával"
             },
             {
                 "difficulty": "medium",
@@ -1466,7 +1730,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A szervezett állami betelepítés (impopulatio) célja az adófizető népesség növelése és a mezőgazdaság helyreállítása volt.",
-                "id": "q213"
+                "id": "q213",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "A török háborúk során elnéptelenedett területek (pl. Dél-Alföld, Dunántúl) benépesítése és a gazdaság újraindítása érdekében"
             },
             {
                 "difficulty": "medium",
@@ -1480,7 +1747,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A merkantilizmus az állam gazdagságát a felhalmozott nemesfémben látta, ezért támogatta a hazai ipart és védővámokat vezetett be.",
-                "id": "q214"
+                "id": "q214",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Az export növelése és az import csökkentése magas vámokkal, hogy a nemesfém (pénz) az országban maradjon"
             },
             {
                 "id": "angol-alkm-300-01",
@@ -1501,7 +1771,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "A király uralkodik, de a hatalom gyakorlása korlátozott és a parlament szerepe meghatározó"
             },
             {
                 "id": "angol-alkm-300-02",
@@ -1522,7 +1795,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Mert korlátozta a királyi hatalmat és megerősítette az alkotmányos kormányzást"
             },
             {
                 "id": "varhaboruk-300-01",
@@ -1543,7 +1819,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Mert trónviszály és külső beavatkozás is követte a vereséget"
             },
             {
                 "id": "varhaboruk-300-02",
@@ -1564,7 +1843,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "A török előretörés és a végvári védelem hosszú küzdelmének időszaka volt"
             },
             {
                 "id": "reformacio-erdely-300-01",
@@ -1585,7 +1867,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Több felekezet együttélésének sajátos terepe volt"
             },
             {
                 "id": "reformacio-erdely-300-02",
@@ -1606,7 +1891,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 300,
+                "correctAnswer": "Mert a politikai és társadalmi viszonyok lehetővé tették több irányzat jelenlétét"
             }
         ]
     },
@@ -1627,7 +1915,10 @@ export const gameBoard: BoardCell[] = [
                     "Bizonyos megközelítések szerint a spanyolok nem hoztak létre gyarmatbirodalmat, csak a portugálok"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A portugálok Ázsiában és Afrikában partmenti erődöket (faktóriákat) építettek a kereskedelem ellenőrzésére, míg a spanyolok Amerikában a teljes kontinensbelső meghódítására és betelepítésére törekedtek."
+                "explanation": "A portugálok Ázsiában és Afrikában partmenti erődöket (faktóriákat) építettek a kereskedelem ellenőrzésére, míg a spanyolok Amerikában a teljes kontinensbelső meghódítására és betelepítésére törekedtek.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "A portugálok főleg kereskedelmi telepeket hoztak létre, a spanyolok hatalmas területeket hódítottak meg"
             },
             {
                 "id": "q69",
@@ -1641,7 +1932,10 @@ export const gameBoard: BoardCell[] = [
                     "Kötelezővé tette mindenki számára a zsidó vallást, így a rendszer átalakulása elkerülhetetlenné vált."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A Türelmi rendelet (1781) megszüntette a protestánsok (kálvinisták, lutheránusok) és görögkeletiek hátrányos megkülönböztetését, lehetővé téve számukra a hivatalviselést és a templomépítést."
+                "explanation": "A Türelmi rendelet (1781) megszüntette a protestánsok (kálvinisták, lutheránusok) és görögkeletiek hátrányos megkülönböztetését, lehetővé téve számukra a hivatalviselést és a templomépítést.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Szabadabb vallásgyakorlást és hivatalviselési jogot biztosított a protestánsoknak és az ortodoxoknak"
             },
             {
                 "id": "q84",
@@ -1655,7 +1949,10 @@ export const gameBoard: BoardCell[] = [
                     "Ónodon mondták ki a Habsburg-ház trónfosztását és a közteherviselést, míg Szécsényben Rákóczit vezérlő fejedelemmé választották"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A szécsényi országgyűlés (1705) az államszervezetről (rendi konföderáció) döntött. Az ónodi (1707) radikálisabb volt: a függetlenség kimondása (trónfosztás) és a nemesség megadóztatása (közteherviselés) jellemezte."
+                "explanation": "A szécsényi országgyűlés (1705) az államszervezetről (rendi konföderáció) döntött. Az ónodi (1707) radikálisabb volt: a függetlenség kimondása (trónfosztás) és a nemesség megadóztatása (közteherviselés) jellemezte.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Ónodon mondták ki a Habsburg-ház trónfosztását és a közteherviselést, míg Szécsényben Rákóczit vezérlő fejedelemmé választották"
             },
             {
                 "difficulty": "hard",
@@ -1669,7 +1966,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A Jognyilatkozat (1689) Angliában rögzítette a parlament jogait (pl. adómegajánlás), míg XIV. Lajos Franciaországában a király a rendi gyűlés nélkül uralkodott.",
-                "id": "q215"
+                "id": "q215",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Angliában a király hatalmát a parlament és a törvények korlátozták, míg Franciaországban a király korlátlan hatalommal rendelkezett"
             },
             {
                 "difficulty": "hard",
@@ -1683,7 +1983,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Az erdélyi rendiséget a Kápolnai unió (1437) óta a magyar vármegyék, a székely székek és a szász székek képviselői alkották.",
-                "id": "q216"
+                "id": "q216",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Erdélyben a három 'nemzet' (magyar nemesség, székelyek, szászok) rendi uniója gyakorolta a hatalmat"
             },
             {
                 "difficulty": "hard",
@@ -1697,7 +2000,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A felvilágosult gondolkodók (pl. Voltaire) a deizmus (Isten megteremtette a világot, de nem avatkozik bele) vagy a tolerancia hívei voltak, és elutasították a vakbuzgóságot.",
-                "id": "q217"
+                "id": "q217",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Kritizálta a vallási dogmákat és az egyház politikai hatalmát, a vallási türelmet és az ész (ráció) elsőbbségét hirdette"
             },
             {
                 "difficulty": "hard",
@@ -1711,7 +2017,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A népességnövekedés miatt a jobbágytelkek elaprózódtak. Aki elvesztette a telkét, zsellérré vált, és a gazdagabb parasztoknál vagy a majorságban vállalt munkát.",
-                "id": "q218"
+                "id": "q218",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "A zsellérek nem rendelkeztek saját jobbágytelekkel (vagy csak nagyon kicsivel), így főként bérmunkából éltek"
             },
             {
                 "difficulty": "hard",
@@ -1725,7 +2034,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A hibás állítás az első: a folyamat éppen fordítva történt. Nyugat-Európa iparosodott, Kelet-Európa pedig az agrártermékek (gabona) exportőrévé vált, ami konzerválta a feudalizmust.",
-                "id": "q219"
+                "id": "q219",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Kelet-Európa iparosodott, míg Nyugat-Európa a mezőgazdasági nyersanyagok termelőjévé vált"
             },
             {
                 "id": "angol-alkm-400-01",
@@ -1746,7 +2058,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Angliában a parlamentnek meghatározóbb szerepe volt, míg Franciaországban az uralkodói központosítás erősebb volt"
             },
             {
                 "id": "angol-alkm-400-02",
@@ -1767,7 +2082,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Az alkotmányos monarchia lényege a király korlátlan, abszolút uralma volt, ami a társadalmi viszonyokat is érintette."
             },
             {
                 "id": "varhaboruk-400-01",
@@ -1788,7 +2106,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "A királyi Magyarország Habsburg fennhatóság alatt állt, a középső területek török uralom alá kerültek, Erdély pedig sajátos önállóságot élvezett"
             },
             {
                 "id": "varhaboruk-400-02",
@@ -1809,7 +2130,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Az 1568-ig tartó időszakban a török veszély teljesen megszűnt Magyarországon"
             },
             {
                 "id": "reformacio-erdely-400-01",
@@ -1830,7 +2154,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "Bizonyos megközelítések szerint erdélyben sajátosabb vallási pluralizmus alakult ki"
             },
             {
                 "id": "reformacio-erdely-400-02",
@@ -1851,7 +2178,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 400,
+                "correctAnswer": "A reformáció teljesen elszigetelt jelenség maradt Erdélyben és nem befolyásolta a társadalmat"
             }
         ]
     },
@@ -1872,7 +2202,10 @@ export const gameBoard: BoardCell[] = [
                     "Árforradalmat (inflációt) okozott, mivel a pénz értéke csökkent a mezőgazdasági cikkekéhez képest"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A beáramló hatalmas mennyiségű arany és ezüst miatt a pénz elértéktelenedett, az élelmiszerek és iparcikkek ára pedig drasztikusan megnőtt (árforradalom)."
+                "explanation": "A beáramló hatalmas mennyiségű arany és ezüst miatt a pénz elértéktelenedett, az élelmiszerek és iparcikkek ára pedig drasztikusan megnőtt (árforradalom).",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Árforradalmat (inflációt) okozott, mivel a pénz értéke csökkent a mezőgazdasági cikkekéhez képest"
             },
             {
                 "id": "q70",
@@ -1886,7 +2219,10 @@ export const gameBoard: BoardCell[] = [
                     "A korszak politikai kontextusában értelmezve mária Terézia vezette be 1754-ben, amely hosszú távon meghatározta a fejlődést."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hibás állítás az első: a kettős vámrendszer éppen hogy az OSZTRÁK és cseh ipart védte, Magyarországot pedig tudatosan a birodalom 'éléskamrájává' tette, hátráltatva a magyar iparfejlődést."
+                "explanation": "A hibás állítás az első: a kettős vámrendszer éppen hogy az OSZTRÁK és cseh ipart védte, Magyarországot pedig tudatosan a birodalom 'éléskamrájává' tette, hátráltatva a magyar iparfejlődést.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "A vámrendszer célja a magyar ipar gyors és erőteljes fejlesztése volt az osztrák iparral szemben"
             },
             {
                 "id": "q85",
@@ -1900,7 +2236,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint rákóczi Ferenc nem fogadta el a békét és emigrációba vonult"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hibás állítás az első: a szatmári béke egy kompromisszum volt. A császár (III. Károly) megígérte a magyar rendi alkotmány és a nemesi kiváltságok (adómentesség) tiszteletben tartását a fegyverletételért cserébe."
+                "explanation": "A hibás állítás az első: a szatmári béke egy kompromisszum volt. A császár (III. Károly) megígérte a magyar rendi alkotmány és a nemesi kiváltságok (adómentesség) tiszteletben tartását a fegyverletételért cserébe.",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "A korszak politikai kontextusában értelmezve a béke megszüntette Magyarország rendi alkotmányát és a nemesi kiváltságokat"
             },
             {
                 "difficulty": "expert",
@@ -1914,7 +2253,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A felvilágosult abszolutizmus egyszerre jelentett modernizációt és központosító, a rendi autonómiát háttérbe szorító uralkodói politikát.",
-                "id": "q220"
+                "id": "q220",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Modernizáló intézkedéseket vezettek be felülről, de mindezt a rendi önállóság és a politikai részvétel korlátozásával párosították"
             },
             {
                 "difficulty": "expert",
@@ -1928,7 +2270,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Montesquieu elmélete szerint a hatalommal való visszaélés csak úgy kerülhető el, ha a hatalmi ágak függetlenek egymástól. Ez lett a modern alkotmányok alapja.",
-                "id": "q221"
+                "id": "q221",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Mert megakadályozta a zsarnokságot azáltal, hogy a törvényhozó, végrehajtó és bírói hatalom egymást ellenőrizte"
             },
             {
                 "difficulty": "expert",
@@ -1942,7 +2287,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A hibás állítás az első: a végvárrendszer fenntartása óriási teher volt, amit a magyar gazdaság nem bírt el. A Habsburg udvar jelentős összegekkel (és külföldi zsoldosokkal) támogatta a védelmet.",
-                "id": "q222"
+                "id": "q222",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "A végvárakat kizárólag a magyar nemesség saját költségén tartotta fenn, a Habsburg udvar nem nyújtott anyagi segítséget"
             },
             {
                 "difficulty": "expert",
@@ -1956,7 +2304,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A nyugati kereslet miatt a kelet-európai nemesek saját kezelésű birtokaikat (majorság) növelték, amit a jobbágyok ingyenmunkájával (robot) műveltettek meg, így a jobbágyi függés megerősödött.",
-                "id": "q223"
+                "id": "q223",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Keleten a földesurak növelték a robotot és a majorságot a gabonaexport miatt, míg Nyugaton a parasztok bérlőkké vagy szabad bérmunkásokká váltak"
             },
             {
                 "difficulty": "expert",
@@ -1970,7 +2321,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A szabadságharc sorsát a spanyol örökösödési háború döntötte el: a franciák nem tudtak segíteni, a Habsburgok pedig átcsoportosíthatták erőiket. Emellett a pestis és a gazdasági csőd is felőrölte a kurucokat.",
-                "id": "q224"
+                "id": "q224",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "A kedvezőtlen nemzetközi helyzet (francia vereségek) és az ország belső gazdasági-katonai kimerülése"
             },
             {
                 "id": "angol-alkm-500-01",
@@ -1991,7 +2345,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Mintát adott arra, hogyan lehet a királyi intézményt a parlamenti korlátokkal összeegyeztetni"
             },
             {
                 "id": "angol-alkm-500-02",
@@ -2012,7 +2369,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Mert a végrehajtó hatalom egyre inkább a parlamenti többséghez kapcsolódott"
             },
             {
                 "id": "varhaboruk-500-01",
@@ -2033,7 +2393,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Mert a vereséget követően a politikai hatalom, a területi berendezkedés és a külpolitikai orientáció is alapvetően átalakult"
             },
             {
                 "id": "varhaboruk-500-02",
@@ -2054,7 +2417,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "A korszak meghatározta a három országrész kialakulását, a végvári rendszer szerepét és a magyar állam mozgásterének beszűkülését"
             },
             {
                 "id": "reformacio-erdely-500-01",
@@ -2075,7 +2441,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Mert a felekezeti változások összefonódtak a politikai megosztottsággal és a társadalmi átalakulással"
             },
             {
                 "id": "reformacio-erdely-500-02",
@@ -2096,7 +2465,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Kora Újkor és Felvilágosodás",
+                "value": 500,
+                "correctAnswer": "Erdély a vallási sokszínűség és a sajátos politikai mozgástér miatt a korszak különleges központjává vált"
             }
         ]
     },
@@ -2117,7 +2489,10 @@ export const gameBoard: BoardCell[] = [
                     "Fa és szélenergia"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A második ipari forradalomban a gőzgépeket fokozatosan felváltották a belső égésű motorok (kőolaj) és a villanymotorok (elektromosság)."
+                "explanation": "A második ipari forradalomban a gőzgépeket fokozatosan felváltották a belső égésű motorok (kőolaj) és a villanymotorok (elektromosság).",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Kőolaj és elektromosság"
             },
             {
                 "id": "q41",
@@ -2131,7 +2506,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint a Lánchíd építésének megkezdését"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Bár a Hitel (1830) a reformkor programadó műve, a korszak kezdetét hagyományosan az 1825-ben, hosszú szünet után összehívott pozsonyi országgyűléshez kötjük."
+                "explanation": "Bár a Hitel (1830) a reformkor programadó műve, a korszak kezdetét hagyományosan az 1825-ben, hosszú szünet után összehívott pozsonyi országgyűléshez kötjük.",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Az 1825-27-es országgyűlés összehívását és Széchenyi felajánlását az MTA-ra"
             },
             {
                 "id": "q46",
@@ -2145,7 +2523,10 @@ export const gameBoard: BoardCell[] = [
                     "A 12 pont"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A 'Mit kiván a magyar nemzet' (12 pont) volt a pesti forradalom programadó dokumentuma, amely a sajtószabadságtól a jobbágyfelszabadításig tartalmazta a legfontosabb követeléseket."
+                "explanation": "A 'Mit kiván a magyar nemzet' (12 pont) volt a pesti forradalom programadó dokumentuma, amely a sajtószabadságtól a jobbágyfelszabadításig tartalmazta a legfontosabb követeléseket.",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "A 12 pont"
             },
             {
                 "id": "q51",
@@ -2159,7 +2540,10 @@ export const gameBoard: BoardCell[] = [
                     "Batthyány Lajos"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Deák Ferenc, a 'haza bölcse' ismerte fel a kompromisszum szükségességét, és ő vezette a magyar tárgyalódelegációt a bécsi udvarral."
+                "explanation": "Deák Ferenc, a 'haza bölcse' ismerte fel a kompromisszum szükségességét, és ő vezette a magyar tárgyalódelegációt a bécsi udvarral.",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Deák Ferenc"
             },
             {
                 "difficulty": "easy",
@@ -2173,7 +2557,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "Anglia volt az ipari forradalom bölcsője, a kedvező gazdasági és politikai feltételek miatt.",
-                "id": "q225"
+                "id": "q225",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Nagy-Britannia"
             },
             {
                 "difficulty": "easy",
@@ -2187,7 +2574,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Gróf Széchenyi István műve a magyar gazdaság és társadalom modernizációjának programját adta.",
-                "id": "q226"
+                "id": "q226",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Széchenyi István"
             },
             {
                 "difficulty": "easy",
@@ -2201,7 +2591,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A márciusi ifjak Pesten (Pilvax kávéház, Nemzeti Múzeum) robbantották ki a forradalmat.",
-                "id": "q227"
+                "id": "q227",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Pest-Buda"
             },
             {
                 "difficulty": "easy",
@@ -2215,7 +2608,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Gróf Andrássy Gyula lett a dualista Magyarország első miniszterelnöke.",
-                "id": "q228"
+                "id": "q228",
+                "category": "A hosszú 19. század",
+                "value": 100,
+                "correctAnswer": "Andrássy Gyula"
             }
         ]
     },
@@ -2236,7 +2632,10 @@ export const gameBoard: BoardCell[] = [
                     "Telefon"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Edison fejlesztette ki a gyakorlatban is jól használható szénszálas izzólámpát, amely forradalmasította a világítást."
+                "explanation": "Edison fejlesztette ki a gyakorlatban is jól használható szénszálas izzólámpát, amely forradalmasította a világítást.",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "Szénszálas izzólámpa"
             },
             {
                 "id": "q42",
@@ -2250,7 +2649,10 @@ export const gameBoard: BoardCell[] = [
                     "A katonai szolgálat kiterjesztését a nőkre is"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A közteherviselés a nemesi kiváltságok (adómentesség) megszüntetését jelentette, hogy a közterhekből (adók, útépítés) a nemesség is kivegye a részét."
+                "explanation": "A közteherviselés a nemesi kiváltságok (adómentesség) megszüntetését jelentette, hogy a közterhekből (adók, útépítés) a nemesség is kivegye a részét.",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "A nemesség adómentességének eltörlését, mindenki adózzon"
             },
             {
                 "id": "q47",
@@ -2264,7 +2666,10 @@ export const gameBoard: BoardCell[] = [
                     "Rendi államot"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Az áprilisi törvények felszámolták a feudalizmust és a rendi rendszert, a király hatalmát törvények (alkotmány) és a felelős magyar minisztérium korlátozta."
+                "explanation": "Az áprilisi törvények felszámolták a feudalizmust és a rendi rendszert, a király hatalmát törvények (alkotmány) és a felelős magyar minisztérium korlátozta.",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "Alkotmányos monarchiát"
             },
             {
                 "id": "q52",
@@ -2278,7 +2683,10 @@ export const gameBoard: BoardCell[] = [
                     "Kétközpontú (dualista) alkotmányos monarchiát"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A kiegyezéssel létrejött az Osztrák-Magyar Monarchia, amely két egyenrangú állam (Ausztria és Magyarország) szövetsége volt, közös uralkodóval."
+                "explanation": "A kiegyezéssel létrejött az Osztrák-Magyar Monarchia, amely két egyenrangú állam (Ausztria és Magyarország) szövetsége volt, közös uralkodóval.",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "Kétközpontú (dualista) alkotmányos monarchiát"
             },
             {
                 "difficulty": "medium",
@@ -2292,7 +2700,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A gyárak megjelenésével kialakult a bérmunkából élő, gyakran rossz körülmények között dolgozó munkásosztály.",
-                "id": "q229"
+                "id": "q229",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "Az ipari munkásság (proletariátus)"
             },
             {
                 "difficulty": "medium",
@@ -2306,7 +2717,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "Kossuth Lajos kezdeményezésére a tagok vállalták, hogy csak magyar iparcikkeket vásárolnak, ezzel támogatva a hazai ipart.",
-                "id": "q230"
+                "id": "q230",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "A hazai ipar védelmét a külföldi áruk bojkottjával"
             },
             {
                 "difficulty": "medium",
@@ -2320,7 +2734,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Az áprilisi törvények felszámolták a feudalizmust és megteremtették a modern, polgári Magyarország alapjait.",
-                "id": "q231"
+                "id": "q231",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "A polgári átalakulás jogi kereteinek megteremtése (pl. jobbágyfelszabadítás, közteherviselés)"
             },
             {
                 "difficulty": "medium",
@@ -2334,7 +2751,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A politikai stabilitás és a közös osztrák-magyar piac hatalmas tőkebeáramlást és gazdasági fejlődést eredményezett a dualizmus korában.",
-                "id": "q232"
+                "id": "q232",
+                "category": "A hosszú 19. század",
+                "value": 200,
+                "correctAnswer": "Példátlan gazdasági fellendülés (pl. vasútépítés, gyáripar) kezdődött"
             }
         ]
     },
@@ -2355,7 +2775,10 @@ export const gameBoard: BoardCell[] = [
                     "A szabad verseny teljes betiltása a kormányok által"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Az új technológiák és a tömegtermelés hatalmas beruházásokat igényeltek, amit csak a tőkék összevonásával, óriásvállalatok (monopóliumok) létrehozásával lehetett finanszírozni."
+                "explanation": "Az új technológiák és a tömegtermelés hatalmas beruházásokat igényeltek, amit csak a tőkék összevonásával, óriásvállalatok (monopóliumok) létrehozásával lehetett finanszírozni.",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "A hatalmas tőkét igénylő új iparágak (pl. vegyipar, gépgyártás) kiépítése"
             },
             {
                 "id": "q43",
@@ -2369,7 +2792,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a birtok elidegeníthetetlensége miatt a nemesek nem vehettek fel hitelt a fejlesztésekre"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Az 1351-es ősiség törvénye kimondta, hogy a nemesi birtokot nem lehet eladni. Így a bankok nem fogadták el fedezetként, a nemes nem kapott hitelt, hitel nélkül pedig nem tudott modernizálni."
+                "explanation": "Az 1351-es ősiség törvénye kimondta, hogy a nemesi birtokot nem lehet eladni. Így a bankok nem fogadták el fedezetként, a nemes nem kapott hitelt, hitel nélkül pedig nem tudott modernizálni.",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "Mert a birtok elidegeníthetetlensége miatt a nemesek nem vehettek fel hitelt a fejlesztésekre"
             },
             {
                 "id": "q48",
@@ -2383,7 +2809,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a jobbágyoknak el kellett hagyniuk a falvaikat és a városokba költözni"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A reformkorban vitatott önkéntes örökváltság helyett a kötelező örökváltság egy csapásra megszüntette a jobbágyságot, a kárpótlást pedig az állam vállalta magára, így elkerülték a parasztlázadást."
+                "explanation": "A reformkorban vitatott önkéntes örökváltság helyett a kötelező örökváltság egy csapásra megszüntette a jobbágyságot, a kárpótlást pedig az állam vállalta magára, így elkerülték a parasztlázadást.",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "Mert a jobbágyok azonnal, fizetés nélkül szabad parasztokká váltak, a földesurakat pedig az állam kártalanította"
             },
             {
                 "id": "q53",
@@ -2397,7 +2826,10 @@ export const gameBoard: BoardCell[] = [
                     "A birodalom gazdasága teljesen összeomlott és csődöt jelentett, ami az események egyfajta logikus következménye volt."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Ausztria elvesztette nagyhatalmi pozícióját Itáliában és Németországban. A meggyengült birodalom egyben tartásához Ferenc Józsefnek békét kellett kötnie a legjelentősebb belső ellenzékkel, a magyarokkal."
+                "explanation": "Ausztria elvesztette nagyhatalmi pozícióját Itáliában és Németországban. A meggyengült birodalom egyben tartásához Ferenc Józsefnek békét kellett kötnie a legjelentősebb belső ellenzékkel, a magyarokkal.",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "A birodalom súlyos katonai vereségeket szenvedett (pl. Königgrätz, 1866) és kiszorult a német és olasz egységből"
             },
             {
                 "difficulty": "medium",
@@ -2411,7 +2843,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A gőzgép forradalmasította a fonó- és szövőgépek meghajtását, majd a közlekedést (gőzhajó, gőzmozdony) is.",
-                "id": "q233"
+                "id": "q233",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "Mert függetlenítette a termelést a természeti erőforrásoktól (víz, szél) és folyamatos, nagy teljesítményű energiaforrást biztosított"
             },
             {
                 "difficulty": "medium",
@@ -2425,7 +2860,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Metternich kancellár rendszere a status quo fenntartására törekedett, és minden változást (liberalizmus, nacionalizmus) veszélyesnek tartott.",
-                "id": "q234"
+                "id": "q234",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "Mert féltették a birodalom egységét és a saját abszolút hatalmukat a polgári és nemzeti mozgalmaktól"
             },
             {
                 "difficulty": "medium",
@@ -2439,7 +2877,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A magyar vezetés az 'egy politikai nemzet' elvét vallotta. A nemzetiségek ezt elutasították, és a bécsi udvar ezt kihasználva ellenünk fordította őket.",
-                "id": "q235"
+                "id": "q235",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "Mert a magyar kormány nem ismerte el őket önálló nemzetként és nem adott nekik területi autonómiát"
             },
             {
                 "difficulty": "medium",
@@ -2453,7 +2894,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A magyar-osztrák kiegyezés után a magyar kormánynak is meg kellett egyeznie a legjelentősebb nemzetiséggel, a horvátokkal, elismerve politikai nemzet voltukat.",
-                "id": "q236"
+                "id": "q236",
+                "category": "A hosszú 19. század",
+                "value": 300,
+                "correctAnswer": "Hogy rendezzék Horvátország közjogi helyzetét, széleskörű belső autonómiát biztosítva számukra a Magyar Királyságon belül"
             }
         ]
     },
@@ -2474,7 +2918,10 @@ export const gameBoard: BoardCell[] = [
                     "A találmányok már tudományos kutatások eredményei voltak, nem csak gyakorlati mesteremberek újításai"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Míg az első ipari forradalom találmányait (pl. gőzgép) gyakran zseniális mesteremberek hozták létre, a másodikban (pl. elektromosság, vegyipar) már egyetemi, laboratóriumi alapkutatásokra volt szükség."
+                "explanation": "Míg az első ipari forradalom találmányait (pl. gőzgép) gyakran zseniális mesteremberek hozták létre, a másodikban (pl. elektromosság, vegyipar) már egyetemi, laboratóriumi alapkutatásokra volt szükség.",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "A találmányok már tudományos kutatások eredményei voltak, nem csak gyakorlati mesteremberek újításai"
             },
             {
                 "id": "q44",
@@ -2488,7 +2935,10 @@ export const gameBoard: BoardCell[] = [
                     "Széchenyi ellenezte a jobbágyfelszabadítást, Kossuth támogatta, így a rendszer átalakulása elkerülhetetlenné vált, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Széchenyi a bécsi udvarral megegyezve, a nagybirtokosok vezetésével képzelte el a gazdasági modernizációt. Kossuth a köznemességre támaszkodva a politikai és társadalmi reformokat (pl. érdekegyesítés) sürgette."
+                "explanation": "Széchenyi a bécsi udvarral megegyezve, a nagybirtokosok vezetésével képzelte el a gazdasági modernizációt. Kossuth a köznemességre támaszkodva a politikai és társadalmi reformokat (pl. érdekegyesítés) sürgette.",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "Széchenyi az arisztokráciára támaszkodva, lassú reformokat akart, Kossuth a köznemességre építve, gyorsabb, radikálisabb változásokat"
             },
             {
                 "id": "q49",
@@ -2502,7 +2952,10 @@ export const gameBoard: BoardCell[] = [
                     "A nemzetiségek kizárólag vallási szabadságot kértek, amit a magyar kormány megtagadott, ami a társadalmi viszonyokat is érintette, ami egyértelműen tükrözte a kor viszonyait."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A magyar liberálisok úgy gondolták, hogy a polgári jogok (pl. jobbágyfelszabadítás) mindenkit megilletnek, ezért nincs szükség külön nemzetiségi jogokra. A nemzetiségek viszont saját nemzeti elismerést és autonómiát akartak."
+                "explanation": "A magyar liberálisok úgy gondolták, hogy a polgári jogok (pl. jobbágyfelszabadítás) mindenkit megilletnek, ezért nincs szükség külön nemzetiségi jogokra. A nemzetiségek viszont saját nemzeti elismerést és autonómiát akartak.",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "A magyar vezetés az egy politikai nemzet elvét vallotta és nem adott területi autonómiát, míg a nemzetiségek kollektív jogokat és önkormányzatot követeltek"
             },
             {
                 "id": "q54",
@@ -2516,7 +2969,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint a hadügy önálló volt, de a külügyet és a belügyet közösen intézték"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A pragmatica sanctio alapján a birodalom védelme (hadügy, külügy és az ehhez szükséges pénzügy) közös minisztériumokhoz tartozott, de a belügyekben (oktatás, igazságszolgáltatás stb.) Magyarország független volt."
+                "explanation": "A pragmatica sanctio alapján a birodalom védelme (hadügy, külügy és az ehhez szükséges pénzügy) közös minisztériumokhoz tartozott, de a belügyekben (oktatás, igazságszolgáltatás stb.) Magyarország független volt.",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "A külügy, a hadügy és az ezeket fedező pénzügy közös volt, minden másban a két állam önállóan döntött"
             },
             {
                 "difficulty": "hard",
@@ -2530,7 +2986,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A 19. század végén a tudomány és az ipar összefonódott, új iparágak (vegyipar, elektrotechnika) jelentek meg, és új nagyhatalmak emelkedtek fel.",
-                "id": "q237"
+                "id": "q237",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "Az első a textiliparra és a gőzre épült (Anglia), a második a nehéziparra, az elektromosságra és a belső égésű motorokra (USA, Németország)"
             },
             {
                 "difficulty": "hard",
@@ -2544,7 +3003,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Széchenyi a nagybirtokosok vezetésével, az osztrák piacra termelve képzelte a fejlődést. Kossuth felismerte, hogy önálló ipar nélkül az ország gyarmati sorban marad.",
-                "id": "q238"
+                "id": "q238",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "Széchenyi a mezőgazdaság modernizálását és a szabadkereskedelmet támogatta, Kossuth a hazai ipar fejlesztését védővámokkal"
             },
             {
                 "difficulty": "hard",
@@ -2558,7 +3020,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A tavaszi hadjárat sikerei után és az olmützi alkotmányra válaszul a debreceni országgyűlés kimondta a Habsburg-ház trónfosztását és Magyarország függetlenségét.",
-                "id": "q239"
+                "id": "q239",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "Trónfosztottnak nyilvánította a dinasztiát a magyar nemzet elleni fegyveres támadás és az alkotmány megsértése miatt"
             },
             {
                 "difficulty": "expert",
@@ -2572,7 +3037,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A dualizmus korában a kapitalista fejlődés mellett továbbra is erős maradt a történeti elit, a nagybirtok és a rendi eredetű presztízs.",
-                "id": "q240"
+                "id": "q240",
+                "category": "A hosszú 19. század",
+                "value": 400,
+                "correctAnswer": "Mert a modern polgári-gazdasági elemek mellett tovább éltek a rendi eredetű társadalmi hierarchiák és nagybirtokosi pozíciók is"
             }
         ]
     },
@@ -2593,7 +3061,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint megjelent a tömegkultúra és a szabadidő fogalma"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a városiasodás (urbanizáció) éppen hogy felgyorsult, hatalmas metropoliszok alakultak ki, ahová a vidéki lakosság tömegesen áramlott be."
+                "explanation": "A hibás állítás az első: a városiasodás (urbanizáció) éppen hogy felgyorsult, hatalmas metropoliszok alakultak ki, ahová a vidéki lakosság tömegesen áramlott be.",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "A korabeli források alapján valószínűsíthető, hogy a városiasodás lelassult, mert a gyárakat vidékre telepítették"
             },
             {
                 "id": "q45",
@@ -2607,7 +3078,10 @@ export const gameBoard: BoardCell[] = [
                     "Célja a nemesség és a bécsi udvar érdekeinek összehangolása volt a birodalom megerősítése érdekében"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A hibás állítás az első: az érdekegyesítés nem a bécsi udvarral, hanem a magyar TÁRSADALMI OSZTÁLYOK (nemesség és jobbágyság) közötti összefogást jelentette a polgárosodás és a nemzeti függetlenség érdekében."
+                "explanation": "A hibás állítás az első: az érdekegyesítés nem a bécsi udvarral, hanem a magyar TÁRSADALMI OSZTÁLYOK (nemesség és jobbágyság) közötti összefogást jelentette a polgárosodás és a nemzeti függetlenség érdekében.",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "Célja a nemesség és a bécsi udvar érdekeinek összehangolása volt a birodalom megerősítése érdekében"
             },
             {
                 "id": "q50",
@@ -2621,7 +3095,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint a király rendeletei csak miniszteri ellenjegyzéssel voltak érvényesek"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hibás állítás az első: az áprilisi törvények NEM mondták ki a függetlenséget (azt csak 1849-ben). Magyarország a birodalom része maradt (perszonálunió), a külügy és a hadügy kérdése pedig tisztázatlan, konfliktusos pont maradt."
+                "explanation": "A hibás állítás az első: az áprilisi törvények NEM mondták ki a függetlenséget (azt csak 1849-ben). Magyarország a birodalom része maradt (perszonálunió), a külügy és a hadügy kérdése pedig tisztázatlan, konfliktusos pont maradt.",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "Magyarország teljesen elszakadt a Habsburg Birodalomtól és önálló külüggyel, hadüggyel rendelkezett"
             },
             {
                 "id": "q55",
@@ -2635,7 +3112,10 @@ export const gameBoard: BoardCell[] = [
                     "A levél szerint Magyarország feladta az önálló állami lét legfontosabb biztosítékait"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A hibás állítás az első: Kossuth Lajos emigrációjából élesen ELLENEZTE a kiegyezést, mert úgy látta, hogy Magyarország sorsát egy halálra ítélt birodalomhoz köti (ez volt a Kasszandra-jóslat)."
+                "explanation": "A hibás állítás az első: Kossuth Lajos emigrációjából élesen ELLENEZTE a kiegyezést, mert úgy látta, hogy Magyarország sorsát egy halálra ítélt birodalomhoz köti (ez volt a Kasszandra-jóslat).",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "Kossuth támogatta a kiegyezést, csak a gazdasági feltételeket tartotta előnytelennek"
             },
             {
                 "difficulty": "expert",
@@ -2649,7 +3129,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A hibás állítás az első: a 19. század első felében (a 'népek tavaszáig') a liberalizmus és a nacionalizmus szorosan összefonódott, egymást erősítő eszmék voltak a régi rendszerekkel szemben.",
-                "id": "q241"
+                "id": "q241",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "A két eszme egymást kizáró, ellenséges ideológia volt a 19. század első felében"
             },
             {
                 "difficulty": "expert",
@@ -2663,7 +3146,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A polgári átalakuláshoz szabad munkaerő és föld kellett. Az önkéntes örökváltság nem működött (a parasztnak nem volt pénze). A kötelező megváltásnál a földesurat kárpótolni kellett, de az államkassza üres volt.",
-                "id": "q242"
+                "id": "q242",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "Mert a jobbágyoknak nem volt pénzük megváltani magukat, az államnak (és a nemességnek) pedig nem volt tőkéje a kártalanításra"
             },
             {
                 "difficulty": "expert",
@@ -2677,7 +3163,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A katonai és politikai vezetés között feszültség volt. Görgei (és a tiszti kar egy része) az áprilisi törvények védelmére esküdött fel, és ellenezte a trónfosztást, amit Kossuth politikai okokból keresztülvitt.",
-                "id": "q243"
+                "id": "q243",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "Görgei a katonai győzelmekkel egy kedvező békekötést akart kikényszeríteni a Habsburgoktól, míg Kossuth a függetlenség kikiáltására használta fel a sikereket"
             },
             {
                 "difficulty": "expert",
@@ -2691,7 +3180,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A hibás állítás az első: a magyar elit ragaszkodott az 'egy politikai nemzet' elvéhez és az ország területi egységéhez, így területi autonómiát (a horvátok kivételével) senkinek nem adtak.",
-                "id": "q244"
+                "id": "q244",
+                "category": "A hosszú 19. század",
+                "value": 500,
+                "correctAnswer": "Az 1868-as nemzetiségi törvény területi autonómiát és önálló parlamentet biztosított minden magyarországi nemzetiségnek"
             }
         ]
     },
@@ -2712,7 +3204,10 @@ export const gameBoard: BoardCell[] = [
                     "A versailles-i békeszerződés aláírása"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "1914. június 28-án egy szerb nacionalista diák, Gavrilo Princip meggyilkolta az osztrák-magyar trónörököst, ami elindította a hadüzenetek láncolatát."
+                "explanation": "1914. június 28-án egy szerb nacionalista diák, Gavrilo Princip meggyilkolta az osztrák-magyar trónörököst, ami elindította a hadüzenetek láncolatát.",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "A szarajevói merénylet Ferenc Ferdinánd ellen"
             },
             {
                 "id": "q91",
@@ -2726,7 +3221,10 @@ export const gameBoard: BoardCell[] = [
                     "1921"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A magyar békedelegáció 1920. június 4-én írta alá a békediktátumot a versailles-i Nagy Trianon palotában."
+                "explanation": "A magyar békedelegáció 1920. június 4-én írta alá a békediktátumot a versailles-i Nagy Trianon palotában.",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "1920"
             },
             {
                 "difficulty": "easy",
@@ -2740,7 +3238,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Az I. világháborúban a brit-francia-orosz antant harcolt a német-osztrák-magyar központi hatalmak ellen.",
-                "id": "q245"
+                "id": "q245",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "Az antant és a központi hatalmak"
             },
             {
                 "difficulty": "easy",
@@ -2754,7 +3255,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Az USA a korlátlan tengeralattjáró-háború miatt lépett be az antant oldalán, hatalmas gazdasági és katonai fölényt biztosítva.",
-                "id": "q246"
+                "id": "q246",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "Amerikai Egyesült Államok"
             },
             {
                 "difficulty": "easy",
@@ -2768,7 +3272,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A trianoni békeszerződést a versailles-i Nagy Trianon kastélyban írták alá.",
-                "id": "q247"
+                "id": "q247",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "Versailles (Trianon palota)"
             },
             {
                 "difficulty": "easy",
@@ -2782,7 +3289,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Horthy Miklós egykori tengerésztisztet 1920-ban választotta kormányzóvá a Nemzetgyűlés.",
-                "id": "q248"
+                "id": "q248",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "Horthy Miklós"
             },
             {
                 "difficulty": "easy",
@@ -2796,7 +3306,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "1939. szeptember 1-jén a német csapatok átlépték a lengyel határt, ami a II. világháború kezdetét jelentette.",
-                "id": "q249"
+                "id": "q249",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "1939"
             },
             {
                 "difficulty": "easy",
@@ -2810,7 +3323,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Az 'Endlösung' a zsidó nép szisztematikus, ipari méretű kiirtását jelentette a haláltáborokban (holokauszt).",
-                "id": "q250"
+                "id": "q250",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "Endlösung (Végső megoldás)"
             },
             {
                 "id": "elso-vh-100-01",
@@ -2831,7 +3347,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "1914"
             },
             {
                 "id": "elso-vh-100-02",
@@ -2852,7 +3371,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "A szarajevói merénylet"
             },
             {
                 "id": "masodik-vh-100-01",
@@ -2873,7 +3395,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "1939"
             },
             {
                 "id": "masodik-vh-100-02",
@@ -2894,7 +3419,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 100,
+                "correctAnswer": "Lengyelország"
             }
         ]
     },
@@ -2915,7 +3443,10 @@ export const gameBoard: BoardCell[] = [
                     "Bizonyos megközelítések szerint béketárgyalások kezdeményezését az USA bevonásával"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A németek tudták, hogy két fronton nem nyerhetnek. A terv az volt, hogy a lassan mozgósító oroszok előtt, Belgiumon át gyorsan lerohanják Párizst, de a terv a marne-i csatánál elbukott."
+                "explanation": "A németek tudták, hogy két fronton nem nyerhetnek. A terv az volt, hogy a lassan mozgósító oroszok előtt, Belgiumon át gyorsan lerohanják Párizst, de a terv a marne-i csatánál elbukott.",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Egy gyors, kétfrontos háborút elkerülő tervet: előbb Franciaország gyors legyőzése, majd Oroszország megtámadása"
             },
             {
                 "id": "q92",
@@ -2929,7 +3460,10 @@ export const gameBoard: BoardCell[] = [
                     "A kommunizmus terjedésének megakadályozására"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Az antant hatalmak Woodrow Wilson amerikai elnök nemzeti önrendelkezési elvére hivatkoztak, bár a határok meghúzásakor gyakran a stratégiai és gazdasági érdekek (pl. vasútvonalak) felülírták az etnikai határokat."
+                "explanation": "Az antant hatalmak Woodrow Wilson amerikai elnök nemzeti önrendelkezési elvére hivatkoztak, bár a határok meghúzásakor gyakran a stratégiai és gazdasági érdekek (pl. vasútvonalak) felülírták az etnikai határokat.",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "A nemzeti önrendelkezés elvére (Wilsoni elvek)"
             },
             {
                 "difficulty": "medium",
@@ -2943,7 +3477,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Woodrow Wilson amerikai elnök egy demokratikus világrendet akart építeni, de elvei a párizsi békekonferencián háttérbe szorultak a győztesek bosszúvágya miatt.",
-                "id": "q251"
+                "id": "q251",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Egy igazságos, a nemzeti önrendelkezésen alapuló tartós béke és a Népszövetség létrehozása"
             },
             {
                 "difficulty": "medium",
@@ -2957,7 +3494,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A négyéves háború felőrölte a birodalmat. A vereség közeledtével a nemzetiségek sorra kikiáltották függetlenségüket, a hátország pedig fellázadt.",
-                "id": "q252"
+                "id": "q252",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "A katonai vereség, a gazdasági kimerültség és a nemzetiségek elszakadási törekvései miatt"
             },
             {
                 "difficulty": "medium",
@@ -2971,7 +3511,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A békeszerződés értelmében a történelmi Magyarország (Horvátország nélkül) 282 ezer km²-ről 93 ezer km²-re csökkent.",
-                "id": "q253"
+                "id": "q253",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Elvesztette területének mintegy kétharmadát és lakosságának több mint felét"
             },
             {
                 "difficulty": "medium",
@@ -2985,7 +3528,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "Bethlen István sikeresen stabilizálta a Trianon utáni csonka országot: új valutát (pengő) vezetett be, és Olaszországgal kötött szerződéssel kitört a kisantant gyűrűjéből.",
-                "id": "q254"
+                "id": "q254",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "A politikai rendszer stabilizálása, a gazdaság talpra állítása (Népszövetségi kölcsönnel) és a nemzetközi elszigeteltség kitörése"
             },
             {
                 "difficulty": "medium",
@@ -2999,7 +3545,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Lengyelország lerohanása után a nyugati fronton 1940 tavaszáig nem történtek jelentős hadműveletek, a felek csak farkasszemet néztek.",
-                "id": "q255"
+                "id": "q255",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Bár Nagy-Britannia és Franciaország hadat üzent Németországnak, hónapokig nem indítottak tényleges fegyveres támadást nyugaton"
             },
             {
                 "difficulty": "medium",
@@ -3013,7 +3562,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A revíziós sikerek reményében a magyar kormányok egyre inkább a tengelyhatalmakhoz (Németország, Olaszország) kötötték az országot, és átvették azok antiszemita politikáját.",
-                "id": "q256"
+                "id": "q256",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "A náci Németországhoz való politikai közeledés és a hazai szélsőjobboldal nyomása miatt, céljuk a zsidóság gazdasági és társadalmi kiszorítása volt"
             },
             {
                 "id": "elso-vh-200-01",
@@ -3034,7 +3586,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Történelmi szempontból vizsgálva állóháború"
             },
             {
                 "id": "elso-vh-200-02",
@@ -3055,7 +3610,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Mert a modern ipari fegyverek tömegesen jelentek meg"
             },
             {
                 "id": "masodik-vh-200-01",
@@ -3076,7 +3634,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Villámháború"
             },
             {
                 "id": "masodik-vh-200-02",
@@ -3097,7 +3658,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 200,
+                "correctAnswer": "Mert a tengelyhatalmak ettől kezdve egyre inkább védekezésre szorultak a keleti fronton"
             }
         ]
     },
@@ -3118,7 +3682,10 @@ export const gameBoard: BoardCell[] = [
                     "Egyes kutatások alapján felmerült, hogy mert a lovasság elvesztette a jelentőségét a repülőkkel szemben"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A technológiai fejlődés (géppuskák) lehetetlenné tette a hagyományos, nyílt terepen történő rohamokat. A seregek beásták magukat, és több száz kilométeres lövészárok-rendszerek alakultak ki."
+                "explanation": "A technológiai fejlődés (géppuskák) lehetetlenné tette a hagyományos, nyílt terepen történő rohamokat. A seregek beásták magukat, és több száz kilométeres lövészárok-rendszerek alakultak ki.",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Mert a modern védekező fegyverek (géppuska, szögesdrót, tüzérség) fölénybe kerültek a gyalogsági támadással szemben"
             },
             {
                 "id": "q93",
@@ -3132,7 +3699,10 @@ export const gameBoard: BoardCell[] = [
                     "Az ország elvesztette nyersanyagforrásainak (fa, só, ércek) és ipari kapacitásának jelentős részét, a gazdaság szerkezete felborult"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A korábbi egységes Kárpát-medencei gazdaság szétesett. A feldolgozóipar (pl. malomipar) Budapesten maradt, de a nyersanyagforrások (erdők, bányák) az új határokon túlra kerültek."
+                "explanation": "A korábbi egységes Kárpát-medencei gazdaság szétesett. A feldolgozóipar (pl. malomipar) Budapesten maradt, de a nyersanyagforrások (erdők, bányák) az új határokon túlra kerültek.",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Az ország elvesztette nyersanyagforrásainak (fa, só, ércek) és ipari kapacitásának jelentős részét, a gazdaság szerkezete felborult"
             },
             {
                 "difficulty": "medium",
@@ -3146,7 +3716,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A Blitzkrieg taktikája a sebességen és a meglepetésen alapult, elkerülve az első világháborús, felőrlő lövészárok-harcokat.",
-                "id": "q257"
+                "id": "q257",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "A páncélosok (tankok) és a légierő szoros együttműködésére, a gyors áttörésre és az ellenség bekerítésére épült"
             },
             {
                 "difficulty": "medium",
@@ -3160,7 +3733,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A Molotov-Ribbentrop paktum ellenére Hitler mindig is a Szovjetunió ('Lebensraum' és a kommunizmus) megsemmisítését tervezte (Barbarossa-terv).",
-                "id": "q258"
+                "id": "q258",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Mert a náci Németország 1941. június 22-én felrúgta a megnemtámadási szerződést és hadüzenet nélkül megtámadta a Szovjetuniót"
             },
             {
                 "difficulty": "medium",
@@ -3174,7 +3750,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A 'zártszám' törvény Európa első 20. századi antiszemita jellegű törvénye volt, amely a zsidó értelmiség visszaszorítását célozta a munkaerőpiacon.",
-                "id": "q259"
+                "id": "q259",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Az egyetemi hallgatók arányát a nemzetiségek (elsősorban a zsidóság) országos arányához kötötte, így korlátozva a továbbtanulásukat"
             },
             {
                 "difficulty": "medium",
@@ -3188,7 +3767,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A délvidéki bevonulás után a magyar hatóságok túlkapásai (több ezer civil áldozat) súlyos árnyékot vetettek a magyar katonai jelenlétre.",
-                "id": "q260"
+                "id": "q260",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "A partizántámadásokra válaszul indított 'razzia' során a katonaság és csendőrség ártatlan szerb és zsidó civileket mészárolt le"
             },
             {
                 "difficulty": "medium",
@@ -3202,7 +3784,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "Sztálingrádnál megtört a német hadsereg legyőzhetetlenségének mítosza, és a szovjetek átvették a hadászati kezdeményezést.",
-                "id": "q261"
+                "id": "q261",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "A szovjetek bekerítették és megsemmisítették a német 6. hadsereget, ami a keleti fronton a háború fordulópontját jelentette"
             },
             {
                 "difficulty": "medium",
@@ -3216,7 +3801,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A német megszállás után a magyar közigazgatás aktív közreműködésével hetek alatt gettósították, majd Auschwitzba deportálták a vidéki zsidóságot.",
-                "id": "q262"
+                "id": "q262",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Hogy a zsidó lakosságot elkülönítsék, kifosszák és összegyűjtsék a megsemmisítő táborokba történő deportálás előtt"
             },
             {
                 "id": "elso-vh-300-01",
@@ -3237,7 +3825,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Mert egy helyi válságot nagyhatalmi háborúvá szélesítettek"
             },
             {
                 "id": "elso-vh-300-02",
@@ -3258,7 +3849,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Totális jellegű, ipari méretű háborúvá vált"
             },
             {
                 "id": "masodik-vh-300-01",
@@ -3279,7 +3873,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Totális háborúvá vált, amely a civil lakosságot is tömegesen érintette"
             },
             {
                 "id": "masodik-vh-300-02",
@@ -3300,7 +3897,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 300,
+                "correctAnswer": "Mert a nyugati szövetségesek új frontot nyitottak Európában"
             }
         ]
     },
@@ -3321,7 +3921,10 @@ export const gameBoard: BoardCell[] = [
                     "Mindkét esemény a háború azonnali befejezését eredményezte, ami a gazdasági viszonyokra is jelentős hatással volt, amely hosszú távon is hatást gyakorolt."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Oroszország összeomlása (bolsevik forradalom) miatt a németek átcsoportosíthatták erőiket nyugatra, de az USA belépése (korlátlan tengeralattjáró-háború és a Zimmermann-távirat miatt) eldöntötte a háborút az antant javára."
+                "explanation": "Oroszország összeomlása (bolsevik forradalom) miatt a németek átcsoportosíthatták erőiket nyugatra, de az USA belépése (korlátlan tengeralattjáró-háború és a Zimmermann-távirat miatt) eldöntötte a háborút az antant javára.",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Az USA belépése friss emberanyagot és hatalmas ipari hátteret adott az antantnak, míg Oroszország kilépése csak átmenetileg tehermentesítette a központi hatalmakat"
             },
             {
                 "id": "q94",
@@ -3335,7 +3938,10 @@ export const gameBoard: BoardCell[] = [
                     "Kizárólag a történelmi határokat mutatta be, etnikai adatokat nem, bár a kortárs elit egy része ezt hevesen ellenezte, ami a társadalmi viszonyokat is érintette."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Teleki Pál és Apponyi Albert térképe zseniális módszerrel, a lakatlan területeket fehéren hagyva mutatta be a Kárpát-medence etnikai viszonyait, vizuálisan kiemelve a magyarság súlyát, de a döntéshozókat ez már nem befolyásolta."
+                "explanation": "Teleki Pál és Apponyi Albert térképe zseniális módszerrel, a lakatlan területeket fehéren hagyva mutatta be a Kárpát-medence etnikai viszonyait, vizuálisan kiemelve a magyarság súlyát, de a döntéshozókat ez már nem befolyásolta.",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "A népsűrűséget is ábrázolta, így a ritkán lakott hegyvidékek (pl. románok) halványabbak, a sűrűn lakott magyar alföldi területek élénk pirosak lettek"
             },
             {
                 "difficulty": "hard",
@@ -3349,7 +3955,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A II. világháborúban a technika (tankok, repülők, radar) felgyorsította a hadműveleteket, és a hátország (városok bombázása) is közvetlen célponttá vált.",
-                "id": "q263"
+                "id": "q263",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Az első főként statikus lövészárok-háború volt, a második gépesített, mozgó háború, amelyben a légierő és a polgári lakosság bombázása is döntő szerepet kapott"
             },
             {
                 "difficulty": "hard",
@@ -3363,7 +3972,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Bár a rendszer tekintélyelvű és konzervatív volt (nyílt szavazás vidéken, cenzúra), nem épített ki totális fasiszta diktatúrát, a parlament és az ellenzéki pártok (pl. szociáldemokraták) működhettek.",
-                "id": "q264"
+                "id": "q264",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Korlátozott parlamentarizmus volt: működött az ellenzék és a sajtó, nem volt egypártrendszer vagy totális terror (a német megszállásig)"
             },
             {
                 "difficulty": "hard",
@@ -3377,7 +3989,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A 'Nem, nem, soha!' jelszava áthatotta az oktatást, a kultúrát és a mindennapokat. A revízió vágya határozta meg Magyarország külpolitikai mozgásterét.",
-                "id": "q265"
+                "id": "q265",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "A társadalom minden rétege elutasította a békét, a területi revízió (visszacsatolás) nemzeti minimummá és a hivatalos politika fő céljává vált"
             },
             {
                 "difficulty": "hard",
@@ -3391,7 +4006,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A hibás állítás az első: Szálasi a Horthy-féle SIKERTELEN kiugrási kísérlet (1944. okt. 15.) után, német katonai nyomásra, zsarolással vette át a hatalmat, nem választásokon.",
-                "id": "q266"
+                "id": "q266",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Szálasi Ferenc a sikeres kiugrási kísérlet után, demokratikus választásokon került hatalomra"
             },
             {
                 "difficulty": "hard",
@@ -3405,7 +4023,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Jaltában (február) még megvolt a közös ellenség. Potsdamban (július-augusztus) Truman és Sztálin között már megmutatkoztak a hidegháborúhoz vezető ideológiai és hatalmi ellentétek.",
-                "id": "q267"
+                "id": "q267",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Jaltában még a háború alatti együttműködés és a befolyási övezetek kijelölése dominált, Potsdamban már kiéleződtek az ellentétek a szövetségesek között"
             },
             {
                 "difficulty": "hard",
@@ -3419,7 +4040,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A hibás állítás az első: a 2. hadsereg tragédiáját éppen a hiányos fegyverzet, a téli ruházat hiánya és a tarthatatlanul hosszú arcvonal okozta a kemény orosz télben.",
-                "id": "q268"
+                "id": "q268",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "A hadsereg kiváló téli felszereléssel és modern páncélosokkal rendelkezett, a vereséget csak a túlerő okozta"
             },
             {
                 "id": "elso-vh-400-01",
@@ -3440,7 +4064,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Az, hogy a társadalom és gazdaság teljesebb mozgósításával zajlott"
             },
             {
                 "id": "elso-vh-400-02",
@@ -3461,7 +4088,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "Történelmi szempontból vizsgálva a konfliktus teljesen érintetlenül hagyta Európa politikai térképét"
             },
             {
                 "id": "masodik-vh-400-01",
@@ -3482,7 +4112,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "A második világháborúban a népirtás és a civil lakosság elleni tömeges erőszak még hangsúlyosabb szerepet kapott"
             },
             {
                 "id": "masodik-vh-400-02",
@@ -3503,7 +4136,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 400,
+                "correctAnswer": "A háború végén Németország győztes nagyhatalomként került ki a konfliktusból"
             }
         ]
     },
@@ -3524,7 +4160,10 @@ export const gameBoard: BoardCell[] = [
                     "A propaganda és a cenzúra a mindennapi élet részévé vált, ami a gazdasági viszonyokra is jelentős hatással volt."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A hibás állítás az első: a háború alatt és után a nők társadalmi szerepe éppen hogy MEGNŐTT. Mivel a férfiak a fronton voltak, a nők tömegesen álltak munkába a gyárakban, ami felgyorsította a női egyenjogúsági (emancipációs) mozgalmakat."
+                "explanation": "A hibás állítás az első: a háború alatt és után a nők társadalmi szerepe éppen hogy MEGNŐTT. Mivel a férfiak a fronton voltak, a nők tömegesen álltak munkába a gyárakban, ami felgyorsította a női egyenjogúsági (emancipációs) mozgalmakat.",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "A háború végére a nők visszaszorultak a háztartásokba, mivel a frontról hazatérő sebesültek átvették a munkájukat"
             },
             {
                 "id": "q95",
@@ -3538,7 +4177,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert katonai téren kedvezőbb helyzetet teremtett, mint a Monarchia idején, amely hosszú távon is hatást gyakorolt."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A hadsereg létszámának és fegyverzetének korlátozása nemcsak katonai, hanem diplomáciai értelemben is kiszolgáltatottá tette Magyarországot."
+                "explanation": "A hadsereg létszámának és fegyverzetének korlátozása nemcsak katonai, hanem diplomáciai értelemben is kiszolgáltatottá tette Magyarországot.",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Mert nemcsak a honvédelem lehetőségeit szűkítette le, hanem a revíziós törekvéseket is külső támogatástól függővé tette"
             },
             {
                 "difficulty": "expert",
@@ -3552,7 +4194,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A hibás állítás az első: a párizsi békék (a franciák revansvágya miatt) igazságtalanok voltak, újabb feszültségeket teremtettek, és magukban hordozták a II. világháború csíráját.",
-                "id": "q269"
+                "id": "q269",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "A békék sikeresen megszüntették a nemzeti ellentéteket Európában, és egy évszázados békés korszakot alapoztak meg"
             },
             {
                 "difficulty": "expert",
@@ -3566,7 +4211,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A demokratikus Károlyi-kormány bízott a wilsoni elvekben, de az antant egyre több területet követelt (Vix-jegyzék). A kilátástalan helyzetben Károlyi lemondott, és a hatalmat a kommunisták vették át.",
-                "id": "q270"
+                "id": "q270",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "A Károlyi-kormány nem tudta megvédeni az ország határait az antant (Vix-jegyzék) és a szomszédok támadásaival szemben, a csalódott tömegek a radikális kommunistákhoz fordultak"
             },
             {
                 "difficulty": "expert",
@@ -3580,7 +4228,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A jogfosztás (1938-tól) egy folyamat volt. Amikor a társadalom elfogadta, hogy a zsidók másodrendű állampolgárok, a német megszállás után sokkal kisebb volt az ellenállás a deportálásokkal szemben.",
-                "id": "q271"
+                "id": "q271",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "A zsidótörvények fokozatosan jogfosztottá és gazdaságilag tönkretetté tették a zsidóságot, ami 'hozzászoktatta' a társadalmat a kirekesztéshez, előkészítve a talajt a fizikai megsemmisítéshez"
             },
             {
                 "difficulty": "expert",
@@ -3594,7 +4245,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A hibás állítás az első: Kállay soha nem üzent hadat a németeknek, és kifejezetten rettegett a szovjetektől. Titkos diplomáciája az angolszászok felé irányult, de a front közeledtével ez illúziónak bizonyult.",
-                "id": "q272"
+                "id": "q272",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Kállay Miklós nyíltan hadat üzent Németországnak és csatlakozott a szovjet Vörös Hadsereghez, amely hosszú távon is hatást gyakorolt."
             },
             {
                 "difficulty": "expert",
@@ -3608,7 +4262,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A japánok fanatikus ellenállása (pl. kamikazék) miatt az amerikai hadvezetés hatalmas saját veszteségektől tartott egy invázió esetén. A bomba bevetése sokkolta Japánt, amely kapitulált.",
-                "id": "q273"
+                "id": "q273",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Hogy kikényszerítse Japán azonnali megadását, elkerülve egy véres szárazföldi inváziót, és demonstrálja erejét a Szovjetunió felé"
             },
             {
                 "difficulty": "expert",
@@ -3622,7 +4279,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Bár mindkettő szélsőjobboldali, vezérelvű diktatúra volt, Mussolini fasizmusa eredetileg nem volt rasszista. Hitler nácizmusa viszont a 'felsőbbrendű árja faj' és a zsidóság megsemmisítésének beteges eszméjére épült.",
-                "id": "q274"
+                "id": "q274",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "A nácizmus központi eleme a biológiai fajelmélet és az antiszemitizmus volt, míg az olasz fasizmus inkább az állam mindenhatóságát (totalitarizmus) és a nemzeti nagyságot hangsúlyozta"
             },
             {
                 "id": "elso-vh-500-01",
@@ -3643,7 +4303,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Mert birodalmak bukásához, forradalmakhoz és új államok létrejöttéhez vezetett"
             },
             {
                 "id": "elso-vh-500-02",
@@ -3664,7 +4327,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Számos sérelmet és instabilitási tényezőt hagyott maga után"
             },
             {
                 "id": "masodik-vh-500-01",
@@ -3685,7 +4351,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Mert a háború után az Egyesült Államok és a Szovjetunió vált a két meghatározó szuperhatalommá"
             },
             {
                 "id": "masodik-vh-500-02",
@@ -3706,7 +4375,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Világháborúk kora",
+                "value": 500,
+                "correctAnswer": "Világméretű, totális konfliktus volt, amely alapvetően átrendezte a politikai, társadalmi és erkölcsi viszonyokat"
             }
         ]
     },
@@ -3727,7 +4399,10 @@ export const gameBoard: BoardCell[] = [
                     "Tervgazdasági csoda"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A 'gulyáskommunizmus' vagy 'fridzsiderszocializmus' kifejezés arra utalt, hogy a rendszer a politikai passzivitásért cserébe viszonylagos anyagi jólétet biztosított."
+                "explanation": "A 'gulyáskommunizmus' vagy 'fridzsiderszocializmus' kifejezés arra utalt, hogy a rendszer a politikai passzivitásért cserébe viszonylagos anyagi jólétet biztosított.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "Gulyáskommunizmus"
             },
             {
                 "id": "q56",
@@ -3741,7 +4416,10 @@ export const gameBoard: BoardCell[] = [
                     "1990"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "1990 tavaszán zajlott le az első szabad választás, amelyet az MDF (Magyar Demokrata Fórum) nyert meg, Antall József vezetésével."
+                "explanation": "1990 tavaszán zajlott le az első szabad választás, amelyet az MDF (Magyar Demokrata Fórum) nyert meg, Antall József vezetésével.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "1990"
             },
             {
                 "id": "q96",
@@ -3755,7 +4433,10 @@ export const gameBoard: BoardCell[] = [
                     "Franciaország és a Szovjetunió, amely hosszú távon is hatást gyakorolt."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A második világháború után a világ kétpólusúvá vált: a kapitalista, demokratikus Nyugatot az USA, a kommunista Keletet a Szovjetunió vezette."
+                "explanation": "A második világháború után a világ kétpólusúvá vált: a kapitalista, demokratikus Nyugatot az USA, a kommunista Keletet a Szovjetunió vezette.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "Az Amerikai Egyesült Államok (USA) és a Szovjetunió (SZU)"
             },
             {
                 "difficulty": "easy",
@@ -3769,7 +4450,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "1956. október 23-án a budapesti diákok tüntetésével kezdődött a forradalom.",
-                "id": "q275"
+                "id": "q275",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "1956"
             },
             {
                 "difficulty": "easy",
@@ -3783,7 +4467,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Kádár János a szovjetek segítségével verte le a forradalmat, majd több mint 30 évig irányította az országot.",
-                "id": "q276"
+                "id": "q276",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "Kádár János"
             },
             {
                 "difficulty": "easy",
@@ -3797,7 +4484,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A rendszerváltás után Magyarország a nyugati integráció részeként csatlakozott az Észak-atlanti Szerződés Szervezetéhez (NATO).",
-                "id": "q277"
+                "id": "q277",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "NATO"
             },
             {
                 "difficulty": "easy",
@@ -3811,7 +4501,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Magyarország 2004. május 1-jén lett az EU teljes jogú tagja 9 másik országgal együtt.",
-                "id": "q278"
+                "id": "q278",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "2004"
             },
             {
                 "difficulty": "easy",
@@ -3825,7 +4518,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A Varsói Szerződést 1955-ben hozták létre a NATO ellensúlyozására, a keleti blokk országainak részvételével.",
-                "id": "q279"
+                "id": "q279",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "Varsói Szerződés"
             },
             {
                 "id": "rakosi-gazd-100-01",
@@ -3846,7 +4542,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "Tervgazdaság"
             },
             {
                 "id": "rakosi-gazd-100-02",
@@ -3867,7 +4566,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 100,
+                "correctAnswer": "Nehézipar"
             }
         ]
     },
@@ -3888,7 +4590,10 @@ export const gameBoard: BoardCell[] = [
                     "Építjük a szocializmus alapjait!"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Ez a jelszó a Rákosi-korszak ('Aki nincs velünk, az ellenünk van') ellentéte volt: a hatalom már nem várt el aktív lelkesedést, csak azt, hogy ne lázadjanak ellene."
+                "explanation": "Ez a jelszó a Rákosi-korszak ('Aki nincs velünk, az ellenünk van') ellentéte volt: a hatalom már nem várt el aktív lelkesedést, csak azt, hogy ne lázadjanak ellene.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Aki nincs ellenünk, az velünk van."
             },
             {
                 "id": "q57",
@@ -3902,7 +4607,10 @@ export const gameBoard: BoardCell[] = [
                     "A békés átmenet és az új, demokratikus alkotmányos keretek kidolgozása az állampárt (MSZMP) és az ellenzék között"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A Kerekasztal-tárgyalásokon egyezett meg a hatalmon lévő MSZMP és az Ellenzéki Kerekasztal a békés rendszerváltás jogi feltételeiről (pl. választási törvény, alkotmánymódosítás)."
+                "explanation": "A Kerekasztal-tárgyalásokon egyezett meg a hatalmon lévő MSZMP és az Ellenzéki Kerekasztal a békés rendszerváltás jogi feltételeiről (pl. választási törvény, alkotmánymódosítás).",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "A békés átmenet és az új, demokratikus alkotmányos keretek kidolgozása az állampárt (MSZMP) és az ellenzék között"
             },
             {
                 "id": "q97",
@@ -3916,7 +4624,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint németország végleges felosztása, így a helyzet átalakulása elkerülhetetlenné vált."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Az USA hatalmas segélyprogramot indított Európa talpra állítására, felismerve, hogy a gazdasági nyomor a kommunista pártok megerősödéséhez vezetne Nyugat-Európában."
+                "explanation": "Az USA hatalmas segélyprogramot indított Európa talpra állítására, felismerve, hogy a gazdasági nyomor a kommunista pártok megerősödéséhez vezetne Nyugat-Európában.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Európa gazdasági újjáépítésének pénzügyi támogatása, ezzel a kommunizmus terjedésének megállítása"
             },
             {
                 "difficulty": "medium",
@@ -3930,7 +4641,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "Kádár az 1956-os tapasztalatokból okulva az életszínvonal emelésével (pl. háztáji gazdaságok, hitelek) próbálta megvásárolni a társadalom békéjét.",
-                "id": "q280"
+                "id": "q280",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "A rendszer viszonylagos jólétet és fogyasztási cikkeket biztosított a társadalomnak a politikai passzivitásért cserébe"
             },
             {
                 "difficulty": "medium",
@@ -3944,7 +4658,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A szovjet tervgazdaság nem bírta a versenyt a nyugati technológiával (pl. csillagháborús tervek). Gorbacsov reformjai (peresztrojka) már nem tudták megmenteni a rendszert.",
-                "id": "q281"
+                "id": "q281",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "A fegyverkezési verseny okozta gazdasági csőd és a kommunista rendszer belső válsága"
             },
             {
                 "difficulty": "medium",
@@ -3958,7 +4675,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Az EKA (1989) biztosította, hogy az MSZMP ne tudja megosztani az ellenzéket, így a Nemzeti Kerekasztal-tárgyalásokon kikényszerítették a demokratikus alkotmányozást.",
-                "id": "q282"
+                "id": "q282",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Az ellenzéki pártok és mozgalmak egyeztető fóruma volt, amely egységesen tárgyalt az állampárttal (MSZMP) a békés átmenetről"
             },
             {
                 "difficulty": "medium",
@@ -3972,7 +4692,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A kommunista NDK gazdaságilag lemaradt, és a fiatal, képzett munkaerő tömegesen menekült Nyugatra. A fal a hidegháború megosztottságának fizikai szimbóluma lett.",
-                "id": "q283"
+                "id": "q283",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Hogy megakadályozzák a keletnémetek (NDK) tömeges menekülését a demokratikus és gazdagabb Nyugat-Berlinbe"
             },
             {
                 "difficulty": "medium",
@@ -3986,7 +4709,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A vasfüggöny a keleti blokk elzártságát jelképezte (szögesdrótok, aknamezők a határon), amely megakadályozta a szabad mozgást és az információáramlást.",
-                "id": "q284"
+                "id": "q284",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Európa ideológiai, politikai és fizikai kettészakadását a demokratikus Nyugat és a szovjet uralom alatt álló Kelet között"
             },
             {
                 "id": "rakosi-gazd-200-01",
@@ -4007,7 +4733,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Mert kötelező terménybeszolgáltatást írt elő, ami súlyosan terhelte a parasztokat"
             },
             {
                 "id": "rakosi-gazd-200-02",
@@ -4028,7 +4757,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 200,
+                "correctAnswer": "Kollektivizálás"
             }
         ]
     },
@@ -4049,7 +4781,10 @@ export const gameBoard: BoardCell[] = [
                     "A tervgazdaság merevségének enyhítése piaci elemek és vállalati önállóság bevezetésével"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A reform célja a gazdaság hatékonyságának növelése volt úgy, hogy a szocialista kereteket megtartva (pl. állami tulajdon), de piaci ösztönzőket (pl. nyereségérdekeltség) is alkalmaztak."
+                "explanation": "A reform célja a gazdaság hatékonyságának növelése volt úgy, hogy a szocialista kereteket megtartva (pl. állami tulajdon), de piaci ösztönzőket (pl. nyereségérdekeltség) is alkalmaztak.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "A tervgazdaság merevségének enyhítése piaci elemek és vállalati önállóság bevezetésével"
             },
             {
                 "id": "q58",
@@ -4063,7 +4798,10 @@ export const gameBoard: BoardCell[] = [
                     "Egyes kutatások alapján felmerült, hogy történelmi szempontból vizsgálva mert ekkor írták alá a Varsói Szerződés felbontását"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A Kádár-rendszer legitimitása az 1956-os forradalom elfojtásán és elhazudásán alapult. A mártír miniszterelnök rehabilitálása és tömegek előtti újratemetése a rendszer végét szimbolizálta."
+                "explanation": "A Kádár-rendszer legitimitása az 1956-os forradalom elfojtásán és elhazudásán alapult. A mártír miniszterelnök rehabilitálása és tömegek előtti újratemetése a rendszer végét szimbolizálta.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "Mert a Kádár-rendszer alapmítoszának (az '56-os 'ellenforradalom') megdőlését és a rendszer erkölcsi bukását jelentette"
             },
             {
                 "id": "q98",
@@ -4077,7 +4815,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert titkos békeszerződést kötöttek Jaltában, ami a társadalmi viszonyokat is érintette."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A 'kölcsönös biztos megsemmisítés' (MAD) doktrínája miatt a szuperhatalmak kerülték a közvetlen háborút, helyette helyi konfliktusokban (proxy háborúk, pl. Korea, Vietnám) támogatták a szembenálló feleket."
+                "explanation": "A 'kölcsönös biztos megsemmisítés' (MAD) doktrínája miatt a szuperhatalmak kerülték a közvetlen háborút, helyette helyi konfliktusokban (proxy háborúk, pl. Korea, Vietnám) támogatták a szembenálló feleket.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "A kölcsönös elrettentés elve (nukleáris egyensúly) miatt, mivel egy atomháború mindkét fél pusztulását jelentette volna"
             },
             {
                 "difficulty": "medium",
@@ -4091,7 +4832,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Nyers Rezső reformja a szocialista blokkban egyedülálló módon próbálta hatékonyabbá tenni a gazdaságot, de a szovjet nyomás és a belső ellenállás miatt a 70-es években leállították.",
-                "id": "q285"
+                "id": "q285",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "Mert a szigorú tervgazdaságot piaci elemekkel (vállalati önállóság, nyereségérdekeltség) lazította, ami átmeneti gazdasági fellendülést hozott"
             },
             {
                 "difficulty": "medium",
@@ -4105,7 +4849,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A magyar határőrök nem lőttek a menekülőkre. Ez az esemény megmutatta a szovjet blokk gyengeségét, és felgyorsította a berlini fal leomlásához vezető folyamatokat.",
-                "id": "q286"
+                "id": "q286",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "Mert a határ ideiglenes megnyitását kihasználva több száz keletnémet menekült át Ausztriába, ami elindította a vasfüggöny és a keleti blokk összeomlását"
             },
             {
                 "difficulty": "medium",
@@ -4119,7 +4866,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "Az USA felismerte, hogy a Szovjetunió világuralomra tör. A doktrína szakított az izolacionizmussal, és az USA-t a 'szabad világ' védelmezőjévé tette.",
-                "id": "q287"
+                "id": "q287",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "A kommunizmus terjeszkedésének 'feltartóztatása' (containment) gazdasági és katonai segítséggel a fenyegetett országok (pl. Görögország, Törökország) számára"
             },
             {
                 "difficulty": "medium",
@@ -4133,7 +4883,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Robert Schuman terve zseniális volt: a háborúhoz szükséges alapanyagok (szén, acél) közös felügyelete gazdaságilag összekötötte a korábbi ősellenségeket (franciákat és németeket).",
-                "id": "q288"
+                "id": "q288",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "Hogy a francia és német nehézipar közös ellenőrzésével lehetetlenné tegyenek egy újabb háborút a két ország között, megalapozva az európai integrációt"
             },
             {
                 "difficulty": "medium",
@@ -4147,7 +4900,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A teljes reprivatizáció (az eredeti vagyon visszaadása) lehetetlen lett volna. A kárpótlási jegyeket földre, részvényekre vagy lakásra lehetett cserélni.",
-                "id": "q289"
+                "id": "q289",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "Hogy részleges anyagi kárpótlást nyújtsanak azoknak, akiket a kommunista diktatúra megfosztott a vagyonuktól (pl. államosítás, téeszesítés)"
             },
             {
                 "id": "rakosi-gazd-300-01",
@@ -4168,7 +4924,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "A fogyasztási cikkek hiánya és az életszínvonal romlása"
             },
             {
                 "id": "rakosi-gazd-300-02",
@@ -4189,7 +4948,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 300,
+                "correctAnswer": "A központi tervutasítás és a politikailag vezérelt gazdasági döntések domináltak"
             }
         ]
     },
@@ -4210,7 +4972,10 @@ export const gameBoard: BoardCell[] = [
                     "A parasztság mentesült minden adó alól, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Bár a földeket tsz-esítették, a parasztok megtarthattak egy kis 'háztáji' földet és állatokat, aminek a terményeit szabadon eladhatták, ez biztosította az ország élelmiszer-ellátását."
+                "explanation": "Bár a földeket tsz-esítették, a parasztok megtarthattak egy kis 'háztáji' földet és állatokat, aminek a terményeit szabadon eladhatták, ez biztosította az ország élelmiszer-ellátását.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "Engedélyezték és támogatták a háztáji gazdaságokat, amelyek a piacra is termelhettek"
             },
             {
                 "id": "q59",
@@ -4224,7 +4989,10 @@ export const gameBoard: BoardCell[] = [
                     "Magyarországon nem volt gazdasági válság, Romániában igen, így a rendszer átalakulása elkerülhetetlenné vált."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A magyar 'tárgyalásos forradalom' vér nélkül, jogi úton zajlott le, míg Romániában Nicolae Ceaușescu diktatúráját csak fegyveres felkelés és sortüzek árán tudták megdönteni."
+                "explanation": "A magyar 'tárgyalásos forradalom' vér nélkül, jogi úton zajlott le, míg Romániában Nicolae Ceaușescu diktatúráját csak fegyveres felkelés és sortüzek árán tudták megdönteni.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "Magyarországon tárgyalásos, békés átmenet történt, Romániában véres, fegyveres forradalom döntötte meg a diktatúrát"
             },
             {
                 "id": "q99",
@@ -4238,7 +5006,10 @@ export const gameBoard: BoardCell[] = [
                     "Szakított a be nem avatkozás elvével, és globális kötelezettséget vállalt a kommunizmus 'feltartóztatására' (containment) bárhol a világon"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Harry Truman elnök 1947-ben meghirdette, hogy az USA gazdasági és katonai segítséget nyújt minden olyan szabad népnek, amelyet fegyveres kisebbségek vagy külső nyomás (kommunizmus) fenyeget."
+                "explanation": "Harry Truman elnök 1947-ben meghirdette, hogy az USA gazdasági és katonai segítséget nyújt minden olyan szabad népnek, amelyet fegyveres kisebbségek vagy külső nyomás (kommunizmus) fenyeget.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "Szakított a be nem avatkozás elvével, és globális kötelezettséget vállalt a kommunizmus 'feltartóztatására' (containment) bárhol a világon"
             },
             {
                 "difficulty": "hard",
@@ -4252,7 +5023,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "Bár mindkettőt szovjet tankok verték le, 1956-ban a magyarok fegyverrel harcoltak a függetlenségért, míg 1968-ban Alexander Dubčekék csak reformálni akarták a szocializmust.",
-                "id": "q290"
+                "id": "q290",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "A magyar forradalom fegyveres felkelés volt a rendszer ellen, míg a prágai tavasz a kommunista párton belüli, békés reformkísérlet ('emberarcú szocializmus')"
             },
             {
                 "difficulty": "hard",
@@ -4266,7 +5040,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A világpiaci árobbanás (olaj) súlyosan érintette a magyar gazdaságot. Kádár nem akarta csökkenteni az életszínvonalat, ezért az ország csapdahelyzetbe került: hitelből finanszírozta a fogyasztást.",
-                "id": "q291"
+                "id": "q291",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "Az olajválságok miatt a gazdaság lelassult, az életszínvonal fenntartását pedig egyre inkább nyugati hitelekből (eladósodás) finanszírozták"
             },
             {
                 "difficulty": "hard",
@@ -4280,7 +5057,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "Maastricht jelentette a minőségi ugrást: az Európai Közösségből Európai Unió lett, megteremtve a gazdasági és monetáris unió (EMU) alapjait.",
-                "id": "q292"
+                "id": "q292",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "A korábbi tisztán gazdasági közösségből (EGK) politikai unióvá is vált, célul tűzve ki a közös valutát (euró) és a közös külpolitikát"
             },
             {
                 "difficulty": "expert",
@@ -4294,7 +5074,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A magyar átmenet egyik sajátossága az volt, hogy a régi alkotmány radikális módosításával, de jogi keretek között hozták létre az új demokratikus rendszert.",
-                "id": "q293"
+                "id": "q293",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "Mert a jogfolytonosság látszatát fenntartva, alkotmánymódosításokkal építették ki a demokratikus jogállamot, elkerülve a forradalmi jogi vákuumot"
             },
             {
                 "difficulty": "hard",
@@ -4308,7 +5091,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A Varsói Szerződés valójában a szovjet birodalmi érdekek eszköze volt, amit a magyar és a csehszlovák forradalom leverése is bizonyít. A NATO-ban a tagállamok szuverenitása megmaradt.",
-                "id": "q294"
+                "id": "q294",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "A NATO független, demokratikus államok önkéntes védelmi szövetsége volt, míg a Varsói Szerződés a Szovjetunió dominanciáján alapult, és saját tagállamai ellen is bevetették (pl. 1956, 1968)"
             },
             {
                 "id": "rakosi-gazd-400-01",
@@ -4329,7 +5115,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "A Rákosi-korszakban a központi terv és a politikai akarat fontosabb volt a piaci igényeknél"
             },
             {
                 "id": "rakosi-gazd-400-02",
@@ -4350,7 +5139,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 400,
+                "correctAnswer": "A korszak fő jellemzője a magánvállalkozások széles körű támogatása volt"
             }
         ]
     },
@@ -4371,7 +5163,10 @@ export const gameBoard: BoardCell[] = [
                     "A rendszer felismerte az olajválság veszélyeit, és azonnal csökkentette az állami kiadásokat"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A hibás állítás az első: a vezetés sokáig 'begyűrűződés-elmélettel' hitegette magát (hogy a válság nem érinti a szocialista blokkot), nem csökkentette a kiadásokat, hanem hiteleket vett fel."
+                "explanation": "A hibás állítás az első: a vezetés sokáig 'begyűrűződés-elmélettel' hitegette magát (hogy a válság nem érinti a szocialista blokkot), nem csökkentette a kiadásokat, hanem hiteleket vett fel.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "A rendszer felismerte az olajválság veszélyeit, és azonnal csökkentette az állami kiadásokat"
             },
             {
                 "id": "q60",
@@ -4385,7 +5180,10 @@ export const gameBoard: BoardCell[] = [
                     "Bizonyos megközelítések szerint a külföldi tőke beáramlása elengedhetetlen volt a gazdaság modernizálásához"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A hibás állítás az első: a privatizáció (magánosítás) során a gyárak és vállalatok nem a munkások, hanem hazai és külföldi magánbefektetők (tőkések) kezébe kerültek."
+                "explanation": "A hibás állítás az első: a privatizáció (magánosítás) során a gyárak és vállalatok nem a munkások, hanem hazai és külföldi magánbefektetők (tőkések) kezébe kerültek.",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "A privatizáció során az állami vagyon jelentős része a dolgozók (munkások) kollektív tulajdonába ment át"
             },
             {
                 "id": "q100",
@@ -4399,7 +5197,10 @@ export const gameBoard: BoardCell[] = [
                     "Bizonyos megközelítések szerint a megegyezés részeként az USA titokban kivonta saját rakétáit Törökországból"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A hibás állítás az első: a válság békés kompromisszummal zárult. A szovjetek kivonták a rakétákat Kubából, cserébe az USA megígérte, hogy nem támadja meg Kubát (és kivonta a törökországi rakétákat)."
+                "explanation": "A hibás állítás az első: a válság békés kompromisszummal zárult. A szovjetek kivonták a rakétákat Kubából, cserébe az USA megígérte, hogy nem támadja meg Kubát (és kivonta a törökországi rakétákat).",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "A válság azzal végződött, hogy az USA fegyveresen megszállta Kubát és megdöntötte Fidel Castro rendszerét"
             },
             {
                 "difficulty": "expert",
@@ -4413,7 +5214,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A hibás állítás az első: a Kádár-rendszer végig szigorú egypártrendszer maradt, cenzúrával. A kompromisszum lényege az életszínvonal emelése volt a politikai szabadságjogok (pl. szabad választások) helyett.",
-                "id": "q295"
+                "id": "q295",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "A rendszer megengedte a többpártrendszert és a szabad sajtót, cserébe a lakosság elfogadta a szovjet megszállást"
             },
             {
                 "difficulty": "expert",
@@ -4427,7 +5231,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 1,
                 "explanation": "A magyar gazdaság nyitott volt. Amikor a szovjet olaj drágult, és a nyugati hitelek kamatai az egekbe szöktek, az ország adósságcsapdába került, ami a rendszer bukásához vezetett.",
-                "id": "q296"
+                "id": "q296",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "Magyarország a nyersanyagokat (olaj) a KGST-ből (Szovjetunió) kapta, de a technológiát és a hiteleket a Nyugattól, így mindkét piac válsága (olajárrobbanás, hitelkamatok) egyszerre sújtotta"
             },
             {
                 "difficulty": "expert",
@@ -4441,7 +5248,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 3,
                 "explanation": "A magyar 'tárgyalásos forradalom' egyedülálló volt: a Nemzeti Kerekasztal-tárgyalásokon vér nélkül, jogi keretek között zajlott le a rendszerváltás.",
-                "id": "q297"
+                "id": "q297",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "Magyarországon az ellenzék és a reformkommunisták tárgyalásos, alkotmányos úton (jogforradalom) bontották le a diktatúrát, míg Romániában véres fegyveres felkelésre volt szükség"
             },
             {
                 "difficulty": "expert",
@@ -4455,7 +5265,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 0,
                 "explanation": "A hibás állítás az első: az ENSZ csak vitatta a 'magyar kérdést', de semmilyen fegyveres vagy érdemi segítséget nem nyújtott. A Nyugat nem kockáztatott meg egy III. világháborút.",
-                "id": "q298"
+                "id": "q298",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "Az ENSZ fegyveres békefenntartókat küldött Budapestre a szovjet támadás megállítására, amely hosszú távon is hatást gyakorolt."
             },
             {
                 "difficulty": "expert",
@@ -4469,7 +5282,10 @@ export const gameBoard: BoardCell[] = [
                 ],
                 "correctAnswerIndex": 2,
                 "explanation": "A schengeni övezet létrehozása (1985/1995) a négy alapszabadság (áruk, szolgáltatások, tőke, személyek) közül a személyek szabad mozgását tette a mindennapok részévé.",
-                "id": "q299"
+                "id": "q299",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "Mert eltörölte a belső határellenőrzéseket a csatlakozó tagállamok között, biztosítva a személyek szabad mozgását, ami az európai polgárság egyik legkézzelfoghatóbb vívmánya lett"
             },
             {
                 "id": "rakosi-gazd-500-01",
@@ -4490,7 +5306,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "Mert a gazdasági intézkedések politikai ellenőrzést és társadalmi kényszert is szolgáltak"
             },
             {
                 "id": "rakosi-gazd-500-02",
@@ -4511,7 +5330,10 @@ export const gameBoard: BoardCell[] = [
                 "isActive": true,
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
-                "notes": ""
+                "notes": "",
+                "category": "Jelenkor és Hidegháború",
+                "value": 500,
+                "correctAnswer": "A rendszer egyszerre akart gyors iparosítást és magas fogyasztói jólétet, de az előbbit a lakosság rovására erőltette"
             }
         ]
     },
@@ -4539,7 +5361,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Középkor és kultúra",
+                "value": 100,
+                "correctAnswer": "Egyetem"
             },
             {
                 "id": "kozepkor-muvelodese-100-02",
@@ -4560,7 +5385,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Középkor és kultúra",
+                "value": 100,
+                "correctAnswer": "Román"
             }
         ]
     },
@@ -4588,7 +5416,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Középkor és kultúra",
+                "value": 200,
+                "correctAnswer": "Gótikus"
             },
             {
                 "id": "kozepkor-muvelodese-200-02",
@@ -4609,7 +5440,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Középkor és kultúra",
+                "value": 200,
+                "correctAnswer": "A középkor végén és a kora újkor elején"
             }
         ]
     },
@@ -4637,7 +5471,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Középkor és kultúra",
+                "value": 300,
+                "correctAnswer": "Mert kódexmásolással és oktatással őrizték és továbbadták a tudást"
             },
             {
                 "id": "kozepkor-muvelodese-300-02",
@@ -4658,7 +5495,35 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Középkor és kultúra",
+                "value": 300,
+                "correctAnswer": "Az ember és az antik örökség iránti fokozott érdeklődés"
+            },
+            {
+                "id": "kozepkor-match-001",
+                "topic": "A középkor művelődése",
+                "category": "Középkor és kultúra",
+                "value": 300,
+                "questionType": "relationship_match",
+                "difficulty": "medium",
+                "question": "Melyik párosítás helyes?",
+                "sourceText": "",
+                "options": [
+                    "Román stílus – csúcsívek és hatalmas üvegablakok",
+                    "Gótikus stílus – tömör falak és félkörívek",
+                    "Reneszánsz – antik minták újrafelfedezése",
+                    "Skolasztika – a klasszikus gőzgép fejlesztése"
+                ],
+                "correctAnswer": "Reneszánsz – antik minták újrafelfedezése",
+                "explanation": "A reneszánsz az antik kultúra újrafelfedezésére és emberközpontúbb szemléletre épült.",
+                "skillFocus": "párosítás",
+                "oralExamLink": "Középkori és reneszánsz művelődés",
+                "isActive": true,
+                "createdBy": "teacher",
+                "lastEdited": "2026-04-19",
+                "notes": "",
+                "correctAnswerIndex": 2
             }
         ]
     },
@@ -4686,7 +5551,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Középkor és kultúra",
+                "value": 400,
+                "correctAnswer": "A román stílus tömörebb és zártabb, a gótikus magasba törőbb és fényesebb"
             },
             {
                 "id": "kozepkor-muvelodese-400-02",
@@ -4707,7 +5575,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Középkor és kultúra",
+                "value": 400,
+                "correctAnswer": "A reneszánsz lényege az antik kultúra teljes elutasítása"
             }
         ]
     },
@@ -4735,7 +5606,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Középkor és kultúra",
+                "value": 500,
+                "correctAnswer": "Mert a reneszánsz új emberképet és antik mintákat hozott, de sok középkori intézményre és tudásformára is épített"
             },
             {
                 "id": "kozepkor-muvelodese-500-02",
@@ -4756,7 +5630,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Középkor és kultúra",
+                "value": 500,
+                "correctAnswer": "A reneszánsz új szempontokkal gazdagította a művelődést, miközben az antik örökséghez fordult vissza"
             }
         ]
     },
@@ -4784,7 +5661,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Eszmék és ideológiák",
+                "value": 100,
+                "correctAnswer": "Liberalizmus"
             },
             {
                 "id": "eszmek-19sz-100-02",
@@ -4805,7 +5685,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Eszmék és ideológiák",
+                "value": 100,
+                "correctAnswer": "Konzervativizmus"
             }
         ]
     },
@@ -4833,7 +5716,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Eszmék és ideológiák",
+                "value": 200,
+                "correctAnswer": "Nacionalizmus"
             },
             {
                 "id": "eszmek-19sz-200-02",
@@ -4854,7 +5740,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Eszmék és ideológiák",
+                "value": 200,
+                "correctAnswer": "Mert a dinasztikus rend és a régi politikai rendszer fenntartására törekedett"
             }
         ]
     },
@@ -4882,7 +5771,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Eszmék és ideológiák",
+                "value": 300,
+                "correctAnswer": "Az alkotmányosság és a szabadságjogok biztosítása"
             },
             {
                 "id": "eszmek-19sz-300-02",
@@ -4903,7 +5795,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Eszmék és ideológiák",
+                "value": 300,
+                "correctAnswer": "Mert a napóleoni háborúk és a politikai átalakulások felerősítették a nemzeti törekvéseket"
             }
         ]
     },
@@ -4931,7 +5826,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Eszmék és ideológiák",
+                "value": 400,
+                "correctAnswer": "A liberalizmus a szabadságjogok és reformok felé nyitottabb volt, míg a konzervativizmus inkább a hagyományos rend megőrzésére törekedett"
             },
             {
                 "id": "eszmek-19sz-400-02",
@@ -4952,7 +5850,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Eszmék és ideológiák",
+                "value": 400,
+                "correctAnswer": "A korszak meghatározó eszméi mindenütt teljesen ellenállás nélkül érvényesültek"
             }
         ]
     },
@@ -4980,7 +5881,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Eszmék és ideológiák",
+                "value": 500,
+                "correctAnswer": "Mert az új eszmék a szabadság, nemzet és állam kérdését új módon vetették fel, de egymással is ütközhettek"
             },
             {
                 "id": "eszmek-19sz-500-02",
@@ -5001,7 +5905,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Eszmék és ideológiák",
+                "value": 500,
+                "correctAnswer": "Mindegyik az állam, a társadalom és az egyén viszonyának újragondolásához járult hozzá"
             }
         ]
     },
@@ -5029,7 +5936,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Gazdaság és modernizáció",
+                "value": 100,
+                "correctAnswer": "Anglia"
             },
             {
                 "id": "ipari-forradalom-100-02",
@@ -5050,7 +5960,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Gazdaság és modernizáció",
+                "value": 100,
+                "correctAnswer": "Textilipar"
             }
         ]
     },
@@ -5078,7 +5991,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Gazdaság és modernizáció",
+                "value": 200,
+                "correctAnswer": "Mert több élelmet biztosított és munkaerőt szabadított fel"
             },
             {
                 "id": "ipari-forradalom-200-02",
@@ -5099,7 +6015,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Gazdaság és modernizáció",
+                "value": 200,
+                "correctAnswer": "Urbanizáció"
             }
         ]
     },
@@ -5127,7 +6046,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Gazdaság és modernizáció",
+                "value": 300,
+                "correctAnswer": "Technikai és szervezeti újítások sorozata, amely átalakította a termelést és a társadalmat"
             },
             {
                 "id": "ipari-forradalom-300-02",
@@ -5148,7 +6070,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Gazdaság és modernizáció",
+                "value": 300,
+                "correctAnswer": "Mert a gyorsabb szállítás segítette a piacok bővülését és az ipari termelést"
             }
         ]
     },
@@ -5176,7 +6101,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 3
+                "correctAnswerIndex": 3,
+                "category": "Gazdaság és modernizáció",
+                "value": 400,
+                "correctAnswer": "A gyári termelés nagyobb gépesítettséggel és szervezettebb munkafolyamatokkal működött"
             },
             {
                 "id": "ipari-forradalom-400-02",
@@ -5197,7 +6125,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 1
+                "correctAnswerIndex": 1,
+                "category": "Gazdaság és modernizáció",
+                "value": 400,
+                "correctAnswer": "Teljesen változatlanul hagyta a közlekedést és a termelés szerkezetét, ami az események egyfajta logikus következménye volt."
             }
         ]
     },
@@ -5225,7 +6156,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 2
+                "correctAnswerIndex": 2,
+                "category": "Gazdaság és modernizáció",
+                "value": 500,
+                "correctAnswer": "Mert a technikai újítások mellett átalakította a településszerkezetet, a munkaviszonyokat, a társadalmi rétegeket és a mindennapi életet is"
             },
             {
                 "id": "ipari-forradalom-500-02",
@@ -5246,7 +6180,10 @@ export const gameBoard: BoardCell[] = [
                 "createdBy": "teacher",
                 "lastEdited": "2026-04-14",
                 "notes": "",
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 0,
+                "category": "Gazdaság és modernizáció",
+                "value": 500,
+                "correctAnswer": "Olyan átalakulás volt, amely a technikát, a termelést, a társadalmat és a mindennapi életet is tartósan megváltoztatta"
             }
         ]
     },
@@ -5267,7 +6204,10 @@ export const gameBoard: BoardCell[] = [
                     "1867–1914"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A reformkor hagyományos időhatára 1825-től 1848-ig tart."
+                "explanation": "A reformkor hagyományos időhatára 1825-től 1848-ig tart.",
+                "category": "Magyar történelem a 19. században",
+                "value": 100,
+                "correctAnswer": "1825–1848"
             },
             {
                 "id": "reformkor-100-02",
@@ -5282,7 +6222,10 @@ export const gameBoard: BoardCell[] = [
                     "Wesselényi Miklós"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Széchenyi István 1825-ben tett felajánlása jelképes reformkori kezdőpont."
+                "explanation": "Széchenyi István 1825-ben tett felajánlása jelképes reformkori kezdőpont.",
+                "category": "Magyar történelem a 19. században",
+                "value": 100,
+                "correctAnswer": "Széchenyi István"
             },
             {
                 "id": "szabadsagharc-100-01",
@@ -5297,7 +6240,10 @@ export const gameBoard: BoardCell[] = [
                     "Március 15."
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A pesti forradalom 1848. március 15-én zajlott le."
+                "explanation": "A pesti forradalom 1848. március 15-én zajlott le.",
+                "category": "Magyar történelem a 19. században",
+                "value": 100,
+                "correctAnswer": "Március 15."
             },
             {
                 "id": "szabadsagharc-100-02",
@@ -5312,7 +6258,10 @@ export const gameBoard: BoardCell[] = [
                     "A Hitlevél"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A 12 pont a márciusi forradalom politikai követeléseit foglalta össze."
+                "explanation": "A 12 pont a márciusi forradalom politikai követeléseit foglalta össze.",
+                "category": "Magyar történelem a 19. században",
+                "value": 100,
+                "correctAnswer": "A 12 pont"
             },
             {
                 "id": "dualizmus-100-01",
@@ -5327,7 +6276,10 @@ export const gameBoard: BoardCell[] = [
                     "1873"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A kiegyezés 1867-ben jött létre a Habsburg uralkodó és a magyar politikai elit megegyezéseként."
+                "explanation": "A kiegyezés 1867-ben jött létre a Habsburg uralkodó és a magyar politikai elit megegyezéseként.",
+                "category": "Magyar történelem a 19. században",
+                "value": 100,
+                "correctAnswer": "1867"
             },
             {
                 "id": "dualizmus-100-02",
@@ -5342,7 +6294,10 @@ export const gameBoard: BoardCell[] = [
                     "Bocskai István"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Deák Ferenc kulcsszerepet játszott a kiegyezés politikai előkészítésében."
+                "explanation": "Deák Ferenc kulcsszerepet játszott a kiegyezés politikai előkészítésében.",
+                "category": "Magyar történelem a 19. században",
+                "value": 100,
+                "correctAnswer": "Deák Ferenc"
             }
         ],
         "categoryName": "Magyar történelem a 19. században"
@@ -5364,7 +6319,10 @@ export const gameBoard: BoardCell[] = [
                     "Pátens"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Az örökváltság a jobbágyfelszabadítás egyik kulcsfogalma volt."
+                "explanation": "Az örökváltság a jobbágyfelszabadítás egyik kulcsfogalma volt.",
+                "category": "Magyar történelem a 19. században",
+                "value": 200,
+                "correctAnswer": "Örökváltság"
             },
             {
                 "id": "reformkor-200-02",
@@ -5379,7 +6337,10 @@ export const gameBoard: BoardCell[] = [
                     "Széchenyi István"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A 'Hitel' Széchenyi programadó műve volt a gazdasági és társadalmi reformokról."
+                "explanation": "A 'Hitel' Széchenyi programadó műve volt a gazdasági és társadalmi reformokról.",
+                "category": "Magyar történelem a 19. században",
+                "value": 200,
+                "correctAnswer": "Széchenyi István"
             },
             {
                 "id": "szabadsagharc-200-01",
@@ -5394,7 +6355,10 @@ export const gameBoard: BoardCell[] = [
                     "Görgei Artúr"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Az első felelős magyar kormány miniszterelnöke Batthyány Lajos lett."
+                "explanation": "Az első felelős magyar kormány miniszterelnöke Batthyány Lajos lett.",
+                "category": "Magyar történelem a 19. században",
+                "value": 200,
+                "correctAnswer": "Batthyány Lajos"
             },
             {
                 "id": "szabadsagharc-200-02",
@@ -5409,7 +6373,10 @@ export const gameBoard: BoardCell[] = [
                     "Vallásügyi türelmi rendelet"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Az áprilisi törvények a polgári átalakulás legfontosabb jogi alapjait teremtették meg."
+                "explanation": "Az áprilisi törvények a polgári átalakulás legfontosabb jogi alapjait teremtették meg.",
+                "category": "Magyar történelem a 19. században",
+                "value": 200,
+                "correctAnswer": "Áprilisi törvények"
             },
             {
                 "id": "dualizmus-200-01",
@@ -5424,7 +6391,10 @@ export const gameBoard: BoardCell[] = [
                     "Két központtal működő államszerkezetet közös uralkodóval és néhány közös üggyel"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A dualizmus két államrészre épült, közös uralkodóval és közös ügyekkel."
+                "explanation": "A dualizmus két államrészre épült, közös uralkodóval és közös ügyekkel.",
+                "category": "Magyar történelem a 19. században",
+                "value": 200,
+                "correctAnswer": "Két központtal működő államszerkezetet közös uralkodóval és néhány közös üggyel"
             },
             {
                 "id": "dualizmus-200-02",
@@ -5439,7 +6409,10 @@ export const gameBoard: BoardCell[] = [
                     "A mezőgazdasági termelés közvetlen irányítása"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A hadügy, a külügy és az ezek fedezéséhez szükséges pénzügy közös ügynek számított."
+                "explanation": "A hadügy, a külügy és az ezek fedezéséhez szükséges pénzügy közös ügynek számított.",
+                "category": "Magyar történelem a 19. században",
+                "value": 200,
+                "correctAnswer": "Bizonyos megközelítések szerint a hadügy"
             }
         ],
         "categoryName": "Magyar történelem a 19. században"
@@ -5461,7 +6434,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás egy része szerint mert a közteherviselés kizárólag külpolitikai kérdés volt"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A közteherviselés a rendi kiváltságok lebontásának és a polgári átalakulásnak fontos eleme volt."
+                "explanation": "A közteherviselés a rendi kiváltságok lebontásának és a polgári átalakulásnak fontos eleme volt.",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "correctAnswer": "Mert a nemesség teljes adómentessége egyre inkább akadályozta az igazságosabb és modernebb állami működést"
             },
             {
                 "id": "reformkor-300-02",
@@ -5476,7 +6452,10 @@ export const gameBoard: BoardCell[] = [
                     "Minden kérdésben a bécsi kormányzat teljes programját támogatta"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Kossuth programja a reformokat és a nemzeti önállóság erősebb hangsúlyozását kapcsolta össze."
+                "explanation": "Kossuth programja a reformokat és a nemzeti önállóság erősebb hangsúlyozását kapcsolta össze.",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "correctAnswer": "A gazdasági és politikai reformokat erőteljesebb nemzeti érdekvédelemmel kapcsolta össze"
             },
             {
                 "id": "szabadsagharc-300-01",
@@ -5491,7 +6470,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a nemzetiségi és birodalmi kérdések teljesen megoldódtak"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Az udvar és a magyar kormányzat közötti konfliktus 1848 őszére fegyveres harccá mélyült."
+                "explanation": "Az udvar és a magyar kormányzat közötti konfliktus 1848 őszére fegyveres harccá mélyült.",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "correctAnswer": "Mert a politikai konfliktus fegyveres összeütközéssé vált a magyar kormány és a Habsburg udvar között"
             },
             {
                 "id": "szabadsagharc-300-02",
@@ -5506,7 +6488,10 @@ export const gameBoard: BoardCell[] = [
                     "A politikai mozgósítás és az önvédelmi harc egyik legfontosabb irányító alakja volt"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Kossuth meghatározó szerepet játszott a politikai vezetésben és a nemzeti ellenállás megszervezésében."
+                "explanation": "Kossuth meghatározó szerepet játszott a politikai vezetésben és a nemzeti ellenállás megszervezésében.",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "correctAnswer": "A politikai mozgósítás és az önvédelmi harc egyik legfontosabb irányító alakja volt"
             },
             {
                 "id": "dualizmus-300-01",
@@ -5521,7 +6506,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert úgy látta, hogy a birodalmon belül így lehet a legreálisabban visszaszerezni az alkotmányos önállóság jelentős részét"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A kiegyezés kompromisszum volt: nem teljes függetlenséget, hanem jelentős belső önállóságot adott."
+                "explanation": "A kiegyezés kompromisszum volt: nem teljes függetlenséget, hanem jelentős belső önállóságot adott.",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "correctAnswer": "Mert úgy látta, hogy a birodalmon belül így lehet a legreálisabban visszaszerezni az alkotmányos önállóság jelentős részét"
             },
             {
                 "id": "dualizmus-300-02",
@@ -5536,7 +6524,35 @@ export const gameBoard: BoardCell[] = [
                     "Egyes kutatások alapján felmerült, hogy a dualizmus kizárólag katonai rendszer volt, gazdasági hatások nélkül"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A dualizmus egyszerre jelentett modernizációt és megoldatlan politikai feszültségeket."
+                "explanation": "A dualizmus egyszerre jelentett modernizációt és megoldatlan politikai feszültségeket.",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "correctAnswer": "Jelentős gazdasági és infrastrukturális fejlődés zajlott, miközben politikai és nemzetiségi problémák is fennmaradtak"
+            },
+            {
+                "id": "reformkor-concept-001",
+                "topic": "Reformkor Magyarországon",
+                "category": "Magyar történelem a 19. században",
+                "value": 300,
+                "questionType": "concept_application",
+                "difficulty": "medium",
+                "question": "Melyik reformkori törekvésre alkalmazható leginkább a közteherviselés fogalma?",
+                "sourceText": "",
+                "options": [
+                    "A nemesség adómentességének fenntartása",
+                    "Az állami terhek igazságosabb megosztása a kiváltságosok bevonásával is",
+                    "A jobbágyok robotterheinek növelése",
+                    "A vármegyék katonai önállóságának kiterjesztése"
+                ],
+                "correctAnswer": "Az állami terhek igazságosabb megosztása a kiváltságosok bevonásával is",
+                "explanation": "A közteherviselés a rendi kiváltságok lebontását és az igazságosabb teherviselést célozta.",
+                "skillFocus": "fogalomalkalmazás",
+                "oralExamLink": "Reformkori átalakulás",
+                "isActive": true,
+                "createdBy": "teacher",
+                "lastEdited": "2026-04-19",
+                "notes": "",
+                "correctAnswerIndex": 1
             }
         ],
         "categoryName": "Magyar történelem a 19. században"
@@ -5558,7 +6574,10 @@ export const gameBoard: BoardCell[] = [
                     "A történetírás jelenlegi álláspontja szerint a két politikus között nem volt lényeges különbség, amely hosszú távon meghatározta a fejlődést, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A két reformpolitikus céljai részben hasonlóak voltak, de módszereik és politikai hangsúlyaik eltértek."
+                "explanation": "A két reformpolitikus céljai részben hasonlóak voltak, de módszereik és politikai hangsúlyaik eltértek.",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "correctAnswer": "Széchenyi fokozatosabb, felülről is támogatható reformokat képzelt el, Kossuth pedig szélesebb társadalmi mozgósításra és határozottabb politikai fellépésre támaszkodott"
             },
             {
                 "id": "reformkor-400-02",
@@ -5573,7 +6592,10 @@ export const gameBoard: BoardCell[] = [
                     "Történelmi szempontból vizsgálva a nemzeti kérdés és a nyelvkérdés is fontos szerepet játszott"
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "Ez hibás, mert a reformkor élénk politikai és társadalmi viták időszaka volt."
+                "explanation": "Ez hibás, mert a reformkor élénk politikai és társadalmi viták időszaka volt.",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "correctAnswer": "A reformkorban teljes politikai mozdulatlanság uralkodott, érdemi vita nélkül"
             },
             {
                 "id": "szabadsagharc-400-01",
@@ -5588,7 +6610,10 @@ export const gameBoard: BoardCell[] = [
                     "A korszak politikai kontextusában értelmezve a két szakasz között nem volt lényeges különbség, így a rendszer átalakulása elkerülhetetlenné vált."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A forradalom kezdeti politikai eredményei később fegyveres önvédelmi és függetlenségi harccá alakultak."
+                "explanation": "A forradalom kezdeti politikai eredményei később fegyveres önvédelmi és függetlenségi harccá alakultak.",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "correctAnswer": "1848 tavaszán főként politikai-jogi átalakulás zajlott, míg 1849-re a függetlenségi küzdelem katonai és állami létkérdéssé vált"
             },
             {
                 "id": "szabadsagharc-400-02",
@@ -5603,7 +6628,10 @@ export const gameBoard: BoardCell[] = [
                     "A forradalom és szabadságharc a modern magyar nemzet történetének egyik kulcseseménye"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Ez hibás, mert a konfliktus fegyveres összecsapássá alakult a magyar fél és a Habsburg hatalom között."
+                "explanation": "Ez hibás, mert a konfliktus fegyveres összecsapássá alakult a magyar fél és a Habsburg hatalom között.",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "correctAnswer": "A szabadságharc idején Magyarország és a bécsi udvar között végig teljes együttműködés volt"
             },
             {
                 "id": "dualizmus-400-01",
@@ -5618,7 +6646,10 @@ export const gameBoard: BoardCell[] = [
                     "1848 a teljesebb nemzeti önrendelkezés felé törekedett, míg 1867 kompromisszumos együttélési keretet keresett a Habsburg Birodalmon belül"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A két korszak között fontos különbség volt a cél és a realitásérzék alapján választott politikai megoldás."
+                "explanation": "A két korszak között fontos különbség volt a cél és a realitásérzék alapján választott politikai megoldás.",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "correctAnswer": "1848 a teljesebb nemzeti önrendelkezés felé törekedett, míg 1867 kompromisszumos együttélési keretet keresett a Habsburg Birodalmon belül"
             },
             {
                 "id": "dualizmus-400-02",
@@ -5633,7 +6664,35 @@ export const gameBoard: BoardCell[] = [
                     "Magyarország belső kormányzata jelentős önállósággal működött"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Ez hibás, mert a nemzetiségi kérdés a dualizmus egész időszakában komoly feszültségforrás maradt."
+                "explanation": "Ez hibás, mert a nemzetiségi kérdés a dualizmus egész időszakában komoly feszültségforrás maradt.",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "correctAnswer": "A dualizmus minden nemzetiségi kérdést tartósan és teljesen megoldott"
+            },
+            {
+                "id": "dualizmus-sequence-001",
+                "topic": "Dualizmus és polgári fejlődés",
+                "category": "Magyar történelem a 19. században",
+                "value": 400,
+                "questionType": "sequence_logic",
+                "difficulty": "hard",
+                "question": "Melyik időrendi sorrend helyes?",
+                "sourceText": "",
+                "options": [
+                    "Kiegyezés – forradalom – szabadságharc – dualizmus",
+                    "Reformkor – forradalom – szabadságharc – kiegyezés",
+                    "Szabadságharc – reformkor – kiegyezés – forradalom",
+                    "Dualizmus – reformkor – forradalom – kiegyezés"
+                ],
+                "correctAnswer": "Reformkor – forradalom – szabadságharc – kiegyezés",
+                "explanation": "A helyes történeti sorrend: reformkor, 1848-as forradalom, szabadságharc, majd 1867-ben a kiegyezés.",
+                "skillFocus": "időrend",
+                "oralExamLink": "Magyar történelem a 19. században",
+                "isActive": true,
+                "createdBy": "teacher",
+                "lastEdited": "2026-04-19",
+                "notes": "",
+                "correctAnswerIndex": 1
             }
         ],
         "categoryName": "Magyar történelem a 19. században"
@@ -5655,7 +6714,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a korszakban a társadalmi reformok és a nemzeti kérdés teljesen függetlenek voltak egymástól, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "A reformkor jelentősége éppen abban áll, hogy a társadalmi-gazdasági modernizáció és a nemzeti program összekapcsolódott."
+                "explanation": "A reformkor jelentősége éppen abban áll, hogy a társadalmi-gazdasági modernizáció és a nemzeti program összekapcsolódott.",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "correctAnswer": "Mert a rendi viszonyok lebontását, a polgári átalakulást és a magyar nemzeti önállóság erősítését párhuzamosan próbálta előmozdítani"
             },
             {
                 "id": "reformkor-500-02",
@@ -5670,7 +6732,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a Habsburg Birodalom és a magyar politikai elit között minden kérdésben teljes egyetértés volt, ami egyértelműen tükrözte a kor viszonyait."
                 ],
                 "correctAnswerIndex": 0,
-                "explanation": "A reformkor kulcskérdése a modernizáció és az állami önállóság viszonyának kezelése volt."
+                "explanation": "A reformkor kulcskérdése a modernizáció és az állami önállóság viszonyának kezelése volt.",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "correctAnswer": "Mert a magyar reformpolitika egyszerre akart belső modernizációt és nagyobb önállóságot, ami szükségszerűen érintette a birodalmi keretek kérdését"
             },
             {
                 "id": "szabadsagharc-500-01",
@@ -5685,7 +6750,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a korszakban a nemzeti és társadalmi kérdések teljesen elváltak egymástól, ami egyértelműen tükrözte a kor viszonyait."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A korszak jelentősége abban áll, hogy a polgári reformok és a nemzeti önállóság programja összekapcsolódott."
+                "explanation": "A korszak jelentősége abban áll, hogy a polgári reformok és a nemzeti önállóság programja összekapcsolódott.",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "correctAnswer": "Mert egyszerre akarta felszámolni a rendi viszonyok jelentős részét és biztosítani a magyar politikai önrendelkezést"
             },
             {
                 "id": "szabadsagharc-500-02",
@@ -5700,7 +6768,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert ez azt jelezte, hogy a konfliktus már nem pusztán belső alkotmányos vita volt, hanem nemzetközi súlyú hatalmi kérdéssé vált"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "Az orosz beavatkozás megmutatta, hogy a szabadságharc leverése a birodalmi rend és az európai hatalmi egyensúly kérdésévé is vált."
+                "explanation": "Az orosz beavatkozás megmutatta, hogy a szabadságharc leverése a birodalmi rend és az európai hatalmi egyensúly kérdésévé is vált.",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "correctAnswer": "Mert ez azt jelezte, hogy a konfliktus már nem pusztán belső alkotmányos vita volt, hanem nemzetközi súlyú hatalmi kérdéssé vált"
             },
             {
                 "id": "dualizmus-500-01",
@@ -5715,7 +6786,10 @@ export const gameBoard: BoardCell[] = [
                     "Mert a rendszer kizárólag rövid távú katonai szerződés volt politikai tartalom nélkül, amely hosszú távon meghatározta a fejlődést, bár a kortárs elit egy része ezt hevesen ellenezte."
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "A kiegyezés történelmi megítélése éppen azért összetett, mert egyszerre hozott stabilizációt és hagyott fenn tartós feszültségeket."
+                "explanation": "A kiegyezés történelmi megítélése éppen azért összetett, mert egyszerre hozott stabilizációt és hagyott fenn tartós feszültségeket.",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "correctAnswer": "Mert jelentős alkotmányos mozgásteret és fejlődési lehetőséget adott Magyarországnak, ugyanakkor több alapvető kérdést, köztük a nemzetiségi és teljes szuverenitási problémákat nyitva hagyta"
             },
             {
                 "id": "dualizmus-500-02",
@@ -5730,10 +6804,102 @@ export const gameBoard: BoardCell[] = [
                     "Mert a modernizáció önmagában nem oldotta meg a nemzetiségi, társadalmi és birodalmi hatalommegosztási feszültségeket"
                 ],
                 "correctAnswerIndex": 3,
-                "explanation": "A gazdasági fejlődés nem szüntette meg azokat a szerkezeti problémákat, amelyek később a rendszer megrendüléséhez vezettek."
+                "explanation": "A gazdasági fejlődés nem szüntette meg azokat a szerkezeti problémákat, amelyek később a rendszer megrendüléséhez vezettek.",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "correctAnswer": "Mert a modernizáció önmagában nem oldotta meg a nemzetiségi, társadalmi és birodalmi hatalommegosztási feszültségeket"
+            },
+            {
+                "id": "forras-1848-001",
+                "topic": "1848–49-es forradalom és szabadságharc",
+                "category": "Magyar történelem a 19. században",
+                "value": 500,
+                "questionType": "source_based",
+                "difficulty": "expert",
+                "question": "Az idézet melyik történelmi törekvéshez kapcsolódik leginkább?",
+                "sourceText": "„Kívánjuk a sajtó szabadságát, a censura eltörlését.”",
+                "options": [
+                    "A rendi kiváltságok megerősítéséhez",
+                    "A polgári szabadságjogok követeléséhez",
+                    "A jobbágyrendszer visszaállításához",
+                    "A katonai önkényuralom kiépítéséhez"
+                ],
+                "correctAnswer": "A polgári szabadságjogok követeléséhez",
+                "explanation": "A sajtószabadság követelése a polgári átalakulás és a politikai nyilvánosság egyik alapelve volt.",
+                "skillFocus": "forráselemzés",
+                "oralExamLink": "1848. március 15. követelései",
+                "isActive": true,
+                "createdBy": "teacher",
+                "lastEdited": "2026-04-19",
+                "notes": "",
+                "correctAnswerIndex": 1
             }
         ],
         "categoryName": "Magyar történelem a 19. században"
+    },
+    {
+        "categoryId": "cat10",
+        "categoryName": "Világháborúk és diktatúrák",
+        "points": 500,
+        "questions": [
+            {
+                "id": "vilaghaboru-significance-001",
+                "topic": "Első világháború",
+                "category": "Világháborúk és diktatúrák",
+                "value": 500,
+                "questionType": "historical_significance",
+                "difficulty": "expert",
+                "question": "Miért tekinthető az első világháború az európai történelem egyik nagy töréspontjának?",
+                "sourceText": "",
+                "options": [
+                    "Mert rövid helyi konfliktus maradt, tartós politikai következmények nélkül",
+                    "Mert elsősorban gyarmati harcokból állt, Európát kevéssé érintve",
+                    "Mert birodalmak bukását, forradalmakat és új államok létrejöttét indította el",
+                    "Mert megszüntette a nemzetiségi kérdéseket Európában"
+                ],
+                "correctAnswer": "Mert birodalmak bukását, forradalmakat és új államok létrejöttét indította el",
+                "explanation": "Az első világháború mély politikai és társadalmi átrendeződést indított el Európában.",
+                "skillFocus": "történelmi jelentőség",
+                "oralExamLink": "Az első világháború következményei",
+                "isActive": true,
+                "createdBy": "teacher",
+                "lastEdited": "2026-04-19",
+                "notes": "",
+                "correctAnswerIndex": 2
+            }
+        ]
+    },
+    {
+        "categoryId": "cat11",
+        "categoryName": "Diktatúrák és hidegháború",
+        "points": 500,
+        "questions": [
+            {
+                "id": "rakosi-viewpoint-001",
+                "topic": "Rákosi-korszak gazdaságpolitikája",
+                "category": "Diktatúrák és hidegháború",
+                "value": 500,
+                "questionType": "viewpoint_goal",
+                "difficulty": "expert",
+                "question": "Melyik cél állt leginkább a Rákosi-korszak erőltetett nehézipari fejlesztése mögött?",
+                "sourceText": "",
+                "options": [
+                    "A fogyasztói jólét gyors és széles körű emelése",
+                    "A piacgazdaság megerősítése és a magánvállalkozások támogatása",
+                    "A szovjet mintájú iparosítás és a politikailag ellenőrzött gazdasági szerkezet kiépítése",
+                    "A mezőgazdasági kisvállalkozások önállóságának növelése"
+                ],
+                "correctAnswer": "A szovjet mintájú iparosítás és a politikailag ellenőrzött gazdasági szerkezet kiépítése",
+                "explanation": "A nehézipari fejlesztés mögött nem pusztán gazdasági, hanem hatalmi és ideológiai célok is álltak.",
+                "skillFocus": "szándékfelismerés",
+                "oralExamLink": "A Rákosi-korszak jellemzői",
+                "isActive": true,
+                "createdBy": "teacher",
+                "lastEdited": "2026-04-19",
+                "notes": "",
+                "correctAnswerIndex": 2
+            }
+        ]
     }
 ];
 
@@ -5743,9 +6909,24 @@ export function generateGameData(customBoard?: BoardCell[], customCategories?: C
   const boardToUse = customBoard || gameBoard;
   const categoriesToUse = customCategories || gameCategories;
   
-  // Shuffle and pick 8 random categories
-  const shuffledCategories = [...categoriesToUse].sort(() => 0.5 - Math.random());
-  const selectedCategories = shuffledCategories.slice(0, 8);
+  // A category is considered "complete" ONLY if it has a BoardCell for 100, 200, 300, 400, and 500
+  // and each of those BoardCells has at least 1 question. 
+  // This prevents empty or half-filled columns on the board.
+  const validCategories = categoriesToUse.filter(cat => {
+    const requiredPoints = [100, 200, 300, 400, 500];
+    return requiredPoints.every(points => {
+      const cell = boardToUse.find(c => c.categoryId === cat.id && c.points === points);
+      return cell && cell.questions && cell.questions.length > 0;
+    });
+  });
+
+  if (validCategories.length === 0) {
+    console.error("Nem található egyetlen teljes kategória sem a játék indításához!");
+  }
+
+  // Shuffle and pick up to 6 random complete categories (perfect for a standard quiz shows visually)
+  const shuffledCategories = [...validCategories].sort(() => 0.5 - Math.random());
+  const selectedCategories = shuffledCategories.slice(0, 6);
   const selectedCategoryIds = new Set(selectedCategories.map(c => c.id));
   
   const selectedQuestions: Question[] = [];
@@ -5753,6 +6934,7 @@ export function generateGameData(customBoard?: BoardCell[], customCategories?: C
   for (const cell of boardToUse) {
     if (!selectedCategoryIds.has(cell.categoryId)) continue;
     if (!cell.questions || cell.questions.length === 0) continue;
+    
     // Pick a random question from the available for this cell
     const randomIndex = Math.floor(Math.random() * cell.questions.length);
     const q = cell.questions[randomIndex];

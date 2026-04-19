@@ -20,26 +20,27 @@ const getDifficultyLabel = (diff: Difficulty) => {
   }
 };
 
-const getTimerDuration = (points: number) => {
-  switch(points) {
-    case 100: return 25;
-    case 200: return 25;
-    case 300: return 25;
-    case 400: return 25;
-    case 500: return 30;
-    default: return 25;
-  }
-};
+const DEFAULT_TIMER = 25;
+const EXPERT_TIMER = 30;
+
+const getTimerDuration = (points: number): number => 
+  points === 500 ? EXPERT_TIMER : DEFAULT_TIMER;
 
 const getTypeLabel = (type: QuestionType) => {
   switch(type) {
-    case 'multiple_choice': return 'Feleletválasztós';
+    case 'multiple_choice': return 'Feleletválasztás';
     case 'true_false': return 'Igaz-Hamis';
     case 'faulty_statement': return 'Hibás állítás';
     case 'timeline': return 'Időrend';
     case 'matching': return 'Párosítás';
     case 'cause_effect': return 'Ok-okozat';
     case 'comparison': return 'Összehasonlítás';
+    case 'concept_application': return 'Fogalomalkalmazás';
+    case 'historical_significance': return 'Történelmi jelentőség';
+    case 'sequence_logic': return 'Időrendi logika';
+    case 'source_based': return 'Forrásalapú kérdés';
+    case 'viewpoint_goal': return 'Nézőpont / cél';
+    case 'relationship_match': return 'Párosítási logika';
     default: return type;
   }
 };
@@ -103,6 +104,8 @@ export default function App() {
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+  const [shuffledCorrectIndex, setShuffledCorrectIndex] = useState<number | null>(null);
   
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isTimeUp, setIsTimeUp] = useState(false);
@@ -158,6 +161,30 @@ export default function App() {
 
   const handleQuestionClick = (q: Question) => {
     if (answeredQuestions.has(q.id)) return;
+    
+    // Shuffling logic for multiple choice and faulty statement questions
+    if (q.questionType === 'multiple_choice' || q.questionType === 'faulty_statement') {
+      const optionsWithMeta = q.options.map((option, index) => ({
+        option,
+        isCorrect: q.correctAnswer 
+          ? option === q.correctAnswer 
+          : index === q.correctAnswerIndex
+      }));
+      
+      // Fisher-Yates Shuffle
+      const shuffled = [...optionsWithMeta];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      
+      setShuffledOptions(shuffled.map(item => item.option));
+      setShuffledCorrectIndex(shuffled.findIndex(item => item.isCorrect));
+    } else {
+      setShuffledOptions(q.options);
+      setShuffledCorrectIndex(q.correctAnswerIndex ?? null);
+    }
+
     setCurrentQuestion(q);
     setSelectedAnswer(null);
     setIsTimeUp(false);
@@ -189,7 +216,7 @@ export default function App() {
     if (!currentQuestion || selectedAnswer !== null || isTimeUp) return;
     
     setSelectedAnswer(index);
-    const isCorrect = index === currentQuestion.correctAnswerIndex;
+    const isCorrect = index === shuffledCorrectIndex;
     
     if (isCorrect) {
       setStats(prev => ({ ...prev, correct: prev.correct + 1 }));
@@ -265,51 +292,96 @@ export default function App() {
         {gameState === 'START' && (
           <motion.div 
             key="start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="flex-1 flex flex-col items-center justify-center p-6 relative"
           >
-            <div className="absolute top-4 right-4 z-10">
+            {/* Background Effects */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/30 via-slate-950 to-slate-950 pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+            
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.4, 0.3]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[100px] pointer-events-none" 
+            />
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.2, 0.3, 0.2]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[80px] pointer-events-none" 
+            />
+
+            {/* Teacher Mode Button Tracker */}
+            <div className="absolute top-6 right-6 z-20">
               <button 
                 onClick={() => navigateTo('/teacher')}
-                className="flex items-center gap-2 text-slate-400 hover:text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors border border-slate-800"
+                className="group flex items-center gap-2 bg-slate-900/60 backdrop-blur-md hover:bg-slate-800 text-slate-300 hover:text-white px-5 py-2.5 rounded-xl transition-all border border-slate-700/50 hover:border-blue-500/50 shadow-lg hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]"
               >
-                <Settings className="w-4 h-4" />
-                <span className="text-sm font-medium">Tanári mód</span>
+                <Settings className="w-4 h-4 group-hover:rotate-90 transition-transform duration-500" />
+                <span className="text-sm font-semibold tracking-wide uppercase">Tanári mód</span>
               </button>
             </div>
-            <div className="text-center mb-16">
-              <h1 className="text-6xl md:text-8xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-purple-600 mb-4 tracking-tight">
-                Töri Mester
-              </h1>
-              <p className="text-xl md:text-2xl text-slate-400 font-medium">Érettségi vetélkedő</p>
-            </div>
 
-            <div className="flex flex-col gap-4 w-full max-w-md">
-              <button 
-                onClick={() => startGame('SINGLE')}
-                className="group relative flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white p-5 rounded-2xl font-bold text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_-10px_rgba(37,99,235,0.5)]"
+            {/* Center Content */}
+            <div className="relative z-10 w-full max-w-lg mx-auto">
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.8 }}
+                className="text-center mb-12"
               >
-                <Play className="w-6 h-6" />
-                Egyéni játék
-              </button>
-              
-              <button 
-                onClick={() => startGame('TEAM')}
-                className="group relative flex items-center justify-center gap-3 bg-purple-600 hover:bg-purple-500 text-white p-5 rounded-2xl font-bold text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_-10px_rgba(147,51,234,0.5)]"
-              >
-                <Users className="w-6 h-6" />
-                Kétcsapatos játék
-              </button>
+                <h1 className="text-7xl md:text-9xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-blue-100 via-blue-400 to-purple-500 mb-6 tracking-tighter drop-shadow-[0_0_30px_rgba(59,130,246,0.3)] filter">
+                  Töri Mester
+                </h1>
+                <p className="text-2xl md:text-3xl text-blue-200/80 font-medium tracking-wide uppercase font-display drop-shadow-sm">
+                  Érettségi vetélkedő
+                </p>
+              </motion.div>
 
-              <button 
-                onClick={() => setGameState('RULES')}
-                className="flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-700 text-slate-300 p-5 rounded-2xl font-bold text-xl transition-all mt-4"
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 p-8 md:p-10 rounded-3xl shadow-2xl flex flex-col gap-5 relative overflow-hidden"
               >
-                <BookOpen className="w-6 h-6" />
-                Szabályok
-              </button>
+                {/* Thin top highlight for glass card */}
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
+
+                <button 
+                  onClick={() => startGame('SINGLE')}
+                  className="group relative w-full flex items-center justify-center gap-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white p-5 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1 active:translate-y-0 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] overflow-hidden border border-blue-400/30"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <Play className="w-7 h-7 drop-shadow-md" />
+                  <span>Egyéni játék</span>
+                </button>
+                
+                <button 
+                  onClick={() => startGame('TEAM')}
+                  className="group relative w-full flex items-center justify-center gap-4 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white p-5 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1 active:translate-y-0 shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] overflow-hidden border border-purple-400/30"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <Users className="w-7 h-7 drop-shadow-md" />
+                  <span>Kétcsapatos játék</span>
+                </button>
+
+                <div className="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent my-2" />
+
+                <button 
+                  onClick={() => setGameState('RULES')}
+                  className="group w-full flex items-center justify-center gap-3 bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white p-4 rounded-2xl font-bold text-lg transition-all border border-slate-700 hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+                >
+                  <BookOpen className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
+                  <span>Szabályok</span>
+                </button>
+              </motion.div>
             </div>
           </motion.div>
         )}
@@ -385,48 +457,85 @@ export default function App() {
               )}
             </div>
 
-            {/* Game Board */}
-            <div 
-              className="flex-1 grid gap-2 md:gap-4"
-              style={{ gridTemplateColumns: `repeat(${gameCategories.length}, minmax(0, 1fr))` }}
-            >
-              {/* Category Headers */}
-              {gameCategories.map(cat => (
-                <div key={cat.id} className="bg-blue-950/50 border border-blue-900/50 rounded-xl p-1 md:p-2 flex items-center justify-center text-center">
-                  <h3 className="font-display font-bold text-blue-200 text-[10px] md:text-sm leading-tight uppercase tracking-wide break-words">
-                    {cat.name}
-                  </h3>
-                </div>
-              ))}
+            {/* Game Board container with slight glow behind */}
+            <div className="flex-1 relative w-full overflow-x-auto pb-4">
+              {/* Board ambient glow */}
+              <div className="absolute inset-0 bg-blue-500/5 blur-[120px] pointer-events-none min-w-[800px]" />
               
-              {/* Question Cells */}
-              {[100, 200, 300, 400, 500].map(points => (
-                <React.Fragment key={points}>
-                  {gameCategories.map(cat => {
-                    const q = gameQuestions.find(q => q.categoryId === cat.id && q.points === points);
-                    if (!q) return <div key={`${cat.id}-${points}`} />;
-                    
-                    const isAnswered = answeredQuestions.has(q.id);
-                    
-                    return (
-                      <button
-                        key={q.id}
-                        onClick={() => handleQuestionClick(q)}
-                        disabled={isAnswered}
-                        className={`
-                          relative aspect-[4/3] rounded-xl flex items-center justify-center text-xl md:text-3xl font-display font-bold transition-all duration-300
-                          ${isAnswered 
-                            ? 'bg-slate-900/30 border border-slate-800/50 text-slate-800 cursor-not-allowed' 
-                            : 'bg-slate-800 border border-slate-700 text-yellow-400 hover:bg-blue-600 hover:border-blue-500 hover:text-white hover:scale-105 hover:shadow-[0_0_30px_-5px_rgba(37,99,235,0.4)] cursor-pointer'
-                          }
-                        `}
-                      >
-                        {!isAnswered && points}
-                      </button>
-                    );
-                  })}
-                </React.Fragment>
-              ))}
+              <div 
+                className="relative z-10 min-w-[800px] w-full h-full grid gap-3 md:gap-4"
+                style={{ gridTemplateColumns: `repeat(${gameCategories.length}, minmax(0, 1fr))` }}
+              >
+                {gameCategories.map(cat => (
+                  <div key={cat.id} className="flex flex-col gap-3 md:gap-4">
+                    {/* Category Header */}
+                    <div 
+                      className="bg-slate-900/80 backdrop-blur-md border border-blue-500/30 rounded-2xl px-2 py-3 flex items-center justify-center text-center shadow-[0_0_15px_rgba(59,130,246,0.15)] relative overflow-hidden h-16 md:h-24 w-full"
+                    >
+                      {/* Top edge highlight */}
+                      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600/0 via-blue-400 to-blue-600/0 opacity-50" />
+                      <h3 className="font-display font-bold text-blue-100 text-[11px] md:text-sm leading-snug uppercase tracking-wider break-words drop-shadow-sm line-clamp-3">
+                        {cat.name}
+                      </h3>
+                    </div>
+
+                    {/* Question Cells in this category column */}
+                    {[100, 200, 300, 400, 500].map(points => {
+                      const q = gameQuestions.find(q => q.categoryId === cat.id && q.points === points);
+                      const isHighValue = points === 500;
+                      
+                      // Render empty placeholder if question doesn't exist, preserving layout
+                      if (!q) {
+                        return <div key={`${cat.id}-${points}`} className="w-full aspect-[4/3] bg-slate-900/20 rounded-2xl border border-slate-800/40" />;
+                      }
+                      
+                      const isAnswered = answeredQuestions.has(q.id);
+                      
+                      return (
+                        <button
+                          key={q.id}
+                          onClick={() => handleQuestionClick(q)}
+                          disabled={isAnswered}
+                          className={`
+                            relative w-full aspect-[4/3] rounded-2xl flex items-center justify-center text-2xl md:text-5xl font-display font-black transition-all duration-500 overflow-hidden group
+                            ${isAnswered 
+                              ? 'bg-slate-950/60 border border-slate-800/40 text-slate-800 cursor-not-allowed shadow-inner' 
+                              : `cursor-pointer shadow-lg hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:-translate-y-1 active:translate-y-0
+                                ${isHighValue
+                                  ? 'bg-gradient-to-b from-indigo-900/90 to-slate-900/90 border-2 border-indigo-500/40 hover:border-indigo-400 text-indigo-300 hover:text-white'
+                                  : 'bg-gradient-to-b from-slate-800/90 to-slate-900/90 border border-blue-900/60 hover:border-blue-500 text-blue-400 hover:text-white'
+                                }`
+                            }
+                          `}
+                        >
+                          {/* Inner card glow/lighting for unanswered */}
+                          {!isAnswered && (
+                            <>
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                              <div className={`absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none ${isHighValue ? 'from-indigo-300/[0.05]' : ''}`} />
+                            </>
+                          )}
+                          
+                          {/* Point value display */}
+                          <span className={`
+                            relative z-10 drop-shadow-md tracking-tighter
+                            ${isAnswered ? '' : (isHighValue ? 'text-indigo-400 group-hover:text-indigo-100 group-hover:drop-shadow-[0_0_15px_rgba(129,140,248,0.8)]' : 'text-blue-300 group-hover:text-amber-300 group-hover:drop-shadow-[0_0_15px_rgba(252,211,77,0.8)]')}
+                          `}>
+                            {!isAnswered && points}
+                          </span>
+                          
+                          {/* "Solved" checkmark for answered */}
+                          {isAnswered && (
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                              <CheckCircle2 className="w-1/3 h-1/3 text-slate-500" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
@@ -463,15 +572,23 @@ export default function App() {
                   {getTypeLabel(currentQuestion.questionType)}
                 </span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight text-white">
+              <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight text-white mb-6">
                 {currentQuestion.question}
               </h2>
+              
+              {currentQuestion.questionType === 'source_based' && currentQuestion.sourceText && (
+                <div className="bg-slate-800/80 border border-slate-700/50 rounded-2xl p-6 text-left max-w-4xl mx-auto mb-8 shadow-inner">
+                  <p className="text-slate-300 font-serif text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4">
+                    {currentQuestion.sourceText}
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {currentQuestion.options.map((opt, idx) => {
+              {shuffledOptions.map((opt, idx) => {
                 const isSelected = selectedAnswer === idx;
-                const isCorrect = idx === currentQuestion.correctAnswerIndex;
+                const isCorrect = idx === shuffledCorrectIndex;
                 const showResult = selectedAnswer !== null;
                 
                 let btnClass = "bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-200";
@@ -529,7 +646,7 @@ export default function App() {
                   <h2 className="text-4xl font-display font-bold">Lejárt az idő!</h2>
                   <p className="text-slate-400 mt-2">Sajnos nem érkezett válasz időben.</p>
                 </div>
-              ) : selectedAnswer === currentQuestion.correctAnswerIndex ? (
+              ) : (selectedAnswer === shuffledCorrectIndex) ? (
                 <div className="flex flex-col items-center text-emerald-400 mb-6">
                   <CheckCircle2 className="w-20 h-20 mb-4" />
                   <h2 className="text-4xl font-display font-bold">Helyes válasz!</h2>
@@ -539,7 +656,7 @@ export default function App() {
                 <div className="flex flex-col items-center text-rose-400 mb-6">
                   <XCircle className="w-20 h-20 mb-4" />
                   <h2 className="text-4xl font-display font-bold">Helytelen válasz</h2>
-                  <p className="text-slate-400 mt-2">A helyes megoldás: <strong className="text-white">{currentQuestion.options[currentQuestion.correctAnswerIndex]}</strong></p>
+                  <p className="text-slate-400 mt-2">A helyes megoldás: <strong className="text-white">{currentQuestion.correctAnswer || currentQuestion.options[currentQuestion.correctAnswerIndex!]}</strong></p>
                 </div>
               )}
 

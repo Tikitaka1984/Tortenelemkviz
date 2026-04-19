@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Lock } from 'lucide-react';
 
-const TEACHER_PASSWORD = "rakoczi2026";
+const TEACHER_PASSWORD = import.meta.env.VITE_TEACHER_PASSWORD || "";
 
 type TeacherLoginProps = {
   onLoginSuccess: () => void;

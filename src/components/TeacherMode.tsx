@@ -83,6 +83,7 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
       questionType: 'multiple_choice',
       topic: '',
       question: '',
+      sourceText: '',
       options: ['', '', '', ''],
       correctAnswerIndex: 0,
       explanation: '',
@@ -138,13 +139,17 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
 
     const questionToSave: QuestionItem = {
       id: formData.id || `q_new_${Date.now()}`,
+      category: categories.find(c => c.id === formData.categoryId)?.name || formData.category || '',
+      value: formData.points || formData.value || 100,
       difficulty: formData.difficulty as Difficulty || 'medium',
       questionType: formData.questionType as QuestionType || 'multiple_choice',
       topic: formData.topic || '',
       question: formData.question || '',
       options: formData.options || ['', '', '', ''],
+      correctAnswer: formData.options ? formData.options[formData.correctAnswerIndex || 0] : '',
       correctAnswerIndex: formData.correctAnswerIndex || 0,
       explanation: formData.explanation || '',
+      sourceText: formData.sourceText || '',
       skillFocus: formData.skillFocus || '',
       oralExamLink: formData.oralExamLink || '',
       notes: formData.notes || '',
@@ -190,11 +195,17 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
 
   const getTypeLabel = (type: string) => {
     switch(type) {
-      case 'multiple_choice': return 'Feleletválasztós';
+      case 'multiple_choice': return 'Feleletválasztás';
       case 'true_false': return 'Igaz-Hamis';
       case 'faulty_statement': return 'Hibás állítás';
       case 'cause_effect': return 'Ok-okozat';
       case 'comparison': return 'Összehasonlítás';
+      case 'concept_application': return 'Fogalomalkalmazás';
+      case 'historical_significance': return 'Történelmi jelentőség';
+      case 'sequence_logic': return 'Időrendi logika';
+      case 'source_based': return 'Forrásalapú kérdés';
+      case 'viewpoint_goal': return 'Nézőpont / cél';
+      case 'relationship_match': return 'Párosítási logika';
       default: return type;
     }
   };
@@ -366,11 +377,17 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
             >
               <option value="ALL">Minden típus</option>
-              <option value="multiple_choice">Feleletválasztós</option>
+              <option value="multiple_choice">Feleletválasztás</option>
               <option value="true_false">Igaz-Hamis</option>
               <option value="faulty_statement">Hibás állítás</option>
               <option value="cause_effect">Ok-okozat</option>
               <option value="comparison">Összehasonlítás</option>
+              <option value="concept_application">Fogalomalkalmazás</option>
+              <option value="historical_significance">Történelmi jelentőség</option>
+              <option value="sequence_logic">Időrendi logika</option>
+              <option value="source_based">Forrásalapú kérdés</option>
+              <option value="viewpoint_goal">Nézőpont / cél</option>
+              <option value="relationship_match">Párosítási logika</option>
             </select>
           </div>
         </div>
@@ -506,11 +523,17 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
                 onChange={e => setFormData({...formData, questionType: e.target.value as QuestionType})}
                 className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
               >
-                <option value="multiple_choice">Feleletválasztós</option>
+                <option value="multiple_choice">Feleletválasztás</option>
                 <option value="true_false">Igaz-Hamis</option>
                 <option value="faulty_statement">Hibás állítás</option>
                 <option value="cause_effect">Ok-okozat</option>
                 <option value="comparison">Összehasonlítás</option>
+                <option value="concept_application">Fogalomalkalmazás</option>
+                <option value="historical_significance">Történelmi jelentőség</option>
+                <option value="sequence_logic">Időrendi logika</option>
+                <option value="source_based">Forrásalapú kérdés</option>
+                <option value="viewpoint_goal">Nézőpont / cél</option>
+                <option value="relationship_match">Párosítási logika</option>
               </select>
             </div>
             <div>
@@ -529,7 +552,7 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Kérdés szövege</label>
+            <label className="block text-sm font-medium text-slate-400 mb-2">A kérdés szövege</label>
             <textarea 
               value={formData.question || ''} 
               onChange={e => setFormData({...formData, question: e.target.value})}
@@ -538,6 +561,19 @@ export default function TeacherMode({ board, categories, onSaveBoard, onExit, on
               placeholder="Írd ide a kérdést..."
             />
           </div>
+
+          {formData.questionType === 'source_based' && (
+            <div>
+              <label className="block text-sm font-medium text-slate-400 mb-2">Forrásszöveg (opcionális, forrásalapú kérdéshez)</label>
+              <textarea 
+                value={formData.sourceText || ''} 
+                onChange={e => setFormData({...formData, sourceText: e.target.value})}
+                rows={4}
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 resize-none font-serif"
+                placeholder="Idézet vagy forrásszöveg, mely a kérdés alapjául szolgál..."
+              />
+            </div>
+          )}
 
           <div className="space-y-4">
             <label className="block text-sm font-medium text-slate-400">Válaszlehetőségek</label>
