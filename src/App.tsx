@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Play, Users, BookOpen, ArrowLeft, CheckCircle2, XCircle, Trophy, RotateCcw, Home, Settings } from 'lucide-react';
+import { Play, Users, BookOpen, ArrowLeft, CheckCircle2, XCircle, Trophy, RotateCcw, Home, Settings, TrendingUp, BarChart2, AlertCircle, Medal } from 'lucide-react';
 import { generateGameData, Category, Question, Difficulty, QuestionType, gameBoard as initialGameBoard, gameCategories as initialCategories, BoardCell } from './data/questions';
 import TeacherMode from './components/TeacherMode';
 import TeacherLogin from './components/TeacherLogin';
@@ -10,6 +10,28 @@ import { playCorrect, playWrong, playTick, playTimeUp, playOpen, playVictory } f
 type GameState = 'START' | 'RULES' | 'TEAM_SETUP' | 'BOARD' | 'QUESTION' | 'FEEDBACK' | 'GAME_OVER';
 type GameMode = 'SINGLE' | 'TEAM';
 type TeamTurn = 'A' | 'B';
+
+type GameStats = {
+  correct: number;
+  incorrect: number;
+  byCategory: Record<string, { correct: number; total: number }>;
+  byTeam: {
+    A: { correct: number; total: number };
+    B: { correct: number; total: number };
+  };
+  toughestMissed: Question | null;
+};
+
+const INITIAL_STATS: GameStats = {
+  correct: 0,
+  incorrect: 0,
+  byCategory: {},
+  byTeam: {
+    A: { correct: 0, total: 0 },
+    B: { correct: 0, total: 0 }
+  },
+  toughestMissed: null
+};
 
 const getDifficultyLabel = (diff: Difficulty) => {
   switch(diff) {
@@ -113,7 +135,7 @@ export default function App() {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isTimeUp, setIsTimeUp] = useState(false);
   
-  const [stats, setStats] = useState({ correct: 0, incorrect: 0 });
+  const [stats, setStats] = useState<GameStats>(INITIAL_STATS);
 
   const [gameCategories, setGameCategories] = useState<Category[]>([]);
   const [gameQuestions, setGameQuestions] = useState<Question[]>([]);
@@ -121,7 +143,11 @@ export default function App() {
 
   useEffect(() => {
     if (gameState === 'GAME_OVER') {
-      playVictory();
+      const isDraw = gameMode === 'TEAM' && teamScores.A === teamScores.B;
+      if (!isDraw) {
+        playVictory();
+      }
+      
       const duration = 3 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
@@ -131,7 +157,7 @@ export default function App() {
       const interval: any = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
 
-        if (timeLeft <= 0) {
+        if (timeLeft <= 0 || isDraw) {
           return clearInterval(interval);
         }
 
@@ -148,7 +174,7 @@ export default function App() {
       
       return () => clearInterval(interval);
     }
-  }, [gameState]);
+  }, [gameState, gameMode, teamScores.A, teamScores.B]);
 
   const startGame = (mode: GameMode) => {
     const { selectedCategories, selectedQuestions } = generateGameData(fullBoard, categories);
@@ -159,7 +185,7 @@ export default function App() {
     setTeamScores({ A: 0, B: 0 });
     setCurrentTurn('A');
     setAnsweredQuestions(new Set());
-    setStats({ correct: 0, incorrect: 0 });
+    setStats(INITIAL_STATS);
     
     if (mode === 'TEAM') {
       setGameState('TEAM_SETUP');
@@ -225,8 +251,32 @@ export default function App() {
   const handleTimeUp = () => {
     playTimeUp();
     setIsTimeUp(true);
-    setStats(prev => ({ ...prev, incorrect: prev.incorrect + 1 }));
+    
     if (currentQuestion) {
+      setStats(prev => {
+        const newByCategory = { ...prev.byCategory };
+        const catId = currentQuestion.categoryId;
+        if (!newByCategory[catId]) newByCategory[catId] = { correct: 0, total: 0 };
+        newByCategory[catId].total += 1;
+
+        const newByTeam = { ...prev.byTeam };
+        if (gameMode === 'TEAM') {
+          newByTeam[currentTurn].total += 1;
+        }
+
+        let toughestMissed = prev.toughestMissed;
+        if (currentQuestion.points === 500) {
+          toughestMissed = currentQuestion;
+        }
+
+        return {
+          ...prev,
+          incorrect: prev.incorrect + 1,
+          byCategory: newByCategory,
+          byTeam: newByTeam,
+          toughestMissed
+        };
+      });
       setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
     }
     setGameState('FEEDBACK');
@@ -238,9 +288,40 @@ export default function App() {
     setSelectedAnswer(index);
     const isCorrect = index === shuffledCorrectIndex;
     
+    setStats(prev => {
+      const newByCategory = { ...prev.byCategory };
+      const catId = currentQuestion.categoryId;
+      if (!newByCategory[catId]) newByCategory[catId] = { correct: 0, total: 0 };
+      newByCategory[catId].total += 1;
+
+      const newByTeam = { ...prev.byTeam };
+      if (gameMode === 'TEAM') {
+        newByTeam[currentTurn].total += 1;
+      }
+
+      let toughestMissed = prev.toughestMissed;
+      
+      if (isCorrect) {
+        newByCategory[catId].correct += 1;
+        if (gameMode === 'TEAM') {
+          newByTeam[currentTurn].correct += 1;
+        }
+      } else if (currentQuestion.points === 500) {
+        toughestMissed = currentQuestion;
+      }
+
+      return {
+        ...prev,
+        correct: isCorrect ? prev.correct + 1 : prev.correct,
+        incorrect: !isCorrect ? prev.incorrect + 1 : prev.incorrect,
+        byCategory: newByCategory,
+        byTeam: newByTeam,
+        toughestMissed
+      };
+    });
+
     if (isCorrect) {
       playCorrect();
-      setStats(prev => ({ ...prev, correct: prev.correct + 1 }));
       if (gameMode === 'SINGLE') {
         setSingleScore(prev => prev + currentQuestion.points);
       } else {
@@ -251,7 +332,6 @@ export default function App() {
       }
     } else {
       playWrong();
-      setStats(prev => ({ ...prev, incorrect: prev.incorrect + 1 }));
     }
 
     setAnsweredQuestions(prev => new Set(prev).add(currentQuestion.id));
@@ -824,121 +904,229 @@ export default function App() {
             key="gameover"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex-1 flex flex-col items-center justify-center p-6"
+            className="flex-1 flex flex-col items-center py-10 px-6 overflow-y-auto"
           >
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.2 }}
+              className="relative mb-8"
             >
-              <Trophy className="w-32 h-32 text-yellow-400 mb-6 drop-shadow-[0_0_30px_rgba(250,204,21,0.6)]" />
+              <div className="absolute inset-0 bg-yellow-400/20 blur-[60px] rounded-full animate-pulse" />
+              <Trophy className="w-40 h-40 text-yellow-400 drop-shadow-[0_0_30px_rgba(250,204,21,0.6)] relative z-10" />
             </motion.div>
             
-            <motion.h2 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-5xl md:text-7xl font-display font-bold text-white mb-2"
+              className="text-center mb-10"
             >
-              Játék vége!
-            </motion.h2>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, type: "spring", stiffness: 200, damping: 25 }}
-              className="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 mt-8 w-full max-w-md text-center shadow-[0_0_50px_-12px_rgba(59,130,246,0.25)]"
-            >
+              <h2 className="text-6xl md:text-8xl font-display font-black text-white mb-4 tracking-tighter">
+                Játék vége!
+              </h2>
+              
               {gameMode === 'SINGLE' ? (
-                <>
-                  <p className="text-slate-400 text-lg mb-2">Végső pontszám</p>
-                  <motion.div 
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 1.2, type: "spring", bounce: 0.5 }}
-                    className="text-7xl font-display font-bold text-yellow-400 mb-6"
-                  >
-                    {singleScore}
-                  </motion.div>
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5 }}
-                    className="inline-block px-6 py-2 rounded-full bg-blue-900/30 border border-blue-800/50 text-blue-300 font-bold text-xl mb-8"
-                  >
-                    Minősítés: {getRank(singleScore)}
-                  </motion.div>
-                </>
+                <div className="space-y-2">
+                  <p className="text-2xl md:text-3xl text-blue-300 font-medium tracking-wide italic">
+                    Gratulálunk! {singleScore} pontot szereztél!
+                  </p>
+                  <p className="inline-block px-8 py-2 rounded-full bg-blue-900/40 border border-blue-700/50 text-blue-200 font-black text-2xl mt-4">
+                    {getRank(singleScore)}
+                  </p>
+                </div>
               ) : (
-                <div className="space-y-6 mb-8">
-                  <motion.div 
-                    initial={{ x: -50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 1.0, type: "spring" }}
-                    className={`p-6 rounded-2xl border-2 ${teamScores.A > teamScores.B ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_30px_-5px_rgba(234,179,8,0.3)]' : 'border-slate-800 bg-slate-800/50'}`}
-                  >
-                    <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">{teamNames.A}</p>
-                    <p className="text-6xl font-display font-bold text-white">{teamScores.A}</p>
-                  </motion.div>
-                  <motion.div 
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 1.3, type: "spring" }}
-                    className={`p-6 rounded-2xl border-2 ${teamScores.B > teamScores.A ? 'border-yellow-500 bg-yellow-500/10 shadow-[0_0_30px_-5px_rgba(234,179,8,0.3)]' : 'border-slate-800 bg-slate-800/50'}`}
-                  >
-                    <p className="text-slate-400 font-bold uppercase tracking-wider mb-2">{teamNames.B}</p>
-                    <p className="text-6xl font-display font-bold text-white">{teamScores.B}</p>
-                  </motion.div>
-                  {teamScores.A === teamScores.B && (
-                    <motion.p 
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 1.6, type: "spring" }}
-                      className="text-2xl font-bold text-slate-300"
-                    >
-                      Döntetlen!
-                    </motion.p>
+                <div className="flex flex-col items-center gap-4">
+                  {teamScores.A === teamScores.B ? (
+                    <div className="px-10 py-4 rounded-3xl bg-slate-800/50 border-2 border-slate-700 text-slate-300 text-3xl font-black shadow-xl">
+                      Döntetlen! Mindkét csapat {teamScores.A} ponttal zárt.
+                    </div>
+                  ) : (
+                    <div className={`px-10 py-5 rounded-3xl border-4 text-4xl font-black shadow-2xl flex items-center gap-4 ${
+                      teamScores.A > teamScores.B 
+                        ? 'bg-blue-600/20 border-blue-500 text-blue-400 shadow-blue-500/30' 
+                        : 'bg-purple-600/20 border-purple-500 text-purple-400 shadow-purple-500/30'
+                    }`}>
+                      <Medal className="w-10 h-10" />
+                      {teamScores.A > teamScores.B ? teamNames.A : teamNames.B} nyert!
+                    </div>
                   )}
                 </div>
               )}
+            </motion.div>
 
+            <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+              {/* Main Stats Panel */}
               <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.8 }}
-                className="flex justify-center gap-8 text-slate-400 mb-8"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 shadow-2xl"
               >
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-emerald-400">{stats.correct}</p>
-                  <p className="text-sm uppercase tracking-wider mt-1">Helyes</p>
+                <div className="flex items-center gap-3 mb-8">
+                  <BarChart2 className="w-6 h-6 text-blue-400" />
+                  <h3 className="text-xl font-black uppercase tracking-widest text-slate-100">Statisztikai Panel</h3>
                 </div>
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-rose-400">{stats.incorrect}</p>
-                  <p className="text-sm uppercase tracking-wider mt-1">Hibás</p>
+
+                <div className="space-y-8">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/30">
+                      <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Válaszok</p>
+                      <p className="text-4xl font-display font-black text-white">
+                        {stats.correct} <span className="text-xl text-slate-500 font-medium">/ {stats.correct + stats.incorrect}</span>
+                      </p>
+                    </div>
+                    <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/30">
+                      <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Pontosság</p>
+                      <p className="text-4xl font-display font-black text-emerald-400">
+                        {Math.round((stats.correct / (stats.correct + stats.incorrect || 1)) * 100)}%
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-end">
+                      <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Teljesítmény</p>
+                      <p className="text-xs font-black text-slate-500 italic">Progress Bar</p>
+                    </div>
+                    <div className="h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-700 shadow-inner">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(stats.correct / (stats.correct + stats.incorrect || 1)) * 100}%` }}
+                        transition={{ duration: 1.5, ease: "easeOut", delay: 1 }}
+                        className="h-full bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500"
+                      />
+                    </div>
+                  </div>
+
+                  {gameMode === 'TEAM' && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs font-black uppercase text-blue-400 px-1">
+                          <span>{teamNames.A}</span>
+                          <span>{Math.round((stats.byTeam.A.correct / (stats.byTeam.A.total || 1)) * 100)}%</span>
+                        </div>
+                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: `${(stats.byTeam.A.correct / (stats.byTeam.A.total || 1)) * 100}%` }}
+                            transition={{ duration: 1, delay: 1.2 }}
+                            className="h-full bg-blue-500"
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs font-black uppercase text-purple-400 px-1">
+                          <span>{teamNames.B}</span>
+                          <span>{Math.round((stats.byTeam.B.correct / (stats.byTeam.B.total || 1)) * 100)}%</span>
+                        </div>
+                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: `${(stats.byTeam.B.correct / (stats.byTeam.B.total || 1)) * 100}%` }}
+                            transition={{ duration: 1, delay: 1.4 }}
+                            className="h-full bg-purple-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
 
+              {/* Highlights Panel */}
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.0 }}
-                className="flex flex-col gap-4"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex flex-col gap-8"
               >
-                <button 
-                  onClick={() => startGame(gameMode)}
-                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-xl font-bold text-lg transition-all hover:scale-105 active:scale-95"
-                >
-                  <RotateCcw className="w-5 h-5" />
-                  Új játék
-                </button>
-                <button 
-                  onClick={() => setGameState('START')}
-                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 p-4 rounded-xl font-bold text-lg transition-all hover:scale-105 active:scale-95"
-                >
-                  <Home className="w-5 h-5" />
-                  Főmenü
-                </button>
+                {/* Best Category */}
+                <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 shadow-2xl flex-1">
+                  <div className="flex items-center gap-3 mb-6">
+                    <TrendingUp className="w-6 h-6 text-emerald-400" />
+                    <h3 className="text-xl font-black uppercase tracking-widest text-slate-100">Legjobb kategória</h3>
+                  </div>
+                  {(() => {
+                    const entries = Object.entries(stats.byCategory) as [string, { correct: number; total: number }][];
+                    const sortedCategories = entries
+                      .map(([id, data]) => ({ id, accuracy: data.correct / data.total, data }))
+                      .sort((a, b) => b.accuracy - a.accuracy || b.data.total - a.data.total);
+                    
+                    const best = sortedCategories[0];
+                    if (!best) return <p className="text-slate-500 italic">Még nincs statisztika.</p>;
+                    
+                    const catName = gameCategories.find(c => c.id === best.id)?.name || "Ismeretlen";
+                    
+                    return (
+                      <div className="flex items-center gap-6">
+                        <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/20 flex items-center justify-center">
+                          <Medal className="w-10 h-10 text-emerald-400" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-display font-black text-white mb-1">{catName}</p>
+                          <p className="text-emerald-400 font-bold uppercase tracking-widest text-sm">
+                            {Math.round(best.accuracy * 100)}% Pontosság
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+
+                {/* Toughest Challenge */}
+                <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 shadow-2xl flex-1">
+                  <div className="flex items-center gap-3 mb-6">
+                    <AlertCircle className="w-6 h-6 text-rose-400" />
+                    <h3 className="text-xl font-black uppercase tracking-widest text-slate-100">Legnagyobb kihívás</h3>
+                  </div>
+                  {stats.toughestMissed ? (
+                    <div className="space-y-4">
+                      <div className="bg-rose-500/5 border border-rose-500/20 rounded-2xl p-4">
+                        <p className="text-slate-300 font-medium italic line-clamp-2">
+                          "{stats.toughestMissed.question}"
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-400 text-[10px] font-black uppercase tracking-tighter">
+                          500 pontos kérdés
+                        </span>
+                        <span className="text-slate-600 text-xs">•</span>
+                        <span className="text-rose-400/80 text-xs font-bold uppercase tracking-widest">Elbukott kérdés</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-4 text-emerald-400">
+                      <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                        <Trophy className="w-6 h-6" />
+                      </div>
+                      <p className="font-bold">Minden nehéz kérdést megoldottál!</p>
+                    </div>
+                  )}
+                </div>
               </motion.div>
+            </div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              className="flex flex-col sm:flex-row gap-6 w-full max-w-lg mb-16"
+            >
+              <button 
+                onClick={() => startGame(gameMode)}
+                className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white p-5 rounded-2xl font-black text-xl transition-all hover:scale-105 active:scale-95 shadow-xl hover:shadow-blue-500/25 group"
+              >
+                <RotateCcw className="w-6 h-6 group-hover:rotate-180 transition-transform duration-500" />
+                Játék újra
+              </button>
+              <button 
+                onClick={() => setGameState('START')}
+                className="flex-1 flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-700 text-slate-100 p-5 rounded-2xl font-black text-xl transition-all hover:scale-105 active:scale-95 border border-slate-700 shadow-xl"
+              >
+                <Home className="w-6 h-6" />
+                Főmenü
+              </button>
             </motion.div>
           </motion.div>
         )}
