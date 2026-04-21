@@ -26,10 +26,10 @@
           "difficulty": "easy",
           "question": "Melyik intézmény vált a középkori művelődés egyik legfontosabb központjává?",
           "options": [
-            "Gyár",
-            "Egyetem",
-            "Tőzsde",
-            "Parlament"
+            "Kolostor",
+            "Céh",
+            "Vásártér",
+            "Egyetem"
           ],
           "explanation": "A középkorban az egyetemek a művelődés és az oktatás kiemelt központjai lettek.",
           "skillFocus": "fogalom",
@@ -38,23 +38,23 @@
           "createdBy": "teacher",
           "lastEdited": "2026-04-14",
           "notes": "",
-          "correctAnswerIndex": 1
+          "correctAnswerIndex": 3
         },
         {
           "id": "kozepkor-muvelodese-100-02",
           "topic": "A középkor művelődése. Román, gótikus és reneszánsz stílus",
           "questionType": "multiple_choice",
           "difficulty": "easy",
-          "question": "Melyik stílusra jellemzők a vastag falak és a félköríves záródások?",
+                      "question": "Melyik magyarországi épület a román stílus kiemelkedő példája?",
           "options": [
-            "Román",
-            "Gótikus",
-            "Barokk",
-            "Klasszicista"
+            "Jáki apátsági templom",
+            "Mátyás-templom",
+            "Esztergomi bazilika",
+            "Pannonhalmi bencés főapátság"
           ],
-          "explanation": "A román stílus egyik alapvető jellemzője a tömörség, a vastag fal és a félkörív.",
+            "explanation": "A Jáki apátsági templom (13. század) Magyarország legsépebb román stílusú épülete. Jellemzi a kerekded apátsági kéttornyú homlokzat, a félköríves kapuzat és a vastag kőfalak.",
           "skillFocus": "korszakjellemzés",
-          "oralExamLink": "A román stílus jellemzői",
+          "oralExamLink": "Középkori építészeti emlékek Magyarországon",
           "isActive": true,
           "createdBy": "teacher",
           "lastEdited": "2026-04-14",
@@ -156,6 +156,27 @@
           "isActive": true,
           "createdBy": "teacher",
           "lastEdited": "2026-04-14",
+          "notes": "",
+          "correctAnswerIndex": 1
+        },
+        {
+          "id": "kozepkor-muvelodes-300-new",
+          "topic": "A középkor művelődése. Román, gótikus és reneszánsz stílus",
+          "questionType": "cause_effect",
+          "difficulty": "medium",
+          "question": "Miért vált a könyvnyomtatás feltalálása korszakalkotó jelentőségűvé a reneszánsz idején?",
+          "options": [
+            "Mert csak a papok számára tette hozzáférhetővé a Bibliát",
+            "Mert lehetővé tette az ismeretek gyors, tömegszerű terjesztését",
+            "Mert a kereskedelemben leegyszerűsítette a szerződéskötéseket",
+            "Mert a műalkotások másolására használták"
+          ],
+          "explanation": "Gutenberg találmánya (kb. 1450) forradalmasította a tudás terjesztését: könyvek ezrei váltak elérhetővé, ami a reformáció és a tudományos forradalom alapja lett.",
+          "skillFocus": "ok-okozati gondolkodás",
+          "oralExamLink": "A reneszánsz művelődése és kultúrája",
+          "isActive": true,
+          "createdBy": "teacher",
+          "lastEdited": "2026-04-21",
           "notes": "",
           "correctAnswerIndex": 1
         }
@@ -403,6 +424,27 @@
           "lastEdited": "2026-04-14",
           "notes": "",
           "correctAnswerIndex": 1
+        },
+        {
+          "id": "eszmek-ideologiak-300-new",
+          "topic": "A 19. század első felének uralkodó eszméi",
+          "questionType": "cause_effect",
+          "difficulty": "medium",
+          "question": "Mi volt a nacionalizmus fő politikai következménye Európában a 19. században?",
+          "options": [
+            "Az abszolút monarchiák megerősödése",
+            "A nemzeti államok kialakulásának igénye és a népek önrendelkezési törekvése",
+            "A gyarmatbirodalmak bővülése",
+            "A kereskedelem visszaesése az országok között"
+          ],
+          "explanation": "A nacionalizmus az azonos nyelvű, kultúrájú népek összefogását hirdette, ami a német és olasz egységesedéshez, illetve a Habsburg Birodalom nemzeti mozgalmaihoz vezetett.",
+          "skillFocus": "ok-okozati gondolkodás",
+          "oralExamLink": "Nacionalizmus és liberalizmus a 19. században",
+          "isActive": true,
+          "createdBy": "teacher",
+          "lastEdited": "2026-04-21",
+          "notes": "",
+          "correctAnswerIndex": 1
         }
       ]
     },
@@ -646,6 +688,27 @@
           "isActive": true,
           "createdBy": "teacher",
           "lastEdited": "2026-04-14",
+          "notes": "",
+          "correctAnswerIndex": 1
+        },
+        {
+          "id": "gazdasag-modernizacio-300-new",
+          "topic": "Ipari forradalom",
+          "questionType": "cause_effect",
+          "difficulty": "medium",
+          "question": "Miért indult el az ipari forradalom először Nagy-Britanniában?",
+          "options": [
+            "Mert a brit hadsereg a legrövidebb volt Európában",
+            "Mert Nagy-Britannia rendelkezett szén- és vasérclelőhelyekkel, gyarmatbirodalommal és fejlett hitelrendszerrel",
+            "Mert a brit királyok betiltották a mezőgazdaságot",
+            "Mert a németektől ellopták a gépek tervrajzait"
+          ],
+          "explanation": "Nagy-Britannia előnyös földrajzi helyzete, nyersanyaggazdagsága (szén, vasérc), fejlett gyarmatbirodalom adta piac és tőkeellátás, valamint a szabadalmi rendszer együtt tette lehetővé az ipari forradalom elindulását.",
+          "skillFocus": "ok-okozati gondolkodás",
+          "oralExamLink": "Az ipari forradalom okai és következményei",
+          "isActive": true,
+          "createdBy": "teacher",
+          "lastEdited": "2026-04-21",
           "notes": "",
           "correctAnswerIndex": 1
         }
