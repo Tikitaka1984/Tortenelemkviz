@@ -43,11 +43,9 @@ const getDifficultyLabel = (diff: Difficulty) => {
   }
 };
 
-const DEFAULT_TIMER = 25;
-const EXPERT_TIMER = 30;
+const DEFAULT_TIMER = 30;
 
-const getTimerDuration = (points: number): number => 
-  points === 500 ? EXPERT_TIMER : DEFAULT_TIMER;
+const getTimerDuration = (points: number): number => DEFAULT_TIMER;
 
 const getTypeLabel = (type: QuestionType) => {
   switch(type) {
